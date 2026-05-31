@@ -30,7 +30,7 @@ gh issue list --milestone "Sprint N" --json state | jq '[.[] | .state] | group_b
 # (수동 분석 필요 — gh issue list + git worktree list 비교)
 
 # GitHub Projects 보드 (브라우저 오픈)
-gh project view 1 --owner @me --web
+gh project view 2 --owner @me --web
 ```
 
 ### 3. 사용자에 인사이트 제공

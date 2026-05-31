@@ -99,5 +99,5 @@ echo "────────────────────────�
 echo ""
 echo "  새 에이전트 시작:    ./scripts/new-agent.sh <type> [<ticket>]"
 echo "  핸드오프:            ./scripts/handoff.sh <issue> <next-agent>"
-echo "  보드 (브라우저):     gh project view 1 --owner @me --web"
+echo "  보드 (브라우저):     gh project view 2 --owner @me --web"
 echo ""

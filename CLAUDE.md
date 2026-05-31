@@ -53,7 +53,7 @@ gh issue comment <number> -b "메시지"
 ./scripts/status.sh
 
 # Projects 보드 (브라우저)
-gh project view 1 --owner @me --web
+gh project view 2 --owner @me --web
 ```
 
 ---

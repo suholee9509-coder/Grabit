@@ -130,6 +130,6 @@ gh issue edit <number> --add-label "agent:dev"
 ## 7. 보드 북마크
 
 브라우저 북마크에 추가 권장:
-- `gh project view 1 --owner @me --web` 의 URL
+- `gh project view 2 --owner @me --web` 의 URL
 
 칸반 보드를 항상 열어두고 작업.

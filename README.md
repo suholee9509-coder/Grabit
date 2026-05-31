@@ -88,7 +88,7 @@ Grabit/
 ./scripts/status.sh
 
 # GitHub Projects 보드 (브라우저)
-gh project view 1 --owner @me --web
+gh project view 2 --owner @me --web
 ```
 
 ---
