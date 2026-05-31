@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 가이드 / 문서
+    url: https://github.com/suholee9509-coder/Grabit/blob/main/README.md
+    about: 에이전트 시스템 사용법은 README + .claude/agents/README.md 참고

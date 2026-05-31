@@ -1,0 +1,32 @@
+# Runtime worktrees (created by scripts/new-agent.sh)
+worktrees/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies (will be relevant once product code is added)
+node_modules/
+.pnpm-store/
+.turbo/
+
+# Build artifacts
+dist/
+build/
+.next/
+out/

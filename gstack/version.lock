@@ -1,0 +1,11 @@
+# gstack 버전 핀 (호환 검증된 버전)
+# 이 버전 이상에서 Grabit 에이전트 시스템 정상 작동 확인
+
+gstack_version=1.26.3.0
+gstack_commit=db9447c3339950bb0506c547e5b3225f5def3854
+verified_date=2026-05-05
+
+# 변경 시 절차:
+# 1. 새 gstack 버전으로 cd ~/.claude/skills/gstack && git pull
+# 2. 우리 스킬 호출이 모두 동작하는지 확인 (Phase 6 end-to-end 테스트 재실행)
+# 3. 이 파일 업데이트 + PR
