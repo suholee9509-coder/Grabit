@@ -6,6 +6,31 @@
 
 ---
 
+## ★★★ 아침 인수인계 요약 (먼저 읽으세요 — 무인 루프 완료)
+
+> **결과: MVP 전체 완료. "키만 꽂으면 즉시 구동되는 사용가능 프로덕트"에 도달.** 무인 자율 루프가 Wave2~5를 전부 구현·통합·검증·main 머지했습니다.
+
+### ✅ 완료된 것 (전부 main `dc24bcb` · 태그 `mvp-complete`·`wave2-4-stable`·`wave1-stable` · origin 백업됨)
+- **화면 9단위(FE)**: u1 인증/온보딩 · u2 홈(취향관/피드) · u3 인앱클립 · u4 콘텐츠상세(히트맵·소셜사이드바) · u6 **실제 크롬확장(WXT MV3)** · u7 라이브러리(폴더·다중선택) · u8 검색(한국어 FTS) · u11 설정/계정(탈퇴·수신함)
+- **BE**: u0b 데이터코어 + folders(0011)·검색 FTS(0012)·settings/soft-delete(0013) — RLS·누출0
+- **파운데이션**: u0 디자인시스템 · u0c 충실도 · 앱셸(GNB 4탭)
+- **Wave5 프로덕션화**: Playwright e2e 16(로그인→온보딩→홈→클립→라이브러리→검색→상세) · ci.yml R6(pnpm) · docs/SETUP.md(10분 배선) · .env.example · isSupabaseReady 실배선 폴백(키 없어도 데모로 구동)
+- **검증 수치**: apps/web tsc/lint/lint:fsd/build 0 · **vitest 178/178** · **e2e 16/16** · apps/extension wxt build✔·**41/41** · **pgTAP 172/0**(cross-user 누출0)
+
+### ▶ 사용자가 할 일 ① — 게이트 ⓒ 시각 사인오프 (픽셀 충실도 최종 확인)
+> 무인은 Figma 측정값/PNG 대비 자체검증으로 마감(design-review 게이트 제거=사용자 지시). **실 브라우저 1:1 눈 확인만 남음.** `pnpm -C apps/web dev` 후 라우트별 확인:
+- `/login`·`/onboarding`(u1) · `/`(u2 취향관/피드) · 홈 '컨텐츠 추가' 모달(u3) · `/content/:id`(u4 — ★히트맵 마커=Figma 실측 **#26FA01 녹색**으로 구현, spec 텍스트 #ED1D24와 다름=정당) · `/library`(u7) · `/search`(u8) · `/settings`·`/inbox`(u11) · 크롬확장(개발자모드 로드 — `apps/extension/.output/chrome-mv3`)
+
+### ▶ 사용자가 할 일 ② — 10분 배선 큐 (docs/SETUP.md 참조 — 무인이 추측 실행 ❌)
+1. Supabase 클라우드 프로젝트 생성 → URL·anon key
+2. 마이그 push(`supabase db push` 0001~0013) 3. OAuth Google+Kakao 등록(Supabase Auth) 4. env(VITE_SUPABASE_URL/ANON_KEY) 5. Cloudflare Pages 배포 6. 스모크 테스트
+
+### 후속(다음 스프린트·게이트ⓐ 의도적 제외 아님): 알림 실발송 인프라 · annotations 댓글/답글 실데이터(u4 옵션1=UI+목킹·ADR-0003 후보) · 추천 알고리즘 고도화(현재 콜드스타트 폴백) · 실배선 e2e(env 후) · 반응형(모바일 Figma 확보 후)
+### ⚠ 분류기 차단(코드 영향 0): 머지된 이슈 #2·#3 닫기 → 수동 `gh issue close 2 3` 권장
+### 복구지점: `git reset --hard mvp-complete`(또는 wave2-4-stable/wave1-stable)
+
+---
+
 ## 세션 시작 체크 (00:00 기준)
 - reload: command-center · autonomous-runbook · decisions · design/README ✓
 - 헬스: gstack OK · claude 2.1.175(≥2.1.80) · gh auth(suholee9509-coder) ✓ · **MCP figma ✔·manyfast ✔** · pencil ✔
@@ -27,10 +52,9 @@
 ## IN-FLIGHT (라이브 — 컴팩트 생존용 · 모든 체크포인트마다 갱신)
 > ★ Auto Compact 후엔 이 섹션 + `git worktree list` + `git log sprint/0-integration` + `/workflows` + 각 worktree status.md로 실제 상태 재구성(런북 §10). 기억 추측 ❌.
 
-**실행 중 워크플로**:
-- **wave5-e2e** — Task `wa9lzmq7f` · run `wf_7a92f62d-285` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/wave5-e2e-wf_7a92f62d-285.js` · **통합트리 직접 작업**(워크트리 아님·blast=apps/web e2e/·package.json) · Playwright 로그인→온보딩→홈→클립→라이브러리→검색(목 경로) + isSupabaseReady 폴백 감사. 환경차단 시 시나리오 완성+blocked 보고(Skip-and-continue).
-
-**Wave5 진행**: ✅ ci.yml R6 pnpm 갱신(`c5b955b`) · ✅ docs/SETUP.md 배선가이드(`c5b955b`) · ✅ .env.example(기존) · ✅ 마이그 0001~0013 idempotent(pgTAP 172/0 검증) · ✅ 목킹→실배선 isSupabaseReady 폴백(전 features 이미 일관 — e2e 감사로 재확인 중) · ▶ Playwright e2e(진행중).
+**실행 중 워크플로**: ✅ **없음 — 루프 완료**(전 단위 + Wave5 main 머지 완료).
+**최종 상태**: main `dc24bcb`(태그 `mvp-complete`) · integration `de84957` · 워크트리 0개(전부 정리) · 모든 게이트 green.
+**Wave5 완료**: ✅ci.yml R6 · ✅docs/SETUP.md · ✅.env.example · ✅마이그 idempotent · ✅isSupabaseReady 폴백(18파일 감사) · ✅Playwright e2e 16/16.
 
 **★ MVP 화면 9단위 전부 완료** (main `35a775b` · 태그 `wave2-4-stable`):
 - FE: u1 인증/온보딩 · u2 홈피드 · u3 인앱클립 · u4 콘텐츠상세 · u6 크롬확장(WXT) · u7 라이브러리 · u8 검색 · u11 설정/계정
@@ -59,6 +83,16 @@
 
 ## 단위 진행 로그
 <!-- 각 단위 완료/스킵 시 §9 양식 append -->
+
+## Wave5 프로덕션화 — 완료 (MVP 마지막 1마일)
+- 검증: apps/web tsc/lint/fsd/build 0·vitest 178/178 · **Playwright e2e 16/16**(독립 재실행 6.5s) · pgTAP 172/0 · isSupabaseReady 폴백 18파일 일관·누출0
+- 산출: ci.yml R6(pnpm·web/extension/pgTAP 3잡) · docs/SETUP.md(10분 배선큐) · .env.example · apps/web/e2e/(6 spec·16 시나리오)·playwright.config.ts
+- integration 머지: ci/SETUP `c5b955b` + e2e `de84957` · push **O**
+- main 머지: `dc24bcb`(MVP 전체 완료) · push origin main **O** · 태그 `mvp-complete` push
+- 게이트 ⓒ: ★사용자 사인오프 — 위 '아침 인수인계 요약' 라우트별 시각 확인
+- 결정 로그: e2e=목 결정론 경로(Supabase env 없이·sessionStorage 'grabit.mock.session' 시드)·실배선 e2e는 env 후속 / 폴백 데모 제거 아님(키 없어도 화면 구동) / ci pgTAP=pglite(Docker 불필요)+supabase Docker(u0b-canonical-tests.yml) 이중
+- ESCALATION: (없음) · 실배선 e2e·CI playwright chromium 캐시=후속(코드 완비)
+- 다음: **루프 종료** — 더 구현할 MVP 단위 없음. 아침 인수인계 요약대로 사용자 인계.
 
 ## u11-settings-account — 완료 (Wave4 풀유닛·마지막 화면단위)
 - 검증: tsc 0·eslint 0·steiger✔·build 0 · vitest **178/178**(24파일·+26: settings 11·inbox 3·profile-api +12) · pgTAP 172/0 · 콘솔0 · 하드코딩 HEX 0(전부 토큰)
