@@ -1,0 +1,89 @@
+/* account-actions — 로그아웃/탈퇴 모달 + 복구 배너. 디자인 공백 → u0 토큰만(하드코딩 HEX ❌).
+   ★ danger 색 토큰 부재 → 위험은 색이 아닌 카피·2단계 확인으로 전달(plan §2-3·리스크표). */
+
+.modalBody {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-2-size); /* 15 */
+  line-height: 150%;
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-secondary); /* #B4B4B4 */
+}
+
+.withdrawBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6); /* 12 */
+}
+
+.emphasis {
+  color: var(--color-text-primary); /* #FAFAFA — 강조는 흰색 위계로(경고색 발명 ❌) */
+  font-weight: var(--font-weight-semibold);
+}
+
+.withdrawList {
+  margin: 0;
+  padding-left: var(--space-9); /* 18 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* 4 */
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 160%;
+  color: var(--color-text-secondary);
+}
+
+/* 명시 동의 체크 — 2단계 확인의 1단계(오발화 방지). */
+.ackRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4); /* 8 */
+  margin-top: var(--space-2);
+  cursor: pointer;
+}
+
+.ackCheckbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-brand-primary); /* #66FF4B — 체크 채움(브랜드 토큰 승계) */
+  cursor: pointer;
+}
+
+.ackText {
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-text-primary); /* #FAFAFA */
+}
+
+/* 복구 배너 — Card 면 + 액션(전용 배너 부재 → 조립). surface-ghost·border-subtle. */
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8); /* 16 */
+  flex-wrap: wrap;
+}
+
+.bannerText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* 4 */
+  min-width: 0;
+}
+
+.bannerTitle {
+  margin: 0;
+  font-size: var(--text-body-1-size); /* 16 */
+  line-height: 150%;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-primary); /* #FAFAFA */
+}
+
+.bannerSub {
+  margin: 0;
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 160%;
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-text-secondary); /* #B4B4B4 */
+}

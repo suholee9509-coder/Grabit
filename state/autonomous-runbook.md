@@ -203,8 +203,8 @@
 ### 현재 IN-FLIGHT 워크플로 (watchdog 대상 — overnight-log와 동기)
 | 단위 | Task ID | runId | scriptPath(요약) | blast |
 |---|---|---|---|---|
-| u7-library FE | `w1vgklj0x` | `wf_4a8ed391-0d8` | u7-library-fe-wf_4a8ed391-0d8.js | apps/web/src |
+| u11-settings FE | `wo3tjlwb0` | `wf_e4217f40-39c` | u11-settings-fe-wf_e4217f40-39c.js | apps/web/src |
 > scriptPath 전체경로 = `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/<위 파일>`. resume 시 사용.
-> ⚠ u7 머지 시 u8의 app.tsx(/search)·entities/content·shared/api 변경과 §5 union(grep 마커0).
-> **완료(통합됨)**: u2·u4·u6·**u8**→main `b9b49a2` · BE u7/u8/u11→main(포함).
-> **남은 단위**: u7 FE(진행중)·u11 FE · Wave5 프로덕션화(ci.yml·.env.example·e2e·docs/SETUP.md·목킹→실배선 폴백).
+> ⚠ u11 머지 시 app.tsx(/settings·/inbox) §5 union 가능.
+> **완료(통합됨)**: u2·u4·u6·u7·**u8**→main `bb66def` · BE u7/u8/u11→main(포함).
+> **남은 단위**: u11 FE(진행중·마지막 화면) · **Wave5 프로덕션화**(목킹→실배선 isSupabaseReady 폴백·Playwright e2e·.env.example·ci.yml pnpm[R6]·docs/SETUP.md 배선큐). Wave5=supabase/ci/docs 중심.

@@ -28,11 +28,11 @@
 > ★ Auto Compact 후엔 이 섹션 + `git worktree list` + `git log sprint/0-integration` + `/workflows` + 각 worktree status.md로 실제 상태 재구성(런북 §10). 기억 추측 ❌.
 
 **실행 중 워크플로** (watchdog 대상):
-- **u7-library FE** — Task `w1vgklj0x` · run `wf_4a8ed391-0d8` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u7-library-fe-wf_4a8ed391-0d8.js` · worktree feat/u7-library-fe(88992ec·u4상세+0011 상속·**u8 미포함**) · blast=apps/web/src. **⚠ 머지 시 u8의 app.tsx(/search)·entities/content·shared/api 변경과 §5 union 필요.**
-- ~~u8 FE `wzepgh9hh`~~ ✅ 완료·integration+main 머지 · ~~u4 `wedn36twz`~~·u2·u6 main · 전 BE integration.
+- **u11-settings FE** — Task `wo3tjlwb0` · run `wf_e4217f40-39c` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u11-settings-fe-wf_e4217f40-39c.js` · worktree feat/u11-settings-fe(e866481·전 FE+0013 상속) · blast=apps/web/src · 계정메뉴·설정·수신함·탈퇴30일·알림(디자인공백→u0 파운데이션). **머지 시 app.tsx(/settings·/inbox) §5 union 가능**.
+- ~~u7 FE `w1vgklj0x`~~ ✅ 완료·integration+main 머지(§5 union 4충돌·SourceCount 구조동일) · ~~u8·u4·u2·u6~~ main · 전 BE main.
 
-**main 상태**: `b9b49a2`(u2·u4·u6·u8 + u7/u8/u11 BE). integration=`6e1e199`+docs.
-**다음 FE**: u7 머지(§5 union) 후 → **u11 FE**(0013 상속·디자인공백→파운데이션). 그 후 **Wave5 프로덕션화**(목킹→실배선 폴백·Playwright e2e·.env.example·ci.yml·docs/SETUP.md).
+**main 상태**: `bb66def`(u2·u4·u6·u7·u8 + u7/u8/u11 BE). **MVP 화면단위 = u11 FE만 남음.**
+**다음**: u11 FE 머지 → **Wave5 프로덕션화**(목킹→실배선 isSupabaseReady 폴백·Playwright e2e[로그인→온보딩→홈→클립→라이브러리→검색]·.env.example·ci.yml pnpm[R6]·docs/SETUP.md 배선큐). Wave5는 supabase/ci/docs 중심.
 
 **완료 단위**: u2(home-feed)·u6(chrome-extension) [main `835e288`] · BE: u7·u8 마이그(0011·0012)[integration].
 **integration 상태**: `61dc7fa` + (이 턴 state docs 커밋) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0. origin 백업됨.
@@ -53,6 +53,15 @@
 
 ## 단위 진행 로그
 <!-- 각 단위 완료/스킵 시 §9 양식 append -->
+
+## u7-library — 완료 (Wave3 풀유닛·마지막 대형 FE)
+- 검증: tsc 0·eslint 0·steiger✔·build 0 · vitest **152/152**(22파일·+33: library.contract 10·library-folders.contract 23) · pgTAP 172/0 · 콘솔0 · 충실도 자체검증(5프레임 1:1·폴더카드 160×160 r16·검색바 h38·출처칩 #FAFAFA)
+- integration 머지: u7 커밋→merge `e866481` · **§5 union 충돌4 해결**(app.tsx /library+/search+/content union·entities/content 배럴[SourceCount=model/search 단일화·구조동일]·shared/api index/types union·steiger excessive-slicing off) · push **O**
+- main 머지: `bb66def`(u2·u4·u6·u7·u8+BE) · push origin main **O**
+- 게이트 ⓒ: ★사용자 사인오프 — 라우트 `/library`. PM 결정 3건(DM2 folder=클립부착·DM-multiselect 선택모드+액션바·DM-bookmark UI탭+빈상태) reversible 진행·사인오프 대기. 인사이트 탭=demo 폴백(0011 전용 RPC 부재·실배선 시 교체)
+- 결정 로그: folder=클립부착(clips.folder_id)·삭제=NULL해제 / 다중선택=선택모드+하단 액션바 / 북마크=UI탭+빈상태 / steiger excessive-slicing off(권고성·ADR-0001 정합)
+- ESCALATION: (없음 — spec 기본값) · design-review 별도 미수행(FE verify 자체검증)
+- 다음: u11 FE(진행중·마지막 화면단위) → Wave5 프로덕션화
 
 ## u8-search — 완료 (Wave3 풀유닛)
 - 검증: tsc 0·eslint 0·steiger✔·build 0 · vitest **104/104**(19파일·18신규: search-results 9·search-discovery 4·search-recent 5) · pgTAP 172/0 · 콘솔0 · 충실도 자체검증(3프레임 1:1·검색바 520×48 r80)

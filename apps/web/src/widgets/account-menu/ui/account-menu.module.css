@@ -1,0 +1,52 @@
+/* AccountMenu — 계정 팝오버. 디자인 공백 → u0 토큰만(하드코딩 HEX ❌).
+   면 = surface-100 #1F1F1F·radius10·border-subtle(.08)·shadow-popover (프로필 카드/Pro 팝오버 토큰 승계). */
+
+/* 전체 오버레이(외부클릭 닫힘) — library-page folderDropdownOverlay 패턴. */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dropdown);
+}
+
+/* 팝오버 면 — 프로필 카드 좌하단(GNB 패널 폭) 위로 띄움. 위치는 GNB inset(14) + 카드 위 8 기준. */
+.menu {
+  position: absolute;
+  left: var(--space-gnb-inset); /* 14 — GNB 패널 좌 inset 정합 */
+  bottom: calc(var(--space-gnb-inset) + var(--size-profile-card-h) + var(--space-4)); /* 카드 위 8 */
+  display: flex;
+  flex-direction: column;
+  min-width: var(--size-gnb-panel); /* 226 — 프로필 카드 폭 정합 */
+  padding: var(--space-2); /* 4 */
+  border-radius: var(--radius-10); /* 10 — 프로필 카드/팝오버 승계 */
+  background: var(--color-surface-100); /* #1F1F1F */
+  border: 1px solid var(--color-border-subtle); /* rgba(255,255,255,.08) */
+  box-shadow: var(--shadow-popover);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  height: var(--size-nav-item); /* 32 — nav item 높이 승계 */
+  padding: 0 var(--space-5); /* 0/10 — nav item padX 정합 */
+  border: none;
+  background: transparent;
+  text-align: left;
+  border-radius: var(--radius-md); /* 8 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: var(--text-body-3-line);
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-text-primary); /* #FAFAFA */
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.item:hover {
+  background: var(--color-surface-hover); /* rgba(255,255,255,.06) */
+}
+
+/* 위험 항목(회원 탈퇴) — danger 색 토큰 부재 → 색 발명 ❌. 보조 텍스트색으로 시각 약화 +
+   확인 모달/카피로 위험 전달(plan §2-3·리스크표). */
+.danger {
+  color: var(--color-text-secondary); /* #B4B4B4 — 중립 약화(네온/경고색 발명 금지) */
+}
