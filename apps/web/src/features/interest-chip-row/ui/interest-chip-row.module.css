@@ -1,0 +1,60 @@
+/* interest-chip-row — 취향관 관심분야 아바타 칩 행.
+ * 측정 2173:120904 / 2278:136811: row gap30 · 칩 column center gap10(아바타↔라벨). */
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px; /* 측정: 칩 간 gap 30(spacing 스케일 부재 — 인라인) */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.row::-webkit-scrollbar {
+  display: none;
+}
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5); /* 측정: 10 (아바타↔라벨) */
+  flex: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+}
+.chip:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-pill);
+}
+
+/* 라벨 — 14/600/130%/-2.5%/center (style_N4CHHJ). 기본 #B4B4B4 · 선택 #66FF4B */
+.label {
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%; /* 측정: 130% */
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+  font-weight: var(--font-weight-semibold); /* 600 */
+  text-align: center;
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  white-space: nowrap;
+}
+.chip.active .label {
+  color: var(--color-brand-primary); /* 측정: #66FF4B */
+}
+
+/* "분야 추가" 칩 — 82×82 투명 보더 박스 + 32×32 더하기, 라벨 Medium 14 #FAFAFA */
+.addAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-avatar-xl); /* 측정: 82 */
+  height: var(--size-avatar-xl);
+  border: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+  border-radius: var(--radius-pill); /* 측정: 100 */
+  color: var(--color-white);
+  background: transparent;
+  flex: none;
+}
+.addLabel {
+  color: var(--color-white); /* 측정: #FAFAFA */
+  font-weight: var(--font-weight-medium); /* 측정: 500 (이 칩만 Medium) */
+}

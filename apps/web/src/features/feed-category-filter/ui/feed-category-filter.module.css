@@ -1,0 +1,7 @@
+/* feed-category-filter — 피드 카테고리 칩 row. 측정 2087:71870: row gap8 align center. */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4); /* 측정: 8 */
+  flex-wrap: wrap;
+}

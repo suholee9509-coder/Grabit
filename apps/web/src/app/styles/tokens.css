@@ -98,6 +98,14 @@
   --color-accent-violet-pro: #6d5dff;  /* 668:29 fills fill_7M6ZZP — Pro 보라(다크 스와치 미등재) */
   --color-accent-violet-pro-soft: #a099ff; /* fill_2JXKGZ — Pro soft 텍스트 */
 
+  /* ── u2 home-feed additive (측정 SoT, 추가만 — 기존 토큰 수정 ❌) ──
+   * 홈 취향관/피드 카드의 작성자 직군 라벨 가변색·크로스트렌드 강조어·순백·임베드 채널명. */
+  --color-author-violet: #8777ff;      /* 측정: 작성자 직군 라벨 violet(2278:136117 fill_VNK3HM·홈 크로스/인사이트/우레일 다수) — accent-violet #727AD0와 별개 */
+  --color-author-magenta: #b472d0;     /* 측정: 작성자 직군 라벨 magenta(2278:136054 fill_IS6U2G·백엔드 등) — 미보유 */
+  --color-accent-trend-green: #20c974; /* 측정: 크로스트렌드 underline 탭 강조어(2278:136031 ts1) — brand #66FF4B·premium #199E41과 별개 */
+  --color-white-pure: #ffffff;         /* 측정: underline 탭 2px·grid/trend·rec 카드 제목 순백(2278:136030/72362/69646) — FD3 흰=#FAFAFA이나 이 사용처는 픽셀-퍼펙트 순백 */
+  --color-gray-575: #dedede;           /* 측정: 우레일 임베드 채널명(2087:71764) — gray-600 #DBDBDB와 미세差 */
+
   /* ============================================================
    * BORDER / STROKE
    * ============================================================ */
@@ -310,6 +318,8 @@
   /* ★FD2 측정: 토글 knob 이중 그림자(2087:35030 effect_L8M9V1) */
   --shadow-toggle-knob: 0px 2px 1px 0px rgba(0, 0, 0, 0.04),
     0px 1px 6px 0px rgba(0, 0, 0, 0.06);
+  /* u2 additive 측정: 홈 그리드/트렌드 카드 그림자(2087:72353 effect_ZYU354·71188) — overlay와 blur 다름(16 vs 24) */
+  --shadow-card: 0px 4px 16px 0px rgba(0, 0, 0, 0.24);
 
   /* ============================================================
    * Z-INDEX (시스템 보조 — Figma 비추출, 레이어링 구조용)

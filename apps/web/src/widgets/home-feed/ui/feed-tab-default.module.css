@@ -1,0 +1,42 @@
+/* feed-tab-default — "취향관" 탭 본문. 측정: 취향관 2087:69031 / 풀스크롤 2087:70384.
+ * 히어로 + 관심분야 칩행 + 추천 캐러셀 + 크로스 트렌드 섹션. 섹션 간 세로 간격. */
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12); /* 섹션 간 세로 간격(측정 골격 — 섹션 그룹 사이 여백) */
+}
+
+/* 관심분야 칩행 — 좌 inset 히어로/칩=40(측정) */
+.chipRow {
+  padding: 0 var(--space-20); /* 측정: 40 */
+}
+
+/* 추천 캐러셀 섹션 */
+.recSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.recTitle {
+  margin: 0;
+  padding-left: var(--space-7); /* 측정: x14 */
+  color: var(--color-white); /* 측정: #FAFAFA */
+  font-size: var(--text-title-3-size); /* 측정: 24 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-tight);
+  font-weight: var(--font-weight-bold); /* 측정: 700 */
+}
+.recCarousel {
+  display: flex;
+  gap: var(--space-2); /* 측정: 카드 사이 4 */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.recCarousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* 섹션 그룹 좌 inset 26(측정 2087:71184 x=26) */
+.group {
+  padding-left: 26px; /* 측정: 섹션그룹 좌 inset 26(spacing 스케일 부재 — 인라인) */
+}

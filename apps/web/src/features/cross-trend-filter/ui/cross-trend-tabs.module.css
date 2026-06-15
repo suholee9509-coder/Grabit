@@ -1,0 +1,25 @@
+/* cross-trend-filter — 크로스 트렌드/인사이트 분야 전환 underline 탭(재필터 트리거).
+ * 측정 2087:69500 / 재필터 2278:136030 / 인사이트 2087:73091:
+ *   탭 h48 · 선택 pad10/0 · 비선택 pad10/28 · 16/600(선택)·500(비선택)/130%/-2.5%
+ *   · 선택 하단 2px 순백 #FFFFFF 언더라인 · 선택 #FAFAFA · 비선택 #999999.
+ * shared/ui Tabs(underline)는 h52·pad10/20·하단 컨테이너 구분선이 있어, 홈 크로스트렌드는 override.
+ * 강조어 그린 #20C974 = label 내 span. */
+.tabs {
+  border-bottom: none; /* 측정: 크로스트렌드 탭 행엔 컨테이너 하단 구분선 없음 */
+  flex-wrap: wrap;
+}
+.tabs :global([role='tab']) {
+  height: 48px; /* 측정: 48 */
+  padding: var(--space-5) 28px; /* 측정: 비선택 10/28(--space-14) */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+}
+.tabs :global([role='tab'][aria-selected='true']) {
+  padding: var(--space-5) 0; /* 측정: 선택 pad 10/0 */
+  border-bottom-color: var(--color-white-pure); /* 측정: 2px 순백 #FFFFFF 언더라인 */
+}
+
+/* 강조어 그린(label 내 span) */
+.emphasis {
+  color: var(--color-accent-trend-green); /* 측정: #20C974 */
+}

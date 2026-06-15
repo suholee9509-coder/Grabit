@@ -1,0 +1,62 @@
+/* feed-tab-stream — "피드" 탭 본문. 측정: 피드 2087:71867.
+ * 카테고리 칩행 + 히어로 + 실시간 인기 그랩 + 현직자 인사이트 + 분야별 트렌드 그리드. */
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+/* 카테고리 칩행 — 좌 inset 40(측정) */
+.chipRow {
+  padding: 0 var(--space-20); /* 측정: 40 */
+}
+
+/* 공통 섹션(제목 Bold24 + 본문) */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.title {
+  margin: 0;
+  padding-left: var(--space-7); /* 측정: x14 */
+  color: var(--color-white); /* #FAFAFA */
+  font-size: var(--text-title-3-size); /* 24 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-tight);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 실시간 인기 그랩 캐러셀 — row gap24, 카드 사이 세로 divider */
+.streamRow {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-12); /* 측정: 24 */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.streamRow::-webkit-scrollbar {
+  display: none;
+}
+.streamDivider {
+  width: 1px;
+  align-self: stretch;
+  background-color: var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+  flex: none;
+}
+
+/* 분야별 트렌드 그리드 — row gap4(측정 2087:72354). 좌 inset 26(그룹) */
+.gridRow {
+  display: flex;
+  gap: var(--space-2); /* 측정: 4 */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.gridRow::-webkit-scrollbar {
+  display: none;
+}
+
+/* 섹션 그룹 좌 inset 26(측정) */
+.group {
+  padding-left: 26px; /* 측정: 26(spacing 스케일 부재 — 인라인) */
+}

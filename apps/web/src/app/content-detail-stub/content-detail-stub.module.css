@@ -1,0 +1,31 @@
+/* content-detail-stub — u4 교체 전 최소 스텁(죽은 링크 방지). 토큰만 사용. */
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 60vh;
+  padding: var(--space-20);
+  text-align: center;
+}
+.heading {
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-4-size);
+  line-height: 130%;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+}
+.sub {
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size);
+  line-height: 160%;
+  letter-spacing: var(--letter-spacing-snug);
+}
+.id {
+  color: var(--color-text-tertiary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-4-size);
+}

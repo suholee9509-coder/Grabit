@@ -1,12 +1,25 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchIsOnboarded, saveOnboarding } from './profile-api';
+import { fetchIsOnboarded, fetchMyProfileJob, saveOnboarding } from './profile-api';
 import type { OnboardingInput, Profile } from '../model/types';
 
 /** 쿼리 키(entities 소유). */
 export const profileKeys = {
   all: ['profile'] as const,
   onboardingGate: ['profile', 'onboarding-gate'] as const,
+  myJob: ['profile', 'my-job'] as const,
 };
+
+/**
+ * 현재 사용자 직군(라벨용, u2) — 추천 캐러셀 제목 "{job}이 많이 본 컨텐츠".
+ * 자기 행만 read(RLS-safe) · job 외 필드 미사용. 없으면 폴백 라벨은 소비처가 처리.
+ */
+export function useMyProfileJob() {
+  return useQuery({
+    queryKey: profileKeys.myJob,
+    queryFn: fetchMyProfileJob,
+    staleTime: 60_000,
+  });
+}
 
 /**
  * 온보딩 게이팅 쿼리 — is_onboarded() (라우팅 가드가 소비).
