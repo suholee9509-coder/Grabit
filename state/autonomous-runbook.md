@@ -15,7 +15,7 @@
 ---
 
 ## 1. 황금 규칙 (절대 — 위반하면 그 작업 중단·로그)
-1. **카디널 룰(제1원칙)**: UI는 Figma MCP(`mcp__figma__get_figma_data`) 실측 → 픽셀-퍼펙트 1:1. 눈대중·추측·근사 ❌. 실화면 = 페이지 "프로토타이핑" `2087:5987` 하위. 컴포넌트 SECTION `2562:7927`(비정준) 보지 말 것. **디자인 공백(프레임 없음)=추측 구현 ❌ → u0c 파운데이션 토큰/컴포넌트로 일관 채움 + 로그.**
+1. **★★ 카디널 룰 (이 프로젝트 제1목표 — 사용자 최우선 재강조)**: UI는 **Figma MCP(`mcp__figma__get_figma_data`)로 대상 프레임을 직접 열어 픽셀단위까지 완벽히 동일하게** 구현한다. 모든 값(height·width·padding·gap·radius·border·color HEX·fontSize·lineHeight·letterSpacing·weight·shadow·상태별 스타일)을 실측 → **1:1**. 눈대중·추측·근사치 **절대 ❌**. 컴포넌트/사이즈/상태는 *그것이 쓰이는 모든 화면*을 MCP로 전수 확인해 변형을 빠짐없이 잡는다(u0 초기 실수=온보딩 버튼만 측정→190건 누락. 반복 ❌). 실화면 = 페이지 "프로토타이핑" `2087:5987` 하위(컴포넌트 SECTION `2562:7927` 비정준 → 보지 말 것). **각 단위 `/design-review`(프레임 대비 충실도) 필수 PASS** — 미달이면 *수정 루프 우선*(스킵보다 충분히 재시도). 디자인 공백(프레임 없음)만 추측 ❌ → u0c 파운데이션 토큰/컴포넌트로 일관 채움 + 로그.
 2. **u0c 파운데이션 재사용**: `shared/ui`(button 34px·chip·toggle FD2·tabs·input·stepper·breadcrumb 등)·`widgets`(app-shell·sidebar FD1 4탭·topbar)·`tokens.css`. 새 컴포넌트 발명 ❌(없으면 토큰으로). 하드코딩 HEX ❌.
 3. **안티-증식 + 티켓 자유 생성**: PM만, 계획 시점(Wave 진입)에만 이슈 생성. **작업 중 새 티켓 분기 ❌**, 범위 내 발견은 같은 단위가 in-flight 흡수. **단 "구동 가능한 프로덕트"에 필요한 단위/단계(프로덕션화·e2e·배포 준비 등)는 PM이 계획 시점에 *자유롭게 생성*한다** — 수직 슬라이스 또는 명확한 단계여야 하고(잡무 증식 ❌), 목표는 사용가능 프로덕트.
 4. **Frozen(절대 미접촉)**: `main` 직접 push ❌ · force-push ❌ · `.env` 커밋 ❌ · **u0b 계약**(마이그 0001~0010·`clips`·`get_or_create_content`·`content_clips_public`·`content_heatmap`·`complete_onboarding`·`is_onboarded`·RLS) · **u0c 토큰/컴포넌트/앱셸 시그니처**(소비만) · 브라우저측 LLM·외부 API 키 호출 ❌(서버/엣지만).
@@ -23,6 +23,7 @@
 6. **비가역은 보수적**: 데이터 손실·스코프 변경·실명 노출·RLS 약화·보안 정책 변경은 **하지 않는다**(보류 + ESCALATION 로그). 가역(reversible) 결정만 기본값으로 진행.
 7. **FSD 경계**: app→pages→widgets→features→entities→shared 하향임포트·배럴(`@/...`)·동일레이어 크로스슬라이스 ❌·`lint:fsd` 0.
 8. **★ Skip-and-continue (막히면 멈추지 말고 건너뛰고 계속 — 사용자 최우선 지시)**: "사용자 개입 필요"는 *에이전트가 물리적으로 불가능한 것*에만 적용한다. **Hard-block 목록(이것만 건너뜀)** = OAuth 키 발급·Supabase 클라우드 프로젝트·`.env` 실값·배포 도메인/트리거(§11) · 비가역 데이터 손실 · 보안 정책 약화(RLS 제거 등) · 스코프(게이트 ⓐ) 변경 · ADR 개정 · 실명 노출(annotations). **이 목록 밖의 모든 것**(어떤 결정·디자인 공백·구현 방법·라이브러리 선택·통합 충돌)은 §6 기본값 또는 *보수적·가역* 선택으로 **반드시 진행**한다. "결정/확인이 필요하다"는 이유로 루프를 멈추지 말 것. 한 항목이 hard-block이면 **그 항목만 스텁/목킹/배선 큐(§11)로 격리하고 단위의 나머지는 끝까지 완료**한다(단위 전체 중단 ❌). 예: OAuth 실키 없음 → 로그인 버튼·OAuth 플로우·콜백 코드·mock 세션은 전부 완성하고 *실키 연결만* 큐. 부분완료도 완료로 기록(잔여는 큐 명시).
+9. **★ 커밋 & 원격 백업 규율 (자동화 손실 방지 — 사용자 지시)**: **의미있는 진전마다 커밋한다.** ① FE Workflow·BE 헤드리스가 **완료될 때마다 PM이 즉시 워크트리 커밋**(체크포인트 — 미커밋 working tree로 방치 ❌·큰 미커밋 덩어리 ❌). ② 단위 통합 후 integration 커밋. ③ **각 단위 머지 직후 `git push origin sprint/0-integration`**(원격 백업 — `main` 미접촉·배포 아님·순수 백업. 디스크 손상 대비). ④ 각 Wave 완료 시 안정 태그(`git tag waveN-stable && git push origin waveN-stable`). 복구는 `git reset --hard <태그/커밋>`. **현재 안정 복구 지점 = 태그 `wave1-stable`(86f0f38) = origin 백업됨.**
 
 ---
 
