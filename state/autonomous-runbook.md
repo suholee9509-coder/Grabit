@@ -203,9 +203,8 @@
 ### 현재 IN-FLIGHT 워크플로 (watchdog 대상 — overnight-log와 동기)
 | 단위 | Task ID | runId | scriptPath(요약) | blast |
 |---|---|---|---|---|
-| u8-search FE | `wzepgh9hh` | `wf_60bb6715-68f` | u8-search-fe-wf_60bb6715-68f.js | apps/web/src |
 | u7-library FE | `w1vgklj0x` | `wf_4a8ed391-0d8` | u7-library-fe-wf_4a8ed391-0d8.js | apps/web/src |
 > scriptPath 전체경로 = `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/<위 파일>`. resume 시 사용.
-> ⚠ u8·u7 둘 다 apps/web/src(app.tsx·shared/api) → 완료순 1개씩 머지·§5 union(양쪽 라우트/export 보존·grep 마커0). u11 FE는 그 뒤.
-> **완료(통합됨)**: u2·u6·**u4**→main `891d4cf` · BE u7/u8/u11→main(891d4cf 포함).
-> **남은 단위**: u8 FE·u7 FE(진행중)·u11 FE · Wave5 프로덕션화(ci.yml·.env.example·e2e·docs/SETUP.md·목킹→실배선 폴백).
+> ⚠ u7 머지 시 u8의 app.tsx(/search)·entities/content·shared/api 변경과 §5 union(grep 마커0).
+> **완료(통합됨)**: u2·u4·u6·**u8**→main `b9b49a2` · BE u7/u8/u11→main(포함).
+> **남은 단위**: u7 FE(진행중)·u11 FE · Wave5 프로덕션화(ci.yml·.env.example·e2e·docs/SETUP.md·목킹→실배선 폴백).
