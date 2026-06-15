@@ -1,0 +1,32 @@
+/* Popup skeleton styles — tokenized 1:1 against Figma in a follow-up (디자인 공백 → u0 토큰). */
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family:
+    'Pretendard',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  background: #121212;
+  color: #ffffff;
+}
+
+.grabit-popup {
+  padding: 16px;
+}
+
+.grabit-popup h1 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.grabit-popup p {
+  margin: 0;
+  font-size: 13px;
+  color: #cecece;
+}

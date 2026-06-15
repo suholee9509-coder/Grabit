@@ -1,0 +1,9 @@
+# WXT
+.output/
+.wxt/
+stats.html
+stats-*.json
+
+# deps / build
+node_modules/
+*.tsbuildinfo

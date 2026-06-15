@@ -2,3 +2,4 @@ packages:
   - 'apps/*'
   # packages/는 u6 시작 시 추가 (packages/ui·공유 타입 추출). 지금은 비움.
   - 'packages/*'
+enablePrePostScripts: true
