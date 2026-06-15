@@ -70,12 +70,15 @@
 - 2026-06-15 · PM · **스캐폴드(`d04d356`) + 병렬 스폰**: pnpm 모노레포·apps/web(Vite·React·TS·FSD steiger lint:fsd)·supabase init — all green. 호스팅=Cloudflare Pages. 워크트리 2개 생성 → **Lane A 디자이너 에이전트(BG) + Lane B u0b 헤드리스(`acceptEdits`·opus4.8 max·7턴 캡=관찰)**. (skip-permissions는 분류기 차단 → acceptEdits.)
 - 2026-06-15 · PM+사용자 · **✅ u0 디자인시스템 완료**(`9924300`, feat/u0-design-system): 디자이너 에이전트 Figma `668:29` 추출 → 정밀 리팩토링 워크플로(실화면 픽셀측정 5병렬 + 프론트 에이전트) → 사용자 사인오프. 핵심: #00623A→#66FF4B 정정·흰색 #FAFAFA 통일·토글 28(탭정렬)·on-primary 2버전. tsc/lint/lint:fsd green, `/ui-preview` 라이브.
 - 2026-06-15 · PM(관찰)+사용자 · **✅ u0b 데이터코어 완료**(`3225bc0`, feat/u0b-data-core): ADR-0002 10항목 락(정준키·[start,end)·**정의자뷰 단일우회 sanitized read**·익명 N=5·히트맵 RPC·프로필분리·folder부착·soft-delete). **RLS 설계리뷰 PASS** + pglite로 정본 .sql 6종 실행·전수통과(38/0, rls 버그1 수정). **정본 = CI**(`u0b-canonical-tests.yml`) — 로컬 Docker가 디스크97%로 wedge·재기동실패 → push 시 클린러너 게이트로 이관. 결정점 3개 → §6.
+- 2026-06-15 · **사용자(게이트 FD1/2/3)** · **u0 충실도 결정 3건 확정**: FD1=**대시보드 탭 제거 유지**(GNB 4탭=홈·검색·라이브러리·수신함) · FD2=**토글 Figma 파랑 100% 채택**(ON #2563EB·track 44×22·knob18 흰+0.5px stroke+이중그림자) · FD3=**흰색 #FAFAFA 유지**. → u0 감사 반영(A) 착수.
+- 2026-06-15 · **PM + 사용자 · ✅ 화면 8단위 spec 역설계 완료**(Workflow `wtpvyccum` 885k토큰/8에이전트 → `docs/units/{u1,u2,u3,u4,u6,u7,u8,u11}/spec.md`, Oliver 템플릿·게이트 ⓐ 스코프·ADR-0002 DM 의존·[fidelity]·디자인공백 표시). **핵심 결정 3건 확정**: ① **u1 인증=Google+Kakao만**(Naver/이메일 컷 → 픽셀충실도 '스코프 컷'=게이트 ⓒ 사인오프) ② **u4 annotations=옵션1**(인사이트=공개클립만 BE배선·댓글/답글=UI+목킹·`annotations`+replies+likes는 **ADR-0003 신규 단위**로 다음 스프린트 분리) ③ **수신함=u11 제공**(목록 빈상태+알림설정 → GNB 죽은링크 방지). 경량결정 다수 PM 기본값(spec 잠정값 reversible — §6).
+- 2026-06-15 · **사용자/PM · ▶ 3-레인 병렬 가동(진행중)**: ① **FE u0c 감사반영**(워크트리 `feat/u0c-fidelity` — Workflow `w5ssx1e3x`: 측정→토큰→컴포넌트→앱셸→검증, FD1/2/3 반영). ★사용자 지시=FE는 **운전 안 함**·워크트리 핸드오프 X → 에이전트 자동완료 후 **시각 확인만**(ui-preview/스크린샷). ② **PM 전단위 spec 역설계**(Workflow `wtpvyccum`: u1·u2·u3·u4·u6·u7·u8·u11 → `docs/units/<slug>/spec.md`, Oliver 템플릿, 게이트 ⓐ 스코프·ADR-0002 DM). ③ **BE** = spec 1단위 확정 후 헤드리스 `/goal` opus4.8 max 투입(아직). 근거: 무엇=Figma 고정이라 UI구현·spec역설계 병렬 성립. 의존: u0c(파운데이션)가 화면 UI의 선행.
 
 ## 5. Design System (Figma 추출)
 > **디자인 = 고정 Figma SoT** (`docs/design/README.md`). frontend가 **디자인-시스템 단위**에서 Figma MCP로 토큰을 추출 → `src/app/styles`. 보이스 시드: `config/brand_seed.md`.
 - 토큰 정밀 추출 SoT = Figma 페이지 **"디자인 시스템" `668:29`** (+ 컴포넌트 SECTION `2562:7927`). 인벤토리: `docs/design/README.md`.
 - 상태: **✅ 추출 완료** (u0 워크트리 `feat/u0-design-system` `9924300` → `apps/web/src/app/styles/tokens.css`). 정밀값은 거기 — integration 머지 시 이 섹션 동기화.
-- 확정 토큰(실화면 측정): primary 그린 **`#66FF4B`**(CTA)·on-primary `#242424`/`#121212`·다크(배경 `#000`/카드 `#121212`/모달 `#1F1F1F`)·흰색 통일 `#FAFAFA`·Pro 보라 `#6D5DFF`. 사이즈: button 42/38·input 42/search 48·toggle 28·radius sm6/lg12/pill100. 그림자 4(모달 3레이어·dropdown).
+- 확정 토큰(실화면 측정): primary 그린 **`#66FF4B`**(CTA)·on-primary `#242424`/`#121212`·다크(배경 `#000`/카드 `#121212`/모달 `#1F1F1F`)·흰색 통일 `#FAFAFA`·Pro 보라 `#6D5DFF`. 사이즈: button 42/38(★+34 신설 예정)·input 42/search 48·**toggle track 44×22/knob18 ON#2563EB(FD2)**·radius sm6/lg12/pill100. 그림자 4(모달 3레이어·dropdown).
 - 토큰 네임스페이스: `--color-*`·`--text-*`·`--space-*`·`--radius-*`·`--shadow-*` (CSS 변수). shared/ui 11종(button·chip·card·tabs·toggle·input·dropdown·modal·toast·avatar·badge). 보이스: config/brand_seed.md
 - ⚠ **픽셀 충실도 감사 완료(2026-06-15, 전수 54프레임)** → **`docs/design/u0-fidelity-audit.md` (190 findings: HIGH48/MED66/LOW76)**. **u0 파운데이션 추가 작업 필요**(게이트 ⓒ 전):
   - **버튼**: ★`--size-button-md=34`(radius8) 신설 — 34px가 전 화면 정준 small(GNB·톱바·상세·검색). compact width 128 추가. 변형 누락(라이트솔리드 #EFEFEF·소셜솔리드다크 #242424). 네온 글자색 3종(#000000/#242424/#121212).
@@ -100,16 +103,24 @@
 | DM2 | **folder=클립 부착** | 클립에 folder_id(클립모달이 폴더+태그 동시설정). 한 콘텐츠 클립이 다른 폴더면 콘텐츠가 복수 폴더 표시 | **u7** 착수 시(콘텐츠-단일폴더로 조일지) |
 | DM3 | **익명화 N=5** | 코호트(직업10×연차6=60버킷) 5명 미만 라벨 숨김. 표본 적은 영상은 대부분 숨김 → 버킷 롤업 추가 여부 | 데이터 생기면 튜닝(`anonymization_threshold()`) |
 
-### u0 충실도 감사 결정점 (Figma SoT ↔ 기존 결정 충돌 — u0 수정 전 확정. 상세: `docs/design/u0-fidelity-audit.md`)
-| # | 충돌 | 옵션 | awaiting |
-|---|---|---|---|
-| FD1 | **대시보드 탭** — Figma GNB엔 '대시보드' 탭 명시 존재(라이브러리·수신함 사이) vs 게이트 ⓐ "대시보드 제거" | 탭 두되 페이지 미구현 / 탭도 제거 유지 / 대시보드 부활 | 사용자 |
-| FD2 | **토글 색** — Figma 토글=Fluent2 외부킷 잔재(ON 파랑 #2563EB·track44×22·knob18) vs 구현 브랜드그린 #66FF4B·46×28 | 브랜드그린 유지(치수만 44×22로) / Figma 파랑 채택 | 사용자 |
-| FD3 | **흰색** — 온보딩 칩 라벨 실측 #FFFFFF vs 사용자 결정 #FAFAFA 통일 | #FAFAFA 유지 / #FFFFFF 환원 | 사용자(미세) |
+### u0 충실도 감사 결정점 (✅ 해소 2026-06-15 — 상세: `docs/design/u0-fidelity-audit.md`)
+| # | 충돌 | ✅ 결정 |
+|---|---|---|
+| FD1 | **대시보드 탭** — Figma GNB엔 '대시보드' 탭 명시 존재(라이브러리·수신함 사이) vs 게이트 ⓐ "대시보드 제거" | ✅ **탭 제거 유지** — GNB=홈·검색·라이브러리·수신함(4탭). 스코프 결정(왜=문서) 우선, 죽은 링크 ❌. 나머지 4탭은 Figma 실측대로 |
+| FD2 | **토글 색** — Figma 토글=Fluent2 외부킷 잔재(ON 파랑 #2563EB·track44×22·knob18) vs 구현 브랜드그린 #66FF4B·46×28 | ✅ **Figma 파랑 100% 채택** — ON track #2563EB·track 44×22·radius1000·knob 18(흰 #FAFAFA+rgba(0,0,0,.24) 0.5px stroke+이중그림자). 카디널 룰 "무엇=Figma" 엄격 적용 |
+| FD3 | **흰색** — 온보딩 칩 라벨 실측 #FFFFFF vs 사용자 결정 #FAFAFA 통일 | ✅ **#FAFAFA 유지** — 흰색 토큰 단일화 유지(미세차 무시) |
+
+### 화면 단위 spec 결정점 (✅ 3건 해소 2026-06-15 — 상세: `docs/units/<slug>/spec.md` §ESCALATION)
+| # | 결정 |
+|---|---|
+| **u1-E1 인증** | ✅ **Google+Kakao만** 렌더 — Naver 버튼·이메일/"계속" 컷. 픽셀충실도=게이트 ⓒ '스코프 컷' 사인오프. ADR-0001 준수 |
+| **u4-DM1 annotations** | ✅ **옵션1** — 인사이트=공개클립만 BE배선·댓글/답글=픽셀퍼펙트 UI+목킹/비활성. `annotations`+replies+likes = **ADR-0003 신규 단위**(다음 스프린트) |
+| **수신함 탭** | ✅ **u11 제공** — 수신함 목록(빈상태)+알림설정. GNB 4탭 죽은링크 방지(u11 머지 전 비활성/준비중) |
+| 잔여(PM 기본값·reversible) | u7 **DM2=클립부착**(`clips.folder_id`)·북마크=UI탭+빈상태·다중선택=게이트ⓒ 사인오프·폴더삭제=folder_id NULL해제 / u2 추천=콜드스타트 폴백·시드(추천 RPC 추후)·비회원홈=온보딩 리다이렉트 / u6 메모 nullable / u1 목표=Figma라벨 SoT·관심분야 5초과 토스트·웹스토어 placeholder·모달 1회 / u8 정렬·자동완성·최근검색어=파운데이션 / u11 계정메뉴=팝오버+설정페이지·soft-delete=deleted_at additive — 전부 spec 잠정값(다르면 PM 보고) |
 
 ## 7. Risks / WIP cap
 - WIP 상한: **2 동시 단위** (기본 — 스프린트 계획 시 조정).
 - 리스크: **R1 디자인 공백 광범위**(빈/로딩/에러 + 설정/알림) → u0 파운데이션으로 채움(게이트 ⓐ 결정). **R2 MV3 확장(u6)=무거운 단위** → 서브-spec 분할, 사이징 게이트 주의. **R3 콜드스타트**(소셜애노테이션·또래비교·추천) → 데이터 없는 MVP에서 빈 화면(u0b 폴백 스텁). **R4 인증=고위험**(u1) → 백그라운드 관찰 필수. **R5 환경: 로컬 Docker wedge·디스크 빠듯** → supabase 정본은 CI로(로컬 supabase dev 시 Docker 복구 필요). **R6 TODO: 범용 `ci.yml`이 npm 기반(stale)** → pnpm + 실제 스크립트로 갱신 필요(integration 브랜치).
 
 ---
-Last updated: 2026-06-15 by PM (✅ Sprint-0 두 파운데이션 머지(`388546d`, 통합 트리 green) + ✅ **u0 픽셀 충실도 감사(전수 54프레임)** → `docs/design/u0-fidelity-audit.md` 190건. **⚠ u0 추가 작업 필요**(§5): 34px 버튼·앱셸 위젯·칩 selected/사이즈·언더라인탭색·stepper·textarea + 토큰갭. **결정 3건**(§6 FD1 대시보드탭·FD2 토글색·FD3 흰색). **다음 = (a) u0 감사 반영 수정 → 게이트 ⓒ, (b) 화면 단위 spec → 게이트 ⓑ**. u0b 결정점 §6 DM1-3.)
+Last updated: 2026-06-15 by PM (✅ **FD1/2/3** + ✅ **화면 8단위 spec 역설계 완료**(`wtpvyccum`) + **spec 결정 3건 확정**[§6: u1 Google+Kakao만·u4 annotations 옵션1(ADR-0003 분리)·수신함 u11]. ▶ **FE u0c 감사반영 Workflow `w5ssx1e3x` 진행중**(완료 시 검증+시각확인→게이트 ⓒ). **다음 = (a) u0c 완료 대기→게이트 ⓒ, (b) 게이트 ⓑ Wave 계획·이슈/보드, (c) BE 레인 투입(u3/u7/u8/u4 데이터, 모드2 승인).**)
