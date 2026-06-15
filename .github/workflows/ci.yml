@@ -1,42 +1,76 @@
 name: CI (validation gate)
 
-# false-done 차단의 외부·결정론적 층(config/work-unit-contract.md §C). dev `/goal` 성공조건의
-# Validation 명령(typecheck·lint·test)을 PR에서 *비-LLM*으로 재실행한다.
-# 스택 미정(Sprint 0)이므로 package.json이 생기기 전엔 안전한 no-op. Sprint 0 스캐폴딩 후 자동 활성화.
-# Sprint 0 할 일: package.json에 typecheck/lint/test 스크립트 정의 → 이 게이트가 즉시 작동.
+# false-done 차단의 외부·결정론적 층(config/work-unit-contract.md §C). dev `/goal`·무인 루프
+# 성공조건의 Validation 명령을 PR/푸시에서 *비-LLM*으로 재실행한다.
+# R6(2026-06-16): npm no-op 스텁 → pnpm + 실제 모노레포 스크립트로 갱신(tsc·lint·lint:fsd·build·vitest
+#   + apps/extension wxt build + pglite pgTAP). supabase Docker pgTAP는 u0b-canonical-tests.yml가 별도 게이트.
 
 on:
   pull_request:
     branches: [main, "sprint/**"]
+  push:
+    branches: [main, "sprint/**"]
 
 jobs:
-  validate:
+  web:
+    name: apps/web (tsc · lint · lint:fsd · build · vitest)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Guard — Sprint 0 전이면 skip
-        id: guard
-        run: |
-          if [ -f package.json ]; then
-            echo "app=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "app=false" >> "$GITHUB_OUTPUT"
-            echo "ℹ package.json 없음 — Sprint 0 전. CI validation no-op (green)."
-          fi
-
-      - uses: actions/setup-node@v4
-        if: steps.guard.outputs.app == 'true'
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: 'lts/*'
+          version: 10.32.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+      - name: tsc -b (apps/web)
+        run: pnpm -C apps/web exec tsc -b --force
+      - name: eslint (apps/web)
+        run: pnpm -C apps/web exec eslint .
+      - name: steiger (lint:fsd — FSD 경계)
+        run: pnpm exec steiger ./apps/web/src
+      - name: build (apps/web)
+        run: pnpm -C apps/web build
+      - name: vitest (apps/web contract/unit)
+        run: pnpm -C apps/web test
 
-      - name: Install
-        if: steps.guard.outputs.app == 'true'
-        run: npm ci || npm install
+  extension:
+    name: apps/extension (tsc --noEmit · wxt build · vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.32.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+      - name: tsc --noEmit (apps/extension)
+        run: pnpm -C apps/extension exec tsc --noEmit
+      - name: wxt build (MV3 chrome)
+        run: pnpm -C apps/extension exec wxt build
+      - name: vitest (apps/extension contract/unit)
+        run: pnpm -C apps/extension test
 
-      - name: Validation gate (typecheck · lint · test)
-        if: steps.guard.outputs.app == 'true'
-        run: |
-          npm run typecheck --if-present
-          npm run lint --if-present
-          npm test --if-present
+  pgtap:
+    name: supabase pgTAP (pglite — no Docker)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.32.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+      - name: pgTAP via pglite (마이그 0001~0013 + tests/*.sql)
+        run: node supabase/tests/_pgtap_pglite.mjs
