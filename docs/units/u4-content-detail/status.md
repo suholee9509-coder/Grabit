@@ -2,18 +2,23 @@
 
 > dev가 매 턴 갱신(변경·검증결과·리스크). PM은 이 파일 + STATUS 반환으로 통합 결정.
 
-- 상태: **계획(미스폰)**
-- 검증: (착수 전 — 없음)
-- 변경 파일 (boundary 준수): (착수 전 — 없음)
-- 설계 노트:
-  - 역설계 SoT = Figma `2087:12538`(시청 정보 탭)·`2087:13354`(원본 소스 탭)·`2087:13772`(사이드바 접힘) + 라이브러리 상세탭 `2117:20168/21245/25667`. 컴포넌트 SECTION `2562:7927`(비정준) 미사용.
-  - dep: **u0c**(디자인시스템·앱셸·underline 탭·우측 사이드바 2상태) + **u0b**(ADR-0002 락: `content_clips_public`·`content_heatmap` RPC·`get_or_create_content`·익명 임계·RLS) 머지 후 착수.
-  - 스코프(게이트 ⓐ): AI 패널/AI 노트 탭/Sparkle mini FAB 제외 · 아티클 경로 제외(영상 전용) · 결제/대시보드/GNB 대시보드 탭 제외. GNB 4탭=홈·검색·라이브러리·수신함.
-  - 인사이트=공개 클립(u0b sanitized read)로 흡수 / 댓글·답글·`작성`=신규 소셜 엔티티(DM1) → ADR-0002 미모델링.
-- 리스크:
-  - **DM1 미결**: 우측 사이드바 댓글/답글이 *실명+아바타+답글 스레드*를 요구 → ADR-0002 익명(코호트) 원칙과 충돌. 데이터 모델 미확정.
-  - [디자인 공백] 로딩/에러/빈/비로그인 프레임 부재 → u0c/u0b 파운데이션으로 채움(추측 ❌).
-- ESCALATION:
-  - **DM1(PM 결정 1개)**: 댓글/답글(annotations)을 옵션1(UI만+목킹·차후 단위 분리/권장) vs 옵션2(지금 엔티티 풀 구현) vs 옵션3(실명→코호트 익명 강등) 중 택1. 실명 노출 vs ADR-0002 익명 원칙 충돌 처리 방안 포함. (부수: DM-likes 좋아요 집계 모델, DM-similar 추천 소스=콜드스타트 폴백.)
+- 상태: **검증·수정 완료(게이트ⓒ 충실도 사인오프 대기)** — 검증 에이전트 재실행(2026-06-16)
+- 검증(재실행 실측): `tsc -b --force`=0 · `eslint .`=0 · `steiger ./apps/web/src`=✔(No problems) · `pnpm build`=OK(tsc -b + vite build, chunk-size 경고만 — 비차단) · `vitest run`=**86 passed / 16 files** · 콘솔 0(테스트 stderr 클린)
+- DM1 옵션1 확정 적용: 인사이트=`content_clips_public` BE 배선만 · 댓글/답글·작성·좋아요 = 픽셀퍼펙트 UI + **데이터패스 차단**(목킹/비활성, annotations RPC 미호출, 신규 마이그레이션 ❌).
+- 변경/신규 파일 (boundary 준수):
+  - **pages/content-detail**: `index.ts` · `ui/{content-detail-page.tsx+.module.css, watch-info-tab.tsx, source-tab.tsx+.module.css}` · `content-detail.contract.test.tsx`
+  - **widgets**: `video-player/` · `clip-heatmap/` · `social-sidebar/`(+comment-card) · `similar-content/` (각 index+ui)
+  - **features**: `view-insights/`(api/{queries,insights-query,heatmap-query} · model/{cohort+test} · ui/{insight-card,popular-segments,cohort-banner,icons}) · `toggle-clip-like/` · `add-clip/`
+  - **entities**: `clip`(+PublicClip·formatClockInterval) · `content`(+ContentDetail·format-meta) · `annotation`(신규 표현 전용 목)
+  - **shared/api**: `content-read.ts`(신규)+test · `types.ts`(DTO 추가) · `demo-data.ts`(시드 추가) · `index.ts`(export)
+  - **app**: `app.tsx`(content/:id → ContentDetailPage) · `app/content-detail-stub/`(삭제)
+- 화면↔프레임 1:1:
+  - 시청 정보 탭 = `2087:12538` · 원본 소스 탭 = `2087:13354` · 사이드바 접힘 = `2087:13772`.
+  - 토큰 갭은 **슬라이스 로컬 CSS 변수**로 정의(u0c tokens.css 무변경): `--color-heatmap-track:#777777`·`--color-heatmap-peak:#26FA01`·`--color-rank-first:#38C524`·`--color-youtube-red:#ED1D24`·`--color-tab-border:#2D2D2D`·`--color-overlay-black-32`·`--shadow-player`.
+- RPC 배선(소비만): `get_content_social_clips(p_content_id)`·`content_heatmap(p_content_id)`·`contents` select. raw `clips` 미쿼리(테스트로 단언). snake→camel 래퍼 내부. isSupabaseReady 분기 → demo 폴백.
+- 리스크/게이트ⓒ 확인 항목:
+  - **히트맵 마커 색**: spec 텍스트=`#ED1D24` 6×6 빨강 vs **실측=`#26FA01` 25×18 녹색(+틱 21×15)**. 세 측정문서 일치로 **녹색 채택**(실측 정본). `#ED1D24`는 유사카드 YT 아이콘. → PM 1회 사인오프.
+  - **DM2 라우트 가드 [수정됨]**: `/content/:id`의 `<RequireOnboarded>` 가드 **제거**. spec `[state] 비로그인`·Production acceptance·[디자인 공백] IQDAKF가 "상세는 비회원도 열람 가능(역할에 비회원 포함)"을 명시 → no-fake-done 위반이던 가드(a)를 spec대로 완화. 페이지 내부 쓰기(좋아요/클립추가/작성)만 `onRequireLogin → /login` 유지. (DM2는 spec ESCALATION 미등재 — spec [디자인 공백]이 이미 해소했으므로 spec 정본대로 적용.) 게이트 전부 무회귀(86 pass).
+  - 히트맵 bucket→px는 duration_sec 스케일(없으면 max(bucket_end) 폴백). 마커 px는 밀도 피크 도출(프레임 고정 px는 데모 한정).
 
-STATUS = "계획(미스폰): u4 spec 역설계 완료 · dep=u0c+u0b · ★DM1(댓글/답글 엔티티 vs 클립 흡수·실명↔익명 충돌) PM 결정 대기"
+STATUS = "검증·수정 완료: tsc/lint/fsd/build/86테스트 PASS · 콘솔 0 · DM1옵션1 적용(댓글 목킹) · DM2 가드 제거(spec 비로그인 열람 가능 충족) · ★게이트ⓒ 잔여 1건: 히트맵 마커 #26FA01녹색(실측 정본·세 측정문서 일치) PM 1회 사인오프 대기"

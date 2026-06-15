@@ -49,3 +49,54 @@ export interface VideoMetaDto {
   durationSec: number | null;
   thumbnailUrl: string | null;
 }
+
+/**
+ * content_clips_public 1행(0007) — sanitized cross-user read(camel).
+ * ★ user_id/display_name/email 키 부재(뷰가 SELECT 안 함). 클라는 cohort_revealed만 신뢰.
+ */
+export interface PublicClipDto {
+  contentId: string;
+  clipId: string;
+  startSec: number;
+  endSec: number;
+  memo: string | null;
+  cohortJob: string | null;
+  cohortYears: number | null;
+  cohortRevealed: boolean;
+  createdAt: string | null;
+}
+
+/** content_heatmap 1버킷(0008) — 식별-프리 밀도 집계(camel). */
+export interface HeatmapBucketDto {
+  bucketStart: number;
+  bucketEnd: number;
+  density: number;
+}
+
+/** contents 1행(0002) select — 정준 영상 메타(camel). 소유자 키 없음(공유 정체성). */
+export interface ContentMetaDto {
+  id: string;
+  provider: string;
+  providerContentId: string;
+  canonicalUrl: string;
+  title: string | null;
+  channel: string | null;
+  durationSec: number | null;
+  thumbnailUrl: string | null;
+  isUnavailable: boolean;
+}
+
+/**
+ * 비슷한 컨텐츠 카드 1건 — 콜드스타트 폴백 시드(ADR-0002 #7, 추천 알고리즘 없음).
+ * 표현 전용(식별자 없음). 클릭 시 /content/:id 라우팅.
+ */
+export interface SimilarContentDto {
+  /** 정준 콘텐츠 id(라우팅 타깃). */
+  id: string;
+  title: string;
+  thumbnailUrl: string | null;
+  /** 분류 태그(예: AI·업무생산성). */
+  tags: string[];
+  /** 클립(그랩) 수. */
+  clipCount: number;
+}

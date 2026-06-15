@@ -27,15 +27,20 @@
 ## IN-FLIGHT (라이브 — 컴팩트 생존용 · 모든 체크포인트마다 갱신)
 > ★ Auto Compact 후엔 이 섹션 + `git worktree list` + `git log sprint/0-integration` + `/workflows` + 각 worktree status.md로 실제 상태 재구성(런북 §10). 기억 추측 ❌.
 
-**실행 중 워크플로**: (없음 — u2·u6·BE 전부 완료·통합됨) → **다음 = u4 FE Workflow 스폰**.
-- ~~u2 FE `wb11srjai`~~ ✅ 완료·integration+main 머지 · ~~u6 확장 `w19nv8wq5`~~ ✅ 완료·통합 · ~~BE u7/u8 `woyt10t8h`~~ ✅ 완료·integration(main은 다음 풀유닛과).
+**실행 중 워크플로** (watchdog 대상):
+- **u8-search FE** — Task `wzepgh9hh` · run `wf_60bb6715-68f` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u8-search-fe-wf_60bb6715-68f.js` · worktree feat/u8-search-fe(9be2b65 브랜치) · blast=apps/web/src · 측정→계획→구현→검증. **⚠ u4가 먼저 머지됨 → u8 머지 시 app.tsx·shared/api §5 union 해결**(양쪽 라우트/export 보존·grep '^<<<<<<<' 0).
+- ~~u4 FE `wedn36twz`~~ ✅ **완료·integration+main 머지**(아래 로그).
+- ~~u11 BE `wgzqi9bn9`~~ ✅ integration · ~~u7/u8 BE `woyt10t8h`~~ ✅ integration.
 
-**완료 단위**: u2(home-feed)·u6(chrome-extension) · BE: u7·u8 마이그(0011·0012).
-**integration 상태**: u2+u6+BE 머지 후 (아래 커밋해시) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0.
-**main 상태**: `b17f9fe`(u2까지 — Sprint0+Wave1+Wave2 u2·BE). **u6은 integration 머지 후 main 전진 예정**(이번 턴).
-**남은 단위**: Wave3 u7-FE·u8-FE(BE 마이그 상속) · Wave4 u11(+u11 BE soft-delete 0013) · u4(Wave2 콘텐츠상세) · Wave5 프로덕션화.
+**다음 FE**: u8 머지 후 → **u7 라이브러리 FE**(u4 상세 재사용·0011 상속) → **u11 FE**(0013 상속). 그 후 Wave5 프로덕션화.
 
-**Watchdog**: 매 턴 끝 ScheduleWakeup(900초). 현재 실행 워크플로 없음 → u4 스폰 후 재예약.
+**완료 단위**: u2(home-feed)·u6(chrome-extension) [main `835e288`] · BE: u7·u8 마이그(0011·0012)[integration].
+**integration 상태**: `61dc7fa` + (이 턴 state docs 커밋) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0. origin 백업됨.
+**main 상태**: `835e288`(u2+u6+u7/u8 BE).
+**남은 단위**: u4(진행중) · Wave3 u7-FE·u8-FE(BE 마이그 0011/0012 상속) · u11-FE(BE 0013 머지 후) · Wave5 프로덕션화.
+
+**Watchdog**: 매 턴 끝 ScheduleWakeup(900초). 현재 실행=u4 FE·u11 BE → 완료 시 통합+main 머지(풀유닛)·멈춤 시 resume.
+**FE 순차 원칙**: FE 단위는 app.tsx 라우트 공유 → 한 번에 하나씩(u4 다음 u7→u8→u11-FE). BE는 병렬.
 
 **Watchdog**: 매 턴 끝 ScheduleWakeup(900초). 15분 무응답 시 위 워크플로 mtime/상태 점검 → 멈춤이면 resume(런북 §12).
 
@@ -48,6 +53,15 @@
 
 ## 단위 진행 로그
 <!-- 각 단위 완료/스킵 시 §9 양식 append -->
+
+## u4-content-detail — 완료 (Wave2 풀유닛)
+- 검증: tsc 0·eslint 0·steiger✔·build 0 · vitest **86/86**(16파일·24신규: content-detail.contract 9·content-read 11 — RPC 정확인자·raw clips 우회·sanitized 키 부재·404·N<임계 cohort 숨김) · pgTAP 172/0 무회귀 · 콘솔0 · 충실도 자체검증(3프레임 1:1)
+- integration 머지: u4 커밋→merge (충돌0·apps/web vs supabase/state 분리) · push origin sprint/0-integration **O**(아래)
+- main 머지: (이 턴 진행) integration→main · push main
+- 게이트 ⓒ: ★사용자 사인오프 — 라우트 `/content/:id`. **확인 1건**: 히트맵 마커 색 = Figma 실측 **#26FA01**(녹색 25×18 피크)으로 구현(spec 텍스트 #ED1D24는 유사컨텐츠 YT play 오버레이 fill — 카디널 룰=Figma 정본대로 녹색 정당). 사이드바 펼침/접힘·탭 전환 시각 확인.
+- 결정 로그: annotations 옵션1(댓글/답글 UI+DEMO_COMMENTS 목킹·BE 미호출·신규 엔티티❌) / 비회원 열람가능(spec [state] IQDAKF — /content/:id RequireOnboarded 가드 제거·쓰기만 /login) / 비슷한콘텐츠=콜드스타트 폴백
+- ESCALATION: (없음 — spec 결정 범위) · design-review 별도 미수행(FE verify 자체 픽셀검증으로 갈음 — 사용자 지시)
+- 다음: u8 검색 FE(병렬 진행중) 머지 → u7 라이브러리 FE
 
 ## u2-home-feed — 완료 (Wave2 첫 풀유닛)
 - 검증: tsc 0·eslint 0·steiger✔·build 0 · pgTAP 131/0(무회귀) · vitest **62/62**(13파일) · 충실도(FE verify 자체검증) PASS(추천카드 334×334·세그먼트 pill100 = Figma 2087:70384/70515 실측 1:1) · 콘솔0
@@ -66,6 +80,15 @@
 - 결정 로그: annotations 무관 / 메모 nullable(구간만 저장 허용·런북§6) / Step1·Step2(브라우저 크롬 UI)=affordance만 / 타임코드칩=u6 자체정의(u0c 공용 밖)
 - ESCALATION: (없음 — 코드 완비) · **PM 통합 잔여 큐**: ①apps/web install 안내페이지(2074:88587)+app.tsx 라우트(u2 충돌방지로 u6 미접촉 → 후속) ②env(WXT_SUPABASE_URL/ANON_KEY/WEB_APP_URL)+manifest externally_connectable 배포오리진 = Wave5 배선큐(현재 플레이스홀더·미인증 폴백 동작)
 - 다음: Wave3(u7·u8 FE) / Wave5에서 install페이지·env 배선
+
+## u11-settings-be (BE 부분) — 완료·integration 머지
+- 검증: pgTAP **172/0**(profile-update 13·notification-pref 9·soft-delete 11·soft-delete-excludes-public 8 추가 · 기존 131 무회귀) · 누출0 · 유예중 user 공개집계 제외 단언 통과 · pglite OK · apps/web tsc 0(무영향)
+- integration 머지: u11-be `7707113`(merge) (충돌0) · push origin sprint/0-integration **O**(`7707113`)
+- main 머지: **보류** — BE 부분만(u11 FE는 후속). additive·green → u11 FE 완료 시 풀유닛으로 main 전진
+- 결정 로그: 0013 = profiles 표시이름·deleted_at·notification pref / soft-delete=deleted_at(hard❌·멱등·30일유예) / 공개집계 제외 = sanitized view CREATE OR REPLACE(컬럼 보존·privacy 강화 additive·기존 pgTAP 무회귀 확인)
+- ESCALATION: (없음 — BE 범위) · u11 FE ESCALATION(계정메뉴 팝오버·설정 단일페이지·표시이름 수정·알림 저장만)은 런북 §6 기본값으로 FE에서
+- 다음: u11 FE(BE 0013 상속, 디자인공백→파운데이션) — Wave3 FE(u7·u8) 뒤 순차
+- 워크트리: feat/u11-settings-be 제거 완료
 
 ## u7-be + u8-be (BE 부분) — 완료·integration 머지 (BE 병렬 첫 산출)
 - 검증: pgTAP **131/0**(u7 library-folders 20/20 · u8 search-* 37 추가 · 기존 74 무회귀) · 누출0(cross-user) · pglite OK · tsc 0 · build 0(apps/web 무영향)
