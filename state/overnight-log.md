@@ -27,12 +27,18 @@
 ## IN-FLIGHT (라이브 — 컴팩트 생존용 · 모든 체크포인트마다 갱신)
 > ★ Auto Compact 후엔 이 섹션 + `git worktree list` + `git log sprint/0-integration` + `/workflows` + 각 worktree status.md로 실제 상태 재구성(런북 §10). 기억 추측 ❌.
 
-**실행 중 워크플로** (watchdog 대상):
-- **u11-settings FE** — Task `wo3tjlwb0` · run `wf_e4217f40-39c` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u11-settings-fe-wf_e4217f40-39c.js` · worktree feat/u11-settings-fe(e866481·전 FE+0013 상속) · blast=apps/web/src · 계정메뉴·설정·수신함·탈퇴30일·알림(디자인공백→u0 파운데이션). **머지 시 app.tsx(/settings·/inbox) §5 union 가능**.
-- ~~u7 FE `w1vgklj0x`~~ ✅ 완료·integration+main 머지(§5 union 4충돌·SourceCount 구조동일) · ~~u8·u4·u2·u6~~ main · 전 BE main.
+**실행 중 워크플로**:
+- **wave5-e2e** — Task `wa9lzmq7f` · run `wf_7a92f62d-285` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/wave5-e2e-wf_7a92f62d-285.js` · **통합트리 직접 작업**(워크트리 아님·blast=apps/web e2e/·package.json) · Playwright 로그인→온보딩→홈→클립→라이브러리→검색(목 경로) + isSupabaseReady 폴백 감사. 환경차단 시 시나리오 완성+blocked 보고(Skip-and-continue).
 
-**main 상태**: `bb66def`(u2·u4·u6·u7·u8 + u7/u8/u11 BE). **MVP 화면단위 = u11 FE만 남음.**
-**다음**: u11 FE 머지 → **Wave5 프로덕션화**(목킹→실배선 isSupabaseReady 폴백·Playwright e2e[로그인→온보딩→홈→클립→라이브러리→검색]·.env.example·ci.yml pnpm[R6]·docs/SETUP.md 배선큐). Wave5는 supabase/ci/docs 중심.
+**Wave5 진행**: ✅ ci.yml R6 pnpm 갱신(`c5b955b`) · ✅ docs/SETUP.md 배선가이드(`c5b955b`) · ✅ .env.example(기존) · ✅ 마이그 0001~0013 idempotent(pgTAP 172/0 검증) · ✅ 목킹→실배선 isSupabaseReady 폴백(전 features 이미 일관 — e2e 감사로 재확인 중) · ▶ Playwright e2e(진행중).
+
+**★ MVP 화면 9단위 전부 완료** (main `35a775b` · 태그 `wave2-4-stable`):
+- FE: u1 인증/온보딩 · u2 홈피드 · u3 인앱클립 · u4 콘텐츠상세 · u6 크롬확장(WXT) · u7 라이브러리 · u8 검색 · u11 설정/계정
+- BE: u0b 데이터코어 + u7 folders(0011)·u8 FTS(0012)·u11 settings(0013)
+- 파운데이션: u0 디자인시스템·u0c 충실도·u0b RLS
+- 통합: apps/web **vitest 178/178**·tsc/lint/fsd/build 0 · apps/extension wxt build✔·41 · **pgTAP 172/0**
+
+**남은 것 = Wave5 프로덕션화(런북 §11)**: ① 목킹→실배선 isSupabaseReady 폴백 점검 ② Playwright e2e(로그인→온보딩→홈→클립→라이브러리→검색) ③ .env.example ④ ci.yml pnpm 갱신[R6] ⑤ docs/SETUP.md 배선큐 ⑥ 마이그 idempotent 확인. hard-block(OAuth 실키·Supabase 클라우드·실배포)=배선큐 분리.
 
 **완료 단위**: u2(home-feed)·u6(chrome-extension) [main `835e288`] · BE: u7·u8 마이그(0011·0012)[integration].
 **integration 상태**: `61dc7fa` + (이 턴 state docs 커밋) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0. origin 백업됨.
@@ -53,6 +59,15 @@
 
 ## 단위 진행 로그
 <!-- 각 단위 완료/스킵 시 §9 양식 append -->
+
+## u11-settings-account — 완료 (Wave4 풀유닛·마지막 화면단위)
+- 검증: tsc 0·eslint 0·steiger✔·build 0 · vitest **178/178**(24파일·+26: settings 11·inbox 3·profile-api +12) · pgTAP 172/0 · 콘솔0 · 하드코딩 HEX 0(전부 토큰)
+- integration 머지: u11 커밋→merge `c58bb4a` (충돌0 — integration이 u11 브랜치 후 state docs만 변경) · push **O**
+- main 머지: `35a775b`(MVP 화면 9단위 완료) · push origin main **O** · 태그 `wave2-4-stable` push
+- 게이트 ⓒ: ★사용자 사인오프 — 라우트 `/settings`·`/inbox`. 전 화면 디자인공백→u0 파운데이션(진입점 2종 sidebar 1:1 보존·1줄도 미수정). 알림 발송 인프라=후속(토글 저장만)
+- 결정 로그: 계정메뉴 팝오버·설정 단일페이지·수신함 목록+빈상태·알림 토글 저장만·탈퇴 2단계 동의 soft-delete(0013)·표시이름 수정가능(빈/공백 차단) — 전부 런북 §6/spec 기본값(reversible)
+- ESCALATION: (없음) · design-review 별도 미수행(FE verify·디자인공백 파운데이션 일관)
+- 다음: **Wave5 프로덕션화**(마지막 1마일)
 
 ## u7-library — 완료 (Wave3 풀유닛·마지막 대형 FE)
 - 검증: tsc 0·eslint 0·steiger✔·build 0 · vitest **152/152**(22파일·+33: library.contract 10·library-folders.contract 23) · pgTAP 172/0 · 콘솔0 · 충실도 자체검증(5프레임 1:1·폴더카드 160×160 r16·검색바 h38·출처칩 #FAFAFA)
