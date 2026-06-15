@@ -1,0 +1,58 @@
+/* Breadcrumb (톱바 좌측 셀렉트 박스) — 실화면 측정 정밀(SoT: 상세 톱바 2087:13114 layout_E6F9SQ).
+ * 컨테이너: row · align center · 칩 간 gap 2 (layout_E6F9SQ).
+ * 칩: h26 · pad 6/8 · radius 6 · gap10(내부) (layout_OY2J50).
+ * 텍스트 Cap1_Rg = 13/Regular(400)/lh130%/-2% · 비활성 #767676 · 활성 #FAFAFA(★FD3, Figma #FFFFFF→#FAFAFA).
+ * 구분자 '/' = 13/SemiBold(600)/lh130%/-2% · rgba(255,255,255,0.16) (style_HVQ0AR / fill_Q5LLZ3).
+ */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1); /* 측정: 2 (칩 간) */
+}
+
+/* 칩 — 측정: h26 pad6/8 radius6 (layout_OY2J50) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--size-breadcrumb-chip); /* 측정: 26 */
+  padding: var(--space-3) var(--space-4); /* 측정: 6/8 */
+  border: none;
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--text-caption-1-size); /* 측정: 13 (Cap1_Rg) */
+  line-height: var(--text-caption-1-line); /* 측정: 130% */
+  font-weight: var(--font-weight-regular); /* 측정: 400 */
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% */
+  white-space: nowrap;
+}
+
+/* 비활성 크럼 — 측정: #767676 (fill_WNOG1L) */
+.inactive {
+  color: var(--color-breadcrumb-inactive); /* 측정: #767676 */
+}
+.inactive:hover {
+  /* gap: hover 실화면 부재 → 텍스트 밝게(합리값) */
+  color: var(--color-text-primary);
+}
+
+/* 활성(마지막=현재 위치) 크럼 — ★FD3: #FAFAFA (Figma #FFFFFF → 통일) */
+.active {
+  color: var(--color-text-primary); /* ★FD3: #FAFAFA */
+  cursor: default;
+}
+
+/* 구분자 '/' — 측정: 13/SemiBold/lh130%/-2% · rgba(255,255,255,0.16) */
+.separator {
+  flex-shrink: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--text-caption-1-size); /* 측정: 13 */
+  line-height: var(--text-caption-1-line); /* 측정: 130% */
+  font-weight: var(--font-weight-semibold); /* 측정: 600 */
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% */
+  color: var(--color-border-breadcrumb-sep); /* 측정: rgba(255,255,255,0.16) */
+  user-select: none;
+}

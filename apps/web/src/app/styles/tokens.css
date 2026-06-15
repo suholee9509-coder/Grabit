@@ -9,6 +9,11 @@
  *       측정에서 발견됐으나 668:29 다크 스와치엔 미등재인 색(point-green #66FF4B, overlay-white/black,
  *       모달 surface, accent violet/mint 등)을 신규 토큰으로 추가 — 각 토큰에 측정 출처 주석.
  *
+ * phase ③ (u0c fidelity) 보강: 충실도 감사(190건) + 측정 산출물 6종(docs/design/u0c-spec/)
+ *   기반 신규/보강 토큰. 버튼 md(34px)·세그먼트 컨테이너 #1B1B1B·셸(#121212)·toggle(FD2 파랑)·
+ *   stepper inactive #434343·#CECECE 그레이·radius10·shadow-popover 등. 각 토큰에 측정 노드ID 주석.
+ *   ★FD: FD1(GNB 4탭=대시보드 제외) / FD2(토글 ON #2563EB·knob 18·stroke·shadow) / FD3(흰색=#FAFAFA).
+ *
  * ⚠ 컴포넌트 SECTION 2562:7927(html.to.design 임포트)은 비정준 → 토큰 SoT 아님.
  *   1차 추출이 그 섹션의 muted-green(#00623A)·pill 칩을 채웠으나, 실화면 측정 결과 brand=네온
  *   #66FF4B·칩=42h 보더형으로 정정됨. 레거시 muted-green 토큰은 호환 위해 남기되 주석으로 표기.
@@ -21,14 +26,18 @@
   --color-bg: #000000;                 /* Dark-Black (alt, 5672) — 앱 베이스 */
   --color-surface-base: #0a0a0a;       /* 측정: 홈 피드 히어로 베이스(2087:71867 fill_836ARH) — 페이지 베이스 변형 */
   --color-surface: #171717;            /* Dark-Black (4420) — 기본 surface (=인사이트 카드 클립칩 #171717) */
-  --color-surface-100: #1f1f1f;        /* Dark-Gray-100 (4464) — 검색바·모달 면색 */
-  --color-surface-200: #242424;        /* Dark-Gray-200 / Stroke-100 (4508) — 인풋 bg·추가칩 bg */
-  --color-surface-300: #313131;        /* Dark-Gray-300 (4552) */
+  --color-surface-100: #1f1f1f;        /* Dark-Gray-100 (4464) — 검색바·모달 면색 (=프로필카드/Pro팝오버 면) */
+  --color-surface-200: #242424;        /* Dark-Gray-200 / Stroke-100 (4508) — 인풋 bg·추가칩 bg (=nav active bg·소셜/영수증 솔리드다크) */
+  --color-surface-300: #313131;        /* Dark-Gray-300 (4552) — 토글 OFF 트랙(gap 채움) */
+  --color-surface-segment: #1b1b1b;    /* 측정: 홈 세그먼트 컨테이너 solid(2173:124313 fill_0QSI6H) — surface #171717↔surface-100 #1F1F1F 사이, 다크 스와치 미등재 */
+  --color-shell-bg: #121212;           /* 측정: GNB·톱바 면색(2087:70381 fill_91K381 / 2087:69671 fill_9BSMUV) — surface #171717와 별개, 미등재 */
+  --color-nav-active-bg: var(--color-surface-200); /* 측정: GNB active nav bg #242424(2087:70381 fill_ZYNWWS) = surface-200 재사용 */
   --color-surface-tag: #2e2e2e;        /* 측정: DS Tag/선택칩 채움 bg(#2E2E2E, =Dark-Stroke-200) */
   --color-surface-tab-selected: #363636; /* 측정: 세그먼트 탭 선택 채움(2087:12542) (=Dark-Stroke-300) */
   --color-gray-400: #898989;           /* Dark-Gray-400 (4596) */
   --color-gray-450: #999999;           /* 측정: placeholder·메타카운트(#999999) — 400/500 사이, 다크 스와치 미등재 */
-  --color-gray-500: #b4b4b4;           /* Dark-Gray-500 (4640) — sub text 다수 */
+  --color-gray-500: #b4b4b4;           /* Dark-Gray-500 (4640) — sub text 다수·출처필터 비선택 카운트 */
+  --color-gray-550: #cecece;           /* 측정: removable 태그칩·홈 카드태그·온보딩 서브텍스트 글자(#CECECE) — gray-500 #B4B4B4↔gray-600 #DBDBDB 사이, 다크 스와치 미등재 */
   --color-gray-600: #dbdbdb;           /* Dark-Gray-600 (4684) */
   --color-gray-700: #ececec;           /* Dark-Gray-700 (4728) */
   --color-white: #fafafa;              /* Dark-White (4772) — ★흰색 통일(사용자 결정 2026-06-15): 모든 흰색 = #FAFAFA */
@@ -43,18 +52,30 @@
   --color-text-quaternary: #898989;    /* Dark-Gray-400 — 더 흐린 보조 */
   --color-text-dim: #5d5d5d;           /* 측정: 메타 구분점(#5D5D5D, ≈Dark-Stroke-500) */
   --color-text-disabled: #5e5e5e;      /* Disabled — Dark-Stroke-500 */
-  --color-text-on-primary: #242424;    /* 측정: 네온 그린 버튼 위 다크 글자(회원가입 CTA #242424) */
-  --color-text-on-primary-alt: #121212; /* 측정: 모달·완료 CTA 위 다크 글자(#121212) — #242424와 미세差, 통합검토 gap */
+  --color-text-on-primary: #242424;    /* 측정: 네온 그린 버튼 위 다크 글자(lg 페어 '설치하러 가기' #242424, 2087:10973 fill_D9AQDF) — 1건 */
+  --color-text-on-primary-alt: #121212; /* 측정: 네온 위 다크 글자 주류(톱바 pill·GNB raw CTA·모달 '다음'·결제 CTA #121212) */
+  --color-text-on-primary-black: #000000; /* 측정: 네온 위 순흑 글자(Button/Box 컴포넌트 GNB CTA·검색하기·확장팝업 — fill_0GZE1C/7ZTQEF/P9XPA0/93ZG0Y) — 다크 스와치 미등재 */
   --color-text-on-accent: #ffffff;     /* muted-green(레거시) 위 텍스트 (fill_TSBHXX) */
   --color-text-inverse: #242424;       /* 흰 배경(선택 폴더 #FAFAFA) 위 다크 글자 */
+  --color-text-on-light: #111111;      /* 측정: 흰 채움 선택칩 위 글자(홈 필터칩·라이브러리 출처필터 선택 #111111 — fill_BVCVYE/N7NWE9) — 다크 스와치 미등재 */
+  --color-text-on-light-solid: #171717; /* 측정: 라이트 솔리드(#EFEFEF) 버튼 위 글자(상세 '클립 추가' #171717, fill_60THF4) = surface와 동일 HEX */
+  --color-breadcrumb-inactive: #767676; /* 측정: 브레드크럼 비활성 크럼(상세/라이브러리 톱바 #767676, fill_PUIYGO) — gray-400 #898989와 다름, 미등재 */
+  --color-chip-count-selected: #505050; /* 측정: 흰 채움 선택 출처필터 카운트(라이브러리 2117:23701 #505050, fill_MUTNQG) — stroke-500 #5E5E5E와 미세差, 미등재 */
 
   /* ============================================================
    * BRAND / ACCENT — 측정 정준: point-green = 네온 #66FF4B
    *   (CTA·선택 링·Pro 라벨·active 카테고리 전반. 668:29 다크 스와치 미등재라 신규.)
    * ============================================================ */
-  --color-brand-primary: #66ff4b;      /* 측정: 모든 Primary CTA bg·active 액센트 (다수 fill) */
+  --color-brand-primary: #66ff4b;      /* 측정: 모든 Primary CTA bg·active 액센트·stepper active (다수 fill) */
   --color-brand-primary-50: rgba(102, 255, 75, 0.5); /* 측정: 카테고리 선택 링(2173:120844) */
   --color-premium-green: #199e41;      /* 측정: Premium 인라인 배지 텍스트(2087:11028) */
+
+  /* 컴포넌트 면색 (측정 — 버튼/토글/stepper 솔리드 fill, 다크 스와치 미등재) */
+  --color-btn-light-solid: #efefef;    /* 측정: 라이트 솔리드 버튼 bg(상세 '클립 추가' 2087:12643 fill_WCP9DQ) */
+  --color-btn-solid-gray: #333333;     /* 측정: 솔리드 그레이 버튼 bg(댓글 '작성' 2117:22120 fill_8NVMU4) */
+  --color-toggle-on: #2563eb;          /* ★FD2 측정: 토글 ON 트랙(2087:35028 'Light-Primary' fill) — 그린 아님 파랑 100% 채택 */
+  --color-toggle-knob: var(--color-white); /* ★FD2/FD3 측정: 토글 knob fill #FAFAFA(2087:35030 'Dark/Dark-White') = color-white */
+  --color-stepper-inactive: #434343;   /* 측정: stepper 비활성 세그먼트(온보딩 2087:8490 fill_8LWHK2) — stroke-400 #4E4E4E·stroke-300 #363636과 다름, 미등재 */
 
   /* 레거시 muted-green (2562:7927 비정준 섹션 — 호환용 보존, 실CTA엔 brand-primary 사용) */
   --color-accent: #00623a;             /* Dark-Main (4814) */
@@ -85,8 +106,11 @@
   --color-border-subtle: rgba(255, 255, 255, 0.08); /* 측정: 칩 보더 대다수·카드 보더·추가칩(0.08) */
   --color-border-default: rgba(255, 255, 255, 0.1);  /* 측정: 검색바 보더(0.10) */
   --color-border-chip: rgba(255, 255, 255, 0.12);    /* 측정: 온보딩 칩·Secondary 버튼 보더(0.12) */
-  --color-border-strong: rgba(255, 255, 255, 0.24);  /* 측정: 요금제 pill outline 보더(0.24) */
+  --color-border-strong: rgba(255, 255, 255, 0.24);  /* 측정: 요금제 pill outline 보더(0.24)·톱바 '확장 설치' outline */
   --color-border-divider: rgba(255, 255, 255, 0.2);  /* 측정: 작성자 구분선(0.2) */
+  --color-border-breadcrumb-sep: rgba(255, 255, 255, 0.16); /* 측정: 브레드크럼 구분자 '/'(상세 톱바 fill_PYOW1O 0.16) — overlay-white 스케일 0.16 미보유 */
+  --color-toggle-knob-stroke: rgba(0, 0, 0, 0.24);   /* ★FD2 측정: 토글 knob 0.5px stroke(2087:35030 fill_7M0FJX) */
+  --color-toggle-off: var(--color-surface-300);      /* ★FD2 [GAP §4] OFF 트랙 — 실화면 부재, 디자인시스템 #313131로 일관 채움(PM 확인 대상) */
 
   /* overlay-white 면(surface) (측정) */
   --color-surface-ghost: rgba(255, 255, 255, 0.04);  /* 측정: 추천칩·드롭다운·세그먼트탭·가로카드 bg(0.04) */
@@ -137,12 +161,32 @@
   --text-caption-3-size: 11px; --text-caption-3-line: 130%; /* style_8X9CZC */
 
   /* 컴포넌트 타입 묶음 (실화면 측정 — 토큰 type ramp 위에 컴포넌트 전용 셋) */
-  /* 버튼 Bt1_Sb: 15 / 600 / lh100% / ls-2% (회원가입 CTA 측정) */
+  /* 버튼 Bt1_Sb: 15 / 600 / lh100% / ls-2% (회원가입 CTA·lg 페어 측정) */
   --text-button-lg-size: 15px; --text-button-lg-line: 100%; --text-button-lg-weight: 600;
-  /* 버튼 T2_Sb: 14 / 600 / lh130% / ls-2% (완료 38px 버튼 측정) */
+  /* 버튼 T2_Sb: 14 / 600 / lh130% / ls-2% (완료 38px·톱바 pill·GNB raw 측정) */
   --text-button-sm-size: 14px; --text-button-sm-line: 130%; --text-button-sm-weight: 600;
+  /* 버튼 md Body3/Semibold: 14 / 600 / lh160% / ls-2% (★34px CTA 컴포넌트본 — GNB '컨텐츠 추가'·검색하기. button-sm lh130과 상이) */
+  --text-button-md-size: 14px; --text-button-md-line: 160%; --text-button-md-weight: 600;
+  /* 버튼 action Medium 15: 15 / 500 / lh130% / ls-2% (상세 '클립 추가'·'원본 링크' Medium 라벨 측정) */
+  --text-button-action-size: 15px; --text-button-action-line: 130%; --text-button-action-weight: 500;
+  /* 버튼 social Regular 14: 14 / 400 / lh160% / ls-2% ('Google로 계속하기' Regular 라벨 2087:8450 style_IETPVN) */
+  --text-button-social-size: 14px; --text-button-social-line: 160%; --text-button-social-weight: 400;
   /* 칩: 15 / 600 / lh130% / ls-2% (온보딩 칩 측정) */
   --text-chip-size: 15px;      --text-chip-line: 130%;      --text-chip-weight: 600;
+  /* 칩 필터 Body3: 14 / 600(선택)·400(비선택) / lh160% / ls-2% (홈 필터칩·출처필터 라벨 측정) */
+  --text-chip-filter-size: 14px; --text-chip-filter-line: 160%;
+  /* 칩 태그 Cap1: 13 / 400 / lh160% / ls-2% (removable·card-tag 본문 2087:35060 style_204YVK) — body-4 lh18과 상이 */
+  --text-chip-tag-size: 13px;  --text-chip-tag-line: 160%;  --text-chip-tag-weight: 400;
+  /* 세그먼트 대형 Body2: 15 / 600·500 / lh160% / ls-2% (홈 취향관/피드 1차내비 2173:124313) — segment 기본은 caption-1(13)과 분기 */
+  --text-segment-lg-size: 15px; --text-segment-lg-line: 160%;
+  /* underline 탭: 16 / 600(active)·500(inactive) / lh130% / ls-2% (상세 탭 style_ZGAR2X) — 현 title-5(18) 오용 정정 */
+  --text-tab-underline-size: 16px; --text-tab-underline-line: 130%;
+  /* 세로 list 탭: 15 / 500·400 / lh130% / ls-2.5% (검색 카테고리 사이드바 style_O7H1IY) */
+  --text-tab-list-size: 15px;  --text-tab-list-line: 130%;
+  /* nav item Body3: 14 / 500(active)·400(inactive) / lh160% / ls-2% (GNB 메뉴 홈 auto-layout 정준 2087:70381) */
+  --text-nav-item-size: 14px;  --text-nav-item-line: 160%;
+  /* 셸 섹션 라벨 Body4/Medium: 13 / 500 / lh150% / ls-2.5% (GNB '내 폴더'·'최근 본 컨텐츠' 홈 정준) — caption-1 lh130과 상이 */
+  --text-section-label-size: 13px; --text-section-label-line: 150%; --text-section-label-weight: 500;
 
   /* ============================================================
    * SPACING — 4px 베이스 (실화면 측정: 2,4,6,8,10,12,14,16,18,20,24,28,40)
@@ -150,10 +194,12 @@
    * ============================================================ */
   --space-0: 0;
   --space-1: 2px;
+  --space-1_5: 3px;  /* 측정: add-chip 아이콘↔텍스트 gap(2384:141372 layout_007DTE) — 4px 베이스 외 3px 변형, 미보유 */
   --space-2: 4px;
   --space-3: 6px;    /* 38px 버튼 gap·라벨↔필드 */
   --space-4: 8px;    /* 모달 pad·칩행 gap */
   --space-5: 10px;   /* 버튼 gap·칩 padY */
+  --space-5_5: 11px; /* 측정: 액션 버튼 비대칭 좌 inset(상세 '클립 추가'·'원본 링크' pad 8/14/8/11, 2087:12643/12635) — 4px 베이스 외 1px 변형, 미보유 */
   --space-6: 12px;   /* 탭 padX */
   --space-7: 14px;   /* 측정: 컨테이너 칩 wrap gap·카드 padX */
   --space-8: 16px;   /* 카드 inset */
@@ -169,7 +215,9 @@
    * ============================================================ */
   --radius-xs: 4px;     /* 썸네일·드롭다운 항목·duration 배지 */
   --radius-sm: 6px;     /* 버튼·인풋·세컨더리·칩·DS Tag */
-  --radius-md: 8px;     /* (레거시 빈도 262) */
+  --radius-md: 8px;     /* GNB CTA·34px 액션 버튼·결제 CTA·nav item·GNB 컨테이너 (실측 — 현 버튼 미적용, 적용 필요) */
+  --radius-btn-write: 7px; /* 측정: 댓글 '작성' 버튼(2117:22120 borderRadius 7) — radius-md 8에서 1px 변형, 미보유 */
+  --radius-10: 10px;    /* 측정: 프로필 카드(2087:70381 layout_E0LIWM)·Pro 팝오버(2278:135560) — md8↔lg12 사이, 미보유 */
   --radius-lg: 12px;    /* 카드·모달 */
   --radius-xl: 16px;
   --radius-2xl: 20px;
@@ -180,24 +228,55 @@
   /* ============================================================
    * SIZE — 컴포넌트 고정 치수 (실화면 측정 — 신뢰값만)
    * ============================================================ */
+  --size-button-md: 34px;   /* ★측정: 정준 1차 액션 높이 — GNB CTA·톱바 pill·상세 액션·검색하기·라이브러리 추가 전 화면 반복 (2087:70381 외 다수). 최우선 신규 */
   --size-button-lg: 42px;   /* 측정: 소셜/이전·다음/모달 CTA height (다수 프레임) */
-  --size-button-sm: 38px;   /* 측정: 완료 버튼(버튼_38px_Short) height */
-  --size-button-compact-w: 108px; /* 측정: 이전/다음 페어 width */
+  --size-button-sm: 38px;   /* 측정: 완료 버튼(버튼_38px_Short)·댓글 작성·모달 footer nav height */
+  --size-button-xl: 48px;   /* 측정: 결제 주 CTA height(2278:126233 layout_BJZVR8) — mvp-out, 후보 */
+  --size-button-compact-w: 108px; /* 측정: 온보딩 이전/다음 페어 width */
+  --size-button-pair-w-md: 128px; /* 측정: 요금제 모달 lg 페어 '나중에 하기'/'설치하러 가기' width(2087:10972/10973) */
+  --size-button-fixed-156: 156px; /* 측정: 모달 footer '다음' 고정 width(2087:33546) */
   --size-input: 42px;       /* 측정: 이메일 인풋 height */
-  --size-search: 48px;      /* 측정: 검색바 height */
+  --size-input-lg: 64px;    /* 측정: 온보딩 textarea-lg height(2087:9224 = 텍스트44 + pad10×2) */
+  --size-search: 48px;      /* 측정: 홈 검색바 height */
+  --size-search-sm: 38px;   /* 측정: 라이브러리 검색바 컴팩트 height(2117:22132, radius100) */
   --size-select: 38px;      /* 측정: 폴더 셀렉트 트리거 height */
   --size-chip: 42px;        /* 측정: 온보딩 칩 height */
-  --size-chip-sm: 32px;     /* 측정: 추천칩·그리드 태그칩 height */
+  --size-chip-filter: 30px; /* 측정: 홈 카테고리 필터칩 height(2087:71871/71873) */
+  --size-chip-sm: 32px;     /* 측정: 추천칩·출처필터칩·그리드 태그칩 height */
+  --size-chip-tag: 28px;    /* 측정: removable 태그칩·add-chip·card-tag height(2087:35059/141372/69045) */
   --size-tab: 36px;         /* 측정: 세그먼트 탭 컨테이너 height */
   --size-tab-item: 28px;    /* 측정: 탭 item height */
+  --size-tab-underline: 52px; /* 측정: underline 탭 height(라이브러리 상세 2117:20311) — 콘텐츠디테일 56은 outlier(노트) */
+  --size-tab-list-item: 32px; /* 측정: 검색 세로 list 탭 item(2557:7615) = folder-item과 동일값 */
   --size-dropdown-item: 28px; /* 측정: 자동완성 항목 height */
   --size-folder-item: 32px;   /* 측정: 폴더 리스트 항목 height */
   --size-avatar-xs: 18px;   /* 측정: 인사이트 카드 작성자 아바타 */
   --size-avatar-sm: 24px;
+  --size-avatar-profile: 28px; /* 측정: GNB 프로필 카드 아바타(2087:70381 layout_GPEQ1V) — sm24↔md32 사이 */
   --size-avatar-md: 32px;
   --size-avatar-lg: 48px;
   --size-avatar-xl: 82px;   /* 측정: 취향관 카테고리 아바타 */
   --size-avatar-ring: 2px;  /* 측정: 카테고리 선택 링 두께 */
+
+  /* 앱 셸 (측정 — GNB/톱바/브레드크럼/프로필) */
+  --size-gnb: 254px;        /* 측정: GNB 컨테이너 width(2087:70381 layout_QAS19A) */
+  --size-gnb-panel: 226px;  /* 측정: GNB 내부 패널 width(= 254 − 좌우 14 inset) */
+  --size-nav-item: 32px;    /* 측정: nav item height(h32·pad8/10·gap8·radius8) */
+  --size-profile-card-h: 50px; /* 측정: 프로필 카드 height(226×50, 2087:70381 layout_E0LIWM) */
+  --size-topbar: 56px;      /* 측정: 톱바 height(2087:69671 layout_O14NM6) */
+  --size-breadcrumb-chip: 26px; /* 측정: 브레드크럼 칩 height(상세 톱바 layout_04UPQY) */
+  --space-gnb-inset: 14px;  /* 측정: GNB 패널 좌우/하단 inset(= space-7) */
+
+  /* 토글(Switch) — ★FD2 측정(2087:35027~35030) */
+  --size-toggle-track-w: 44px;  /* 트랙 너비 */
+  --size-toggle-track-h: 22px;  /* 트랙 높이 */
+  --size-toggle-knob: 18px;     /* knob 지름 */
+  --size-toggle-knob-travel: 16px; /* OFF→ON translateX (검산: 44−2−18−8) */
+  --size-toggle-knob-stroke: 0.5px; /* ★FD2 측정: knob stroke 두께(2087:35030 strokeWeight) */
+
+  /* stepper(온보딩 진행바) — 측정(2087:8488~8492) */
+  --size-stepper-seg-w: 40px;   /* 세그먼트 폭 */
+  --size-stepper-seg-h: 4px;    /* 세그먼트 높이 */
 
   /* ============================================================
    * SHADOW / EFFECT (668:29 globalVars.styles + 측정 모달 shadow)
@@ -212,6 +291,12 @@
     0px 0px 0px 1px rgba(84, 72, 49, 0.1);
   /* 측정: 태그 자동완성 드롭다운 Dropdown-100(2384:141352) */
   --shadow-dropdown: 0px 0px 8px 0px rgba(0, 0, 0, 0.07);
+  /* 측정: Pro 업셀 팝오버/코치마크(2278:135560 effect_NSJ0D9) — 2레이어 강한 그림자, card·modal과 별개 */
+  --shadow-popover: 0px 8px 24px 0px rgba(0, 0, 0, 0.48),
+    0px -2px 8px 0px rgba(0, 0, 0, 0.24);
+  /* ★FD2 측정: 토글 knob 이중 그림자(2087:35030 effect_L8M9V1) */
+  --shadow-toggle-knob: 0px 2px 1px 0px rgba(0, 0, 0, 0.04),
+    0px 1px 6px 0px rgba(0, 0, 0, 0.06);
 
   /* ============================================================
    * Z-INDEX (시스템 보조 — Figma 비추출, 레이어링 구조용)

@@ -1,11 +1,11 @@
 import styles from './avatar.module.css';
 
 /**
- * Avatar — 유저/카테고리 프로필 (측정: xs=18 인사이트·xl=82 취향관 카테고리).
- * size = xs(18)/sm(24)/md(32)/lg(48)/xl(82). 이미지 없으면 이니셜 폴백.
+ * Avatar — 유저/카테고리 프로필 (측정: xs=18 인사이트·profile=28 GNB 프로필·xl=82 취향관 카테고리).
+ * size = xs(18)/sm(24)/profile(28)/md(32)/lg(48)/xl(82). 이미지 없으면 이니셜 폴백.
  * selected = 취향관 카테고리 선택 링(2px 네온 50%, 측정).
  */
-export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type AvatarSize = 'xs' | 'sm' | 'profile' | 'md' | 'lg' | 'xl';
 
 export interface AvatarProps {
   src?: string;

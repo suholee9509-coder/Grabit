@@ -1,10 +1,13 @@
-/* Chip — 실화면 측정 정밀 리팩토링.
- * default(온보딩 직업/관심분야, 측정 2087:8476·8968): 투명 bg + rgba(white,0.12) 1px 보더 +
+/* Chip — 실화면 측정 정밀 리팩토링(phase ②→③ u0c). 9개 폼팩터 1:1.
+ * SoT: file 5GGyKsjXEOpjKMLtUodeSs · "프로토타이핑" 2087:5987 하위 실화면 프레임.
+ * default(온보딩 직업/관심분야, 2087:8476·8968): 투명 bg + rgba(white,0.12) 1px 보더 +
  *   흰 글자 · height 42 · pad 10/18 · radius 6 · 15/600/130%/-2%. ★pill 아님(정정).
- * recommend(검색 추천칩, 측정 2087:40686): surface-ghost(0.04) bg + border-subtle(0.08) +
+ * recommend(검색 추천칩, 2087:40686): surface-ghost(0.04) bg + border-subtle(0.08) +
  *   #FAFAFA · height 32 · pad 10/12 · radius 100(pill) · 14/500/130%.
- * ⚠ selected(채움) 상태는 두 온보딩 프레임에 정적 export 부재 → 미측정(gap). 추측 색 ❌ →
- *   브랜드 보더 강조로 표현(채움값 미정, status.md). disabled도 실화면 부재 → opacity.
+ * filter / source / tag / add 는 §1~§9 실측값(아래 각 블록 주석에 노드ID).
+ * ⚠ default selected(채움)는 온보딩 정적 export 부재 → 브랜드 보더(추측 ❌, gap).
+ *   filter/source selected = 실측 확정(#FAFAFA/#111111).
+ * 규칙: 토큰 변수만 사용(하드코딩 HEX ❌).
  */
 .chip {
   display: inline-flex;
@@ -41,19 +44,19 @@
   cursor: not-allowed;
 }
 
-/* Selected=True — ⚠ 채움 색 미측정. 브랜드 보더로 선택 표시(추측 채움 ❌, gap status.md). */
-.selected {
+/* Selected=True (default 한정) — ⚠ 채움 색 미측정. 브랜드 보더로 표시(추측 채움 ❌, gap). */
+.default.selected {
   border-color: var(--color-brand-primary);
   color: var(--color-brand-primary);
 }
-.selected:hover:not(:disabled) {
+.default.selected:hover:not(:disabled) {
   border-color: var(--color-brand-primary);
 }
 
 /* recommend — 검색 추천칩(측정: h32·radius pill·surface-ghost) */
 .recommend {
   height: var(--size-chip-sm); /* 측정: 32 */
-  padding: var(--space-5) var(--space-6); /* 측정: 10 / 12 (좌 padLeft 10) */
+  padding: var(--space-5) var(--space-6); /* 측정: 10 / 12 */
   gap: var(--space-2); /* 측정: 아이콘-텍스트 4 */
   border-radius: var(--radius-pill); /* 측정: 100 */
   border-color: var(--color-border-subtle); /* 측정: 0.08 */
@@ -62,6 +65,160 @@
   font-size: var(--text-body-3-size); /* 14 */
   line-height: 130%;
   font-weight: var(--font-weight-medium); /* 500 */
+}
+
+/* ============================================================
+ * §1·§2 filter — 홈 카테고리 필터칩 (2087:71871 selected / 2087:71873 unselected)
+ * h30 · pad 10/12 · radius 6 · 14/160%/-2% · gap 10
+ * unselected: surface-hover(.06) bg / #B4B4B4(gray-500) / 400 · 보더 없음
+ * selected:   #FAFAFA bg / #111111(text-on-light) / 600
+ * ============================================================ */
+.filter {
+  height: var(--size-chip-filter); /* 측정: 30 */
+  padding: var(--space-5) var(--space-6); /* 측정: 10 / 12 */
+  gap: var(--space-5); /* 측정: 10 */
+  border: none; /* 측정: 보더 없음 */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background-color: var(--color-surface-hover); /* 측정: rgba(255,255,255,0.06) */
+  color: var(--color-gray-500); /* 측정: #B4B4B4 */
+  font-size: var(--text-chip-filter-size); /* 14 */
+  line-height: var(--text-chip-filter-line); /* 160% */
+  font-weight: var(--font-weight-regular); /* 400 */
+}
+.filter:hover:not(:disabled) {
+  /* [GAP] 비선택 hover 정적 export 없음 → ghost 한 단계 강조로 일관 채움(spec §2) */
+  background-color: var(--color-surface-ghost);
+  border-color: transparent;
+}
+.filter.selected {
+  background-color: var(--color-white); /* 측정: #FAFAFA */
+  color: var(--color-text-on-light); /* 측정: #111111 */
+  font-weight: var(--font-weight-semibold); /* 600 */
+}
+.filter.selected:hover:not(:disabled) {
+  background-color: var(--color-white);
+  border-color: transparent;
+}
+
+/* ============================================================
+ * §3·§4·§6 source — 출처필터칩 (라이브러리 2117:23699/23702 · 검색 2087:38908)
+ * h32 · pad 10/12/10/10 · radius 6(기본)·100(pill, 검색) · outer gap 4 · 14/130%/-2%
+ * inner(아이콘+라벨) gap 6 · 플랫폼 아이콘 20×20 · 라벨↔카운트 gap 4
+ * unselected: surface-hover(.06)·검색은 surface-ghost(.04) bg + border-subtle(.08) /
+ *             라벨 #FAFAFA(500) / count #B4B4B4(gray-500, 400)
+ * selected:   #FAFAFA bg / 라벨 #111111(600) / count #505050(chip-count-selected)
+ * ============================================================ */
+.source {
+  height: var(--size-chip-sm); /* 측정: 32 */
+  padding: var(--space-5) var(--space-6) var(--space-5) var(--space-5); /* 측정: 10/12/10/10 */
+  gap: var(--space-2); /* 측정: outer 4 (라벨블록↔카운트) */
+  border: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+  border-radius: var(--radius-sm); /* 측정: 6 (라이브러리) */
+  background-color: var(--color-surface-hover); /* 측정: rgba(255,255,255,0.06) */
+  color: var(--color-text-primary); /* 측정: 라벨 #FAFAFA */
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium); /* 측정: 500 */
+}
+.source.pill {
+  border-radius: var(--radius-pill); /* 측정: 100 (검색 출처필터) */
+  background-color: var(--color-surface-ghost); /* 측정: rgba(255,255,255,0.04) (검색) */
+}
+.source:hover:not(:disabled) {
+  border-color: var(--color-border-strong);
+}
+.source.selected {
+  background-color: var(--color-white); /* 측정: #FAFAFA */
+  border-color: transparent;
+  color: var(--color-text-on-light); /* 측정: 라벨 #111111 */
+  font-weight: var(--font-weight-semibold); /* 측정: 600 */
+}
+.source.selected:hover:not(:disabled) {
+  background-color: var(--color-white);
+  border-color: transparent;
+}
+.source.selected .count {
+  color: var(--color-chip-count-selected); /* 측정: #505050 */
+}
+
+/* source 내부 블록(아이콘+라벨) — gap 6 */
+.inner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3); /* 측정: 6 */
+}
+/* trailing 카운트(비선택 기본색 #B4B4B4) */
+.count {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-gray-500); /* 측정: #B4B4B4 */
+  font-weight: var(--font-weight-regular); /* 측정: 400 */
+}
+
+/* ============================================================
+ * §9 tag — 카드 내부 분류 태그 (라이브러리 2117:22069 등)
+ * h28 · pad 10(전방향) · radius 6 · surface-hover(.06) · 13/400/160%/-2% · gap 10
+ * 색: 기본 #B4B4B4(gray-500) · 홈 #CECECE(gray-550, .cece)
+ * §7 removable: pad 10/8/10/10 · gap 2 · trailing x(16) · 글자 #CECECE
+ * ============================================================ */
+.tag {
+  height: var(--size-chip-tag); /* 측정: 28 */
+  padding: var(--space-5); /* 측정: 10 전방향 */
+  gap: var(--space-5); /* 측정: 10 */
+  border: none; /* 측정: 보더 없음 */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background-color: var(--color-surface-hover); /* 측정: rgba(255,255,255,0.06) */
+  color: var(--color-gray-500); /* 측정: #B4B4B4 (다수결 기본) */
+  font-size: var(--text-chip-tag-size); /* 13 */
+  line-height: var(--text-chip-tag-line); /* 160% */
+  font-weight: var(--text-chip-tag-weight); /* 400 */
+}
+.tag.cece {
+  color: var(--color-gray-550); /* 측정: #CECECE (홈 카드태그 §9) */
+}
+.tag:hover:not(:disabled) {
+  border-color: transparent; /* [GAP] hover 정적 export 없음 — 무변(노트) */
+}
+/* §7 removable 태그칩 — x 동반(콘텐츠추가·확장). 글자 #CECECE 실측. */
+.tag.removable {
+  padding: var(--space-5) var(--space-4) var(--space-5) var(--space-5); /* 측정: 10/8/10/10 */
+  gap: var(--space-1); /* 측정: 2 (라벨↔x) */
+  color: var(--color-gray-550); /* 측정: #CECECE (2087:35060 fill_N6KAQN) */
+}
+/* trailing 취소(x) 슬롯 16×16 — x glyph 8×8 #777777(아이콘 자체색) */
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; /* 측정: 16 (2087:35061 layout_YSNNDQ) */
+  height: 16px;
+  flex: none;
+  color: var(--color-gray-400); /* x glyph 근사 — SVG removeIcon 전달 시 자체색 사용 */
+  cursor: pointer;
+}
+
+/* ============================================================
+ * §8 add — 태그 추가 트리거 "+추가" (콘텐츠추가 2384:141372 · 확장 2074:88496)
+ * h28 · pad 6/10/6/8 · radius 6 · #242424(surface-200) + border-subtle(.08)
+ * inner(아이콘+텍스트) gap 3 · "+" 16×16 · "추가" #FAFAFA 13/500/130%/-2%
+ * ============================================================ */
+.add {
+  height: var(--size-chip-tag); /* 측정: 28 */
+  padding: var(--space-3) var(--space-5) var(--space-3) var(--space-4); /* 측정: 6/10/6/8 */
+  gap: var(--space-5); /* 측정: outer 10 (단일 블록이라 시각상 영향 적음) */
+  border: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background-color: var(--color-surface-200); /* 측정: #242424 */
+  color: var(--color-white); /* 측정: "추가" #FAFAFA */
+  font-size: var(--text-caption-1-size); /* 13 (Cap1_Md) */
+  line-height: var(--text-caption-1-line); /* 130% */
+  font-weight: var(--font-weight-medium); /* 500 */
+}
+.add .inner {
+  gap: var(--space-1_5); /* 측정: 3 (아이콘↔텍스트, 2384:141372 layout_007DTE) */
+}
+.add:hover:not(:disabled) {
+  border-color: var(--color-border-strong);
 }
 
 .icon {

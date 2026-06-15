@@ -1,8 +1,15 @@
-/* Tabs — 실화면 측정 정밀 리팩토링.
- * segment(측정 2087:12540/12542/12545): pill segmented control.
- *   container = surface-ghost(0.04) bg · pad 4 · radius 100 · h36.
- *   item h28 · pad 8/12 · radius 100 · selected bg #363636/#FAFAFA/600 · unselected 투명/#999999/500.
- * underline(측정 2087:11010 카테고리 탭): 밑줄 인디케이터 — active #66FF4B/밑줄, inactive #B4B4B4.
+/* Tabs — 실화면 측정 정밀 리팩토링 (phase ③ u0c 충실도).
+ * 3변형:
+ *   segment(pill): 보조 토글. size=sm(13·ghost bg) / lg(15·#1B1B1B bg).
+ *     - sm(기본, 측정 라이브러리 2117:25117·대시보드 2557:34597·상세 2087:12541):
+ *       container ghost(0.04)·pad4·radius100·item pad8/12·font13·selected #363636/#FAFAFA/600.
+ *     - lg(홈 1차 내비 2173:124313): container #1B1B1B(solid)·pad4·item gap4·pad 4/12/4/10·
+ *       font Body2 15/160%/-2%·selected #363636/#FAFAFA/600·unselected #999999/500.
+ *   underline(상세 사이드바 2557:23067/2117:20311): item h52(콘텐츠디테일 56 outlier)·
+ *     pad10/20·gap4·font16/130%/-2%·active #FAFAFA(★FD3 흰색, 네온 제거)+밑줄 2px #FAFAFA·
+ *     inactive #B4B4B4/500·컨테이너 하단 구분선 #2E2E2E 1px(노트: 실측 #2D2D2D 미세差).
+ *   list(검색 카테고리 세로 사이드바 2557:7615/7617): item h32·pad6/0·gap10·
+ *     선택 #FAFAFA/Medium 500·비선택 #999999/Regular 400·font15/130%/-2.5%·밑줄/border 없음.
  * ⚠ hover/disabled 상태는 실화면 부재(gap).
  */
 .tabs {
@@ -14,6 +21,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-2); /* 측정: leading 아이콘/trailing 카운트 동반 시 4 (segment·underline) */
   background: transparent;
   border: none;
   font-family: var(--font-family-base);
@@ -28,19 +36,21 @@
   outline-offset: 2px;
 }
 
-/* variant=segment — 측정 정준(세그먼트 pill) */
+/* ============================================================
+ * variant=segment — 측정 정준(세그먼트 pill). 기본 size=sm.
+ * ============================================================ */
 .segment {
-  height: var(--size-tab); /* 측정: 36 */
+  height: var(--size-tab); /* 측정: 36 (sm) */
   padding: var(--space-2); /* 측정: 4 전방향 */
-  gap: var(--space-5); /* 측정: 10 */
+  gap: var(--space-2); /* 측정: 아이템 간 4 (2087:12541 itemSpacing 4 / 2173:124313 layout_KG193V gap4) */
   border-radius: var(--radius-pill); /* 측정: 100 */
-  background-color: var(--color-surface-ghost); /* 측정: rgba(255,255,255,0.04) */
+  background-color: var(--color-surface-ghost); /* 측정: sm = rgba(255,255,255,0.04) (라이브러리·대시보드) */
 }
 .segment .tab {
-  height: var(--size-tab-item); /* 측정: 28 */
-  padding: var(--space-4) var(--space-6); /* 측정: 8 / 12 */
+  height: var(--size-tab-item); /* 측정: 28 (sm) */
+  padding: var(--space-4) var(--space-6); /* 측정: 8 / 12 (sm) */
   border-radius: var(--radius-pill); /* 측정: 100 */
-  font-size: var(--text-caption-1-size); /* 측정: 13 */
+  font-size: var(--text-caption-1-size); /* 측정: 13 (sm) */
   line-height: 130%;
 }
 .segment .active {
@@ -49,23 +59,68 @@
   font-weight: var(--font-weight-semibold); /* 측정: 600 */
 }
 
-/* variant=underline — 측정: 카테고리 탭(밑줄, active 브랜드 네온) */
+/* size=lg — 홈 1차 내비(취향관/피드) 측정 2173:124313 */
+.segment.lg {
+  height: auto; /* 측정: hug (15px·160% 라벨이 28에 안 들어감 → 라벨+pad로 결정) */
+  background-color: var(--color-surface-segment); /* 측정: solid #1B1B1B (fill_57DUVX/0QSI6H) */
+}
+.segment.lg .tab {
+  height: auto; /* 측정: hug */
+  padding: var(--space-2) var(--space-6) var(--space-2) var(--space-5); /* 측정: 4/12/4/10 (T/R/B/L, layout_ZRG7FU) */
+  font-size: var(--text-segment-lg-size); /* 측정: 15 (Body 2) */
+  line-height: var(--text-segment-lg-line); /* 측정: 160% */
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% (Body 2) */
+}
+
+/* ============================================================
+ * variant=underline — 측정: 상세 사이드바 탭(밑줄 인디케이터).
+ *   ★FD3: active = 흰 #FAFAFA (네온 #66FF4B 제거).
+ * ============================================================ */
 .underline {
-  gap: var(--space-12);
-  border-bottom: 1px solid var(--color-stroke-200);
+  gap: var(--space-0); /* 측정: 탭 행 자체 gap 없음(item pad가 간격 형성) */
+  border-bottom: 1px solid var(--color-stroke-200); /* 측정: 컨테이너 하단 구분선 1px (#2E2E2E; 노트: 실측 #2D2D2D 미세差) */
 }
 .underline .tab {
-  padding: var(--space-6) 0;
-  font-size: var(--text-title-5-size);
+  height: var(--size-tab-underline); /* 측정: 52 (라이브러리 상세 2117:20311; 콘텐츠디테일 56 outlier) */
+  padding: var(--space-5) var(--space-10); /* 측정: 10 / 20 (layout_10NNV9) */
+  font-size: var(--text-tab-underline-size); /* 측정: 16 (style_DYYH0L) */
+  line-height: var(--text-tab-underline-line); /* 측정: 130% */
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% */
   margin-bottom: -1px;
   border-bottom: 2px solid transparent;
-  color: var(--color-gray-500); /* 측정: inactive #B4B4B4 */
+  color: var(--color-gray-500); /* 측정: inactive #B4B4B4 (fill_VGMNRO) */
 }
 .underline .tab:hover {
   color: var(--color-text-secondary);
 }
 .underline .active {
-  color: var(--color-brand-primary); /* 측정: active #66FF4B */
-  border-bottom-color: var(--color-brand-primary);
-  font-weight: var(--font-weight-semibold);
+  color: var(--color-white); /* ★FD3 측정: active 흰 #FAFAFA (실측 #FFFFFF/#FAFAFA → 흰색 통일) */
+  border-bottom-color: var(--color-white); /* ★FD3: 밑줄 2px 흰 #FAFAFA (네온 제거) */
+  font-weight: var(--font-weight-semibold); /* 측정: active 600 (style_DYYH0L) */
+}
+
+/* ============================================================
+ * variant=list — 측정: 검색 카테고리 세로 사이드바(2557:7615/7617).
+ *   세로 리스트. 선택 = 색(#FAFAFA)+굵기(Medium 500)만. 밑줄·border·인디케이터 없음.
+ * ============================================================ */
+.list {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-0); /* 측정: 항목 간 별도 gap 없음(item pad6/0가 간격 형성) */
+}
+.list .tab {
+  height: var(--size-tab-list-item); /* 측정: 32 (layout_4CZB30) */
+  justify-content: flex-start; /* 측정: row alignItems center, 좌측 정렬 */
+  gap: var(--space-5); /* 측정: 10 (leading 아이콘 동반 시) */
+  padding: var(--space-3) 0; /* 측정: 6px 0px */
+  font-size: var(--text-tab-list-size); /* 측정: 15 (style_5ZP8DL) */
+  line-height: var(--text-tab-list-line); /* 측정: 130% */
+  letter-spacing: var(--letter-spacing-tight); /* 측정: -2.5% (style_5ZP8DL) */
+  font-weight: var(--font-weight-regular); /* 측정: 비선택 Regular 400 (style_QAIDDI) */
+  color: var(--color-text-tertiary); /* 측정: 비선택 #999999 (fill_55QZHF) */
+}
+.list .active {
+  color: var(--color-text-primary); /* 측정: 선택 #FAFAFA (fill_B99UMD) */
+  font-weight: var(--font-weight-medium); /* 측정: 선택 Medium 500 (style_5ZP8DL) */
 }

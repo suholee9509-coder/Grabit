@@ -1,0 +1,25 @@
+/* Stepper (온보딩 진행바) — 실화면 측정 정밀(phase ③ u0c).
+ *   컨테이너 = 온보딩 스텝 인디케이터(2087:8488 layout_6MM9Y5):
+ *     row · alignItems center · gap 4 · sizing hug/hug.
+ *   세그먼트 4개 각 = 40×4 · radius 100(2087:8489~8492 layout_K7ZGCL):
+ *     active fill #66FF4B(fill_Z9IWT5=brand-primary) / inactive fill #434343(fill_BSGWYE=stepper-inactive).
+ *   상태 = 1/4(첫 세그먼트만 active)~4/4(전 세그먼트 active).
+ *   [GAP-5] 1/4→4/4 진행 트랜지션(시간·이징) 프레임 부재 → 정적 색 스왑 + DS 일관 transition만 적용. */
+.stepper {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2); /* 4px (layout_6MM9Y5) */
+}
+
+.segment {
+  width: var(--size-stepper-seg-w); /* 40px (layout_K7ZGCL) */
+  height: var(--size-stepper-seg-h); /* 4px (layout_K7ZGCL) */
+  border-radius: var(--radius-pill); /* 100 (2087:8489~8492) */
+  background-color: var(--color-stepper-inactive); /* #434343 (fill_BSGWYE) — inactive 기본 */
+  transition: background-color 0.15s ease; /* [GAP-5] 모션 미측정 — DS 일관값 */
+}
+
+.active {
+  background-color: var(--color-brand-primary); /* #66FF4B (fill_Z9IWT5) */
+}

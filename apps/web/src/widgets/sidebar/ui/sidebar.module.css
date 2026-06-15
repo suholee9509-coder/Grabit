@@ -1,0 +1,233 @@
+/* Sidebar (GNB) — 실화면 측정 정밀(SoT: 홈 GNB 2087:70381 auto-layout 정준).
+ * 컨테이너 254 / 내부 패널 226(좌우 14 inset) · fill #121212 · radius 8.
+ * 세로 구성: Logo Frame(pad14·gap10·CTA) → Container(226·gap16: nav묶음) · nav묶음↔divider↔폴더↔divider↔최근 gap18.
+ * ★FD1: 메뉴 = 홈·검색·라이브러리·수신함(대시보드 제외). ★FD3: 흰색 = #FAFAFA.
+ * 측정 노드: layout_6A0UUX(254) / layout_XYQ5PU(패널) / layout_M32C1W(로고 pad14 gap10) /
+ *   layout_AFDXFY(226 gap16) / layout_L4SWNV(gap18) / layout_FT2TA8(list gap4) /
+ *   layout_9B1CYN(프로필 226×50 pad8/12 r10 x14 y1008).
+ */
+
+/* 컨테이너 — 254px 고정폭, 뷰포트 높이(가변), #121212, radius 8 */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--size-gnb); /* 측정: 254 (layout_6A0UUX) */
+  height: 100%;
+  background-color: var(--color-shell-bg); /* 측정: #121212 (fill_QIETQQ) */
+  border-radius: var(--radius-md); /* 측정: 8 */
+}
+
+/* 내부 콘텐츠 패널 — column, 상단(로고+CTA+nav묶음) / 하단(프로필) 분리.
+ * 패널 폭 254, 내부 inset 14는 로고프레임 padding·CTA/nav Container width226로 표현. */
+.panel {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  width: var(--size-gnb); /* 측정: 254 (layout_XYQ5PU) */
+}
+
+/* 로고 프레임 — 측정: padding 14, column gap 10(아래 CTA와), align stretch (layout_M32C1W) */
+.logoFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-5); /* 측정: 10 (CTA와) */
+  padding: var(--space-gnb-inset); /* 측정: 14 */
+}
+
+/* 로고 영역 — 측정: height 24, full-width (layout_28DMBR) */
+.logo {
+  display: flex;
+  align-items: center;
+  height: 24px; /* 측정: 24 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-5-size);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-primary);
+}
+
+/* nav 묶음 Container — 측정: width 226, column gap 16 (layout_AFDXFY).
+ * inset 14를 좌우 margin으로 표현(패널 254 − 226 = 28 = 좌우 14). */
+.content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-8); /* 측정: 16 (layout_AFDXFY) */
+  width: var(--size-gnb-panel); /* 측정: 226 */
+  margin: 0 var(--space-gnb-inset); /* 측정: 좌우 14 inset */
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* nav묶음↔divider↔폴더↔divider↔최근 — 측정: column gap 18 (layout_L4SWNV) */
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9); /* 측정: 18 */
+}
+
+/* 메뉴 리스트 — 측정: column, 항목 간 gap 4 (layout_FT2TA8) */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* 측정: 4 */
+}
+
+/* divider — 측정: 1px rgba(255,255,255,0.08) (fill_RL767V, layout_MCXW0N w226 h0) */
+.divider {
+  width: 100%;
+  height: 0;
+  border: none;
+  border-top: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+}
+
+/* 섹션(내 폴더 / 최근 본 컨텐츠) — 측정: column, 라벨 위 + 리스트(항목 gap 4) */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* 측정: 라벨↔리스트 4(섹션 라벨 y:0, 리스트 y:25 ≈ 라벨h20+여백) */
+}
+
+/* 섹션 라벨('내 폴더'/'최근 본 컨텐츠') — 측정: Body4/Medium 13/500/lh150%/-2.5% #B4B4B4 */
+.sectionLabel {
+  margin: 0;
+  padding: 0 var(--space-5_5); /* 측정: 라벨 x:10 들여쓰기 (layout_85VRJX x:10) — 항목 pad10과 정렬 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-section-label-size);   /* 측정: 13 */
+  line-height: var(--text-section-label-line);  /* 측정: 150% */
+  font-weight: var(--text-section-label-weight); /* 측정: 500 */
+  letter-spacing: var(--letter-spacing-tight);  /* 측정: -2.5% */
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+}
+
+/* 최근 본 컨텐츠 항목 — 측정: 텍스트 width 178 말줄임, 썸네일 20×20 radius4 (layout_V324MR/UOOBJC) */
+.recentItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4); /* 측정: 8 (nav item과 동일 셸 gap) */
+  width: 100%;
+  height: var(--size-nav-item); /* 측정: 32 */
+  padding: var(--space-4) var(--space-5); /* 측정: 8/10 (nav item 셸 재사용) */
+  border: none;
+  border-radius: var(--radius-md); /* 측정: 8 */
+  /* ★박스 제거 — Figma layout_LYC6B7 = 투명(fills 없음). reset.css에 button bg 리셋이 없어 기본 버튼 배경이 박스로 보이던 것 제거. */
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-family-base);
+}
+.recentItem:hover {
+  background-color: var(--color-surface-ghost); /* hover 강조(nav item 관례, rgba(white,0.04)) */
+}
+
+.recentThumb {
+  flex-shrink: 0;
+  width: 20px;  /* 측정: 20 (favicon 컨테이너 — layout_5L02XR/WGF2PN) */
+  height: 20px;
+  border-radius: var(--radius-xs); /* 측정: 4 */
+  /* Figma 컨테이너 자체는 투명·실제 favicon(YouTube/Medium/Long Black 18~20px)이 채움.
+   * favicon 없을 때만 옅은 placeholder(추측 진한면 #242424 제거 — 박스 원인). */
+  background-color: var(--color-surface-ghost); /* rgba(white,0.04) — 옅은 자리표시 */
+  object-fit: cover;
+}
+
+.recentText {
+  width: 178px; /* 측정: 178 (layout_V324MR) */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--font-family-base);
+  font-size: var(--text-nav-item-size);  /* 측정: 14 (Body3/Regular) */
+  line-height: var(--text-nav-item-line); /* 측정: 160% */
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% */
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+}
+
+/* ── CTA: '컨텐츠 추가' (Button md + neonLabel 위에 추가 정렬만) ── */
+.cta {
+  /* 측정: alignSelf stretch — 풀폭 (layout_EK47AE) → fullWidth prop으로 처리 */
+}
+
+/* ── 프로필 카드 — 측정: 226×50, pad 8/12, radius 10, border 0.08, 하단 고정 inset 14 (layout_9B1CYN) ── */
+.profileWrap {
+  margin: 0 var(--space-gnb-inset) var(--space-gnb-inset); /* 측정: 좌우/하단 14 inset (x:14, bottom 14) */
+}
+
+.profileCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 측정: space-between (layout_9B1CYN) */
+  box-sizing: border-box;
+  width: var(--size-gnb-panel); /* 측정: 226 */
+  height: var(--size-profile-card-h); /* 측정: 50 */
+  padding: var(--space-4) var(--space-6); /* 측정: 8/12 */
+  border: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+  border-radius: var(--radius-10); /* 측정: 10 */
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-family-base);
+}
+
+/* 아바타 + (이름/Premium) 묶음 — 측정: row gap 8 (layout_A5ZDP6) */
+.profileMain {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4); /* 측정: 8 */
+  min-width: 0;
+}
+
+/* 이름↔Premium — 측정: column gap -1, padTop 1 (밀착, layout_GBMDGX).
+ * CSS gap은 음수 불가 → Premium에 margin-top:-1px로 측정 밀착 재현. */
+.profileText {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1px; /* 측정: padTop 1 */
+  min-width: 0;
+}
+.profileText .profilePremium {
+  margin-top: -1px; /* 측정: gap -1 (밀착) */
+}
+
+/* 이름 — 측정: 14/Regular/lh130%/-2.5% #FAFAFA (style_SYDB3D) */
+.profileName {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%; /* 측정: 130% */
+  font-weight: var(--font-weight-regular); /* 측정: 400 */
+  letter-spacing: var(--letter-spacing-tight); /* 측정: -2.5% */
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+}
+
+/* Premium 인라인 — 측정: row align center, thunder 12 + 텍스트 12/Regular/lh130%/-2.5% #199E41 (layout_RE6RGT) */
+.profilePremium {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--text-caption-2-size); /* 12 */
+  line-height: 130%; /* 측정: 130% */
+  font-weight: var(--font-weight-regular); /* 측정: 400 */
+  letter-spacing: var(--letter-spacing-tight); /* 측정: -2.5% */
+  color: var(--color-premium-green); /* 측정: #199E41 */
+}
+
+.premiumIcon {
+  display: inline-flex;
+  width: 12px; /* 측정: 12 (layout_60OQDI) */
+  height: 12px;
+}
+
+/* 펼침 화살표 — 측정: 16×16 우측 (layout_OI84BM, 아이콘_화살표 675:718) */
+.profileArrow {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 16px; /* 측정: 16 */
+  height: 16px;
+  color: var(--color-text-secondary);
+}

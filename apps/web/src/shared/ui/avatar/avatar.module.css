@@ -36,6 +36,11 @@
   height: var(--size-avatar-sm);
   font-size: var(--text-caption-3-size);
 }
+.profile {
+  width: var(--size-avatar-profile); /* 측정: 28 (GNB 프로필 카드 2087:70381 layout_GPEQ1V) */
+  height: var(--size-avatar-profile);
+  font-size: var(--text-body-4-size);
+}
 .md {
   width: var(--size-avatar-md); /* 32 */
   height: var(--size-avatar-md);

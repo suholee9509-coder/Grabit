@@ -32,3 +32,4 @@ test-results/
 
 # figma reverse-engineering renders (throwaway — inventory only)
 docs/design/.render/
+.gstack/
