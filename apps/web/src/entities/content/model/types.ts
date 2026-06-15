@@ -52,3 +52,46 @@ export interface ContentDetail {
   /** 작성자(코호트) 직군 라벨(예: "프로덕트 디자이너 5년차") — 식별자 아님. */
   cohortLabel: string | null;
 }
+
+/**
+ * 라이브러리 카드 표현 타입(u7) — library_cards 1행의 도메인 표현(LibraryCardDto 소비/매핑).
+ * ★ 읽기/표현만 — 식별자(user_id/실명) 없음. 카드 클릭 → /content/:id 라우팅 타깃 = contentId.
+ */
+export interface LibraryCard {
+  /** 정준 콘텐츠 id(라우팅 타깃). */
+  contentId: string;
+  /** 영상 제목(없으면 null — 폴백 처리). */
+  title: string | null;
+  /** 썸네일 URL(없으면 null — 빈 면 폴백). */
+  thumbnailUrl: string | null;
+  /** provider(정준 출처키). */
+  provider: string;
+  /** 클립 태그(distinct). */
+  tags: string[];
+  /** 그랩(본인 클립) 수 — 카드 메타 "N개". */
+  grabCount: number;
+  /** 최신 클립 시각 ISO(폴더별 뷰 날짜 표시 폴백). */
+  lastClipAt: string | null;
+}
+
+/** 출처 카운트(u7) — provider별 distinct content 수(출처 필터 칩). */
+export interface SourceCount {
+  /** provider 정준키(예: youtube). */
+  provider: string;
+  count: number;
+}
+
+/**
+ * 인사이트(내 메모 발췌) 카드 표현 타입(u7) — 본인 클립 메모(본인 read, sanitized 불필요).
+ * 썸네일 + 출처/제목 + 메모 발췌(2117:24721 §8).
+ */
+export interface InsightCard {
+  /** 정준 콘텐츠 id(라우팅 타깃). */
+  contentId: string;
+  thumbnailUrl: string | null;
+  provider: string;
+  /** 영상 제목(인사이트 카드의 출처행 옆 제목 — #B4B4B4). */
+  title: string;
+  /** 메모 발췌(강조 #FAFAFA — 위계 반전). */
+  memoExcerpt: string;
+}

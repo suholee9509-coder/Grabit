@@ -27,13 +27,12 @@
 ## IN-FLIGHT (라이브 — 컴팩트 생존용 · 모든 체크포인트마다 갱신)
 > ★ Auto Compact 후엔 이 섹션 + `git worktree list` + `git log sprint/0-integration` + `/workflows` + 각 worktree status.md로 실제 상태 재구성(런북 §10). 기억 추측 ❌.
 
-**실행 중 워크플로** (watchdog 대상 · 둘 다 apps/web/src·app.tsx 공유 → 머지 시 §5 union):
-- **u8-search FE** — Task `wzepgh9hh` · run `wf_60bb6715-68f` · script `.../u8-search-fe-wf_60bb6715-68f.js` · worktree feat/u8-search-fe(9be2b65) · blast=apps/web/src.
-- **u7-library FE** — Task `w1vgklj0x` · run `wf_4a8ed391-0d8` · script `.../u7-library-fe-wf_4a8ed391-0d8.js` · worktree feat/u7-library-fe(88992ec·u4상세+0011 상속) · blast=apps/web/src.
-- ~~u4 FE `wedn36twz`~~ ✅ main `891d4cf` · ~~u2·u6~~ main · ~~u7/u8/u11 BE~~ integration.
+**실행 중 워크플로** (watchdog 대상):
+- **u7-library FE** — Task `w1vgklj0x` · run `wf_4a8ed391-0d8` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u7-library-fe-wf_4a8ed391-0d8.js` · worktree feat/u7-library-fe(88992ec·u4상세+0011 상속·**u8 미포함**) · blast=apps/web/src. **⚠ 머지 시 u8의 app.tsx(/search)·entities/content·shared/api 변경과 §5 union 필요.**
+- ~~u8 FE `wzepgh9hh`~~ ✅ 완료·integration+main 머지 · ~~u4 `wedn36twz`~~·u2·u6 main · 전 BE integration.
 
-**머지 순서(§5 union·app.tsx 라우트·shared/api export 양쪽 보존·grep 마커0)**: 완료 순서대로 1개씩(먼저 끝난 것부터). 각 머지 후 tsc/lint/fsd/build/vitest/pgTAP green 재확인 → push → 풀유닛 main 머지.
-**다음 FE**: u8·u7 머지 후 → **u11 FE**(0013 상속·디자인공백→파운데이션). 그 후 **Wave5 프로덕션화**.
+**main 상태**: `b9b49a2`(u2·u4·u6·u8 + u7/u8/u11 BE). integration=`6e1e199`+docs.
+**다음 FE**: u7 머지(§5 union) 후 → **u11 FE**(0013 상속·디자인공백→파운데이션). 그 후 **Wave5 프로덕션화**(목킹→실배선 폴백·Playwright e2e·.env.example·ci.yml·docs/SETUP.md).
 
 **완료 단위**: u2(home-feed)·u6(chrome-extension) [main `835e288`] · BE: u7·u8 마이그(0011·0012)[integration].
 **integration 상태**: `61dc7fa` + (이 턴 state docs 커밋) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0. origin 백업됨.
@@ -54,6 +53,15 @@
 
 ## 단위 진행 로그
 <!-- 각 단위 완료/스킵 시 §9 양식 append -->
+
+## u8-search — 완료 (Wave3 풀유닛)
+- 검증: tsc 0·eslint 0·steiger✔·build 0 · vitest **104/104**(19파일·18신규: search-results 9·search-discovery 4·search-recent 5) · pgTAP 172/0 · 콘솔0 · 충실도 자체검증(3프레임 1:1·검색바 520×48 r80)
+- integration 머지: u8 커밋→merge `6e1e199` · **§5 union 충돌4 해결**(app.tsx /search+/content union·entities/content 배럴·shared/api index/types union — 마커0·재검증 green) · push origin sprint/0-integration **O**
+- main 머지: `b9b49a2`(u2·u4·u6·u8+BE) · push origin main **O**
+- 게이트 ⓒ: ★사용자 사인오프 — 라우트 `/search`(디폴트발견·결과·빈). 출처 로고=Youtube SVG만(타 provider=첫글자 모노그램 폴백)·카테고리=태그 매핑(실데이터서 0건 가능→빈상태 graceful) 확인
+- 결정 로그: search_my_content RPC(본인행만·디바운스 0.5s·최근검색어 10캡 localStorage·쿼리칩 dismiss) / 디폴트발견=콜드스타트 폴백 / AI 자동완성/시맨틱 제외
+- ESCALATION: (없음) · design-review 별도 미수행(FE verify 자체 픽셀검증)
+- 다음: u7 라이브러리 FE(진행중) 머지 §5 union → u11 FE
 
 ## u4-content-detail — 완료 (Wave2 풀유닛)
 - 검증: tsc 0·eslint 0·steiger✔·build 0 · vitest **86/86**(16파일·24신규: content-detail.contract 9·content-read 11 — RPC 정확인자·raw clips 우회·sanitized 키 부재·404·N<임계 cohort 숨김) · pgTAP 172/0 무회귀 · 콘솔0 · 충실도 자체검증(3프레임 1:1)

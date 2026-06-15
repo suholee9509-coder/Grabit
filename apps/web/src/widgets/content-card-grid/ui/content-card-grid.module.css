@@ -1,0 +1,93 @@
+/* ContentCardGrid — 측정 2117:22165: 행당 5열 fill · 행내 gap28 · 행간 gap24 · 그룹간 gap42.
+   CSS grid로 5열 fill 구현(반응형: 카드 최소폭 확보 시 auto-fill). 측정 우선 = 5열 고정. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  column-gap: var(--space-14); /* 28 */
+  row-gap: var(--space-grid-row); /* 42 — 그룹/행간 통합(측정 행간24/그룹42 중 시각 행간 통일) */
+  width: 100%;
+}
+
+.cell {
+  min-width: 0;
+}
+
+/* 좁은 뷰포트 폴백(픽셀 SoT=5열, 1280 미만에서 가독성 유지). */
+@media (max-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* 스켈레톤 — u0c 로딩 패턴(측정 프레임 부재). */
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  min-width: 0;
+}
+
+.skeletonThumb {
+  width: 100%;
+  height: 142px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-ghost);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.skeletonLine {
+  height: 14px;
+  border-radius: var(--radius-xs);
+  background: var(--color-surface-ghost);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.skeletonLineShort {
+  width: 60%;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* 빈/에러 상태 — u0c 파운데이션 표면. */
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-7);
+  padding: 80px var(--space-10);
+  text-align: center;
+}
+
+.stateText {
+  margin: 0;
+  font-size: var(--text-body-2-size);
+  line-height: 150%;
+  color: var(--color-gray-500);
+}
+
+.retry {
+  height: var(--size-button-md);
+  padding: 0 var(--space-8);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-surface-ghost);
+  color: var(--color-white);
+  font-size: var(--text-body-3-size);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+}

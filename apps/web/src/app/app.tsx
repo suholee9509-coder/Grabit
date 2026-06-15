@@ -5,6 +5,7 @@ import { OnboardingPage } from '@/pages/onboarding';
 import { HomePage } from '@/pages/home';
 import { ContentDetailPage } from '@/pages/content-detail';
 import { SearchPage } from '@/pages/search';
+import { LibraryPage } from '@/pages/library';
 import {
   RequireOnboarded,
   OnboardingRouteGuard,
@@ -73,6 +74,16 @@ export const routes: RouteObject[] = [
         // 페이지 내부에서 쓰기(좋아요·클립추가·작성)만 로그인 유도(onRequireLogin → /login).
         path: 'content/:id',
         element: <ContentDetailPage />,
+      },
+      {
+        // u7 라이브러리 — 인증 + 온보딩 완료 필수(RequireOnboarded).
+        // GNB 라이브러리 링크는 페이지 onMenuSelect→navigate('/library') · activeMenu="library".
+        path: 'library',
+        element: (
+          <RequireOnboarded>
+            <LibraryPage />
+          </RequireOnboarded>
+        ),
       },
       {
         path: 'ui-preview',

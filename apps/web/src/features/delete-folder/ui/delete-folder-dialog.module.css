@@ -1,0 +1,19 @@
+/* DeleteFolderDialog — u0c Modal 기반. */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-4); /* 8 */
+}
+
+.body {
+  margin: 0;
+  font-size: var(--text-body-2-size);
+  line-height: 150%;
+  color: var(--color-gray-550);
+}
+
+.name {
+  color: var(--color-white);
+  font-weight: var(--font-weight-semibold);
+}
