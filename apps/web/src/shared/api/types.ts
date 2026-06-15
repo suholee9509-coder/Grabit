@@ -100,3 +100,43 @@ export interface SimilarContentDto {
   /** 클립(그랩) 수. */
   clipCount: number;
 }
+
+/* ============================================================
+ * u7 라이브러리 — 0011 RPC 계약 DTO(camel). snake 매핑은 library.ts 내부.
+ *   누출 0: 본인 행만(RLS). user_id/실명 키 부재(RPC가 SELECT 안 함).
+ * ============================================================ */
+
+/** library_cards 정렬 파라미터(기획 §5.1.1 — 최신순/오래된순/클립 많은 순). */
+export type LibrarySort = 'recent' | 'oldest' | 'most_clips';
+
+/**
+ * library_cards 1행(0011 7c) — 카드 표면(distinct content 1행).
+ * lastClipAt = 최신 클립 시각(정렬·표시 폴백). 식별자 없음(본인 라이브러리 표현).
+ */
+export interface LibraryCardDto {
+  /** 정준 콘텐츠 id(카드 클릭 → /content/:id 라우팅 타깃). */
+  contentId: string;
+  title: string | null;
+  thumbnailUrl: string | null;
+  /** provider(정준 출처키, 예: 'youtube'). */
+  provider: string;
+  /** 클립 태그(distinct, 정렬됨). */
+  tags: string[];
+  /** 그랩(본인 클립) 수 — 카드 메타 "N개". */
+  grabCount: number;
+  /** 최신 클립 시각 ISO(폴더별 카드의 날짜 표시 폴백). */
+  lastClipAt: string | null;
+}
+
+/** library_folder_counts 1행(0011 7) — 폴더별 distinct content 수("N개의 컨텐츠"). */
+export interface FolderCountDto {
+  folderId: string;
+  name: string;
+  contentCount: number;
+}
+
+/** library_source_counts 1행(0011 7b) — provider별 distinct content 수(출처 카운트 필터). */
+export interface SourceCountDto {
+  provider: string;
+  contentCount: number;
+}

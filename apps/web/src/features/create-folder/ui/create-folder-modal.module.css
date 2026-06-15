@@ -1,0 +1,14 @@
+/* CreateFolderModal — u0c Modal 기반(측정 프레임 부재 → 파운데이션 패턴). */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-4); /* 8 */
+}
+
+.limit {
+  margin: 0;
+  font-size: var(--text-body-2-size);
+  line-height: 150%;
+  color: var(--color-gray-550);
+}

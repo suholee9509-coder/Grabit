@@ -1,0 +1,13 @@
+/* SortLibrary — u0c Dropdown 래퍼. 정렬 라벨(기획 §5.1.1). */
+.dropdown {
+  flex: none;
+}
+
+.triggerLabel {
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-white);
+  white-space: nowrap;
+}

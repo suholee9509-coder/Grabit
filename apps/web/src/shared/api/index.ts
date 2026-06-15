@@ -17,7 +17,23 @@ export {
   getContentHeatmap,
   getContentMeta,
 } from './content-read';
-export { mapIngestError, type MappedError, type IngestErrorKind } from './errors';
+export {
+  createFolder,
+  renameFolder,
+  softDeleteFolder,
+  moveClipsToFolder,
+  getFolderCounts,
+  getSourceCounts,
+  getLibraryCards,
+} from './library';
+export {
+  mapIngestError,
+  mapLibraryError,
+  type MappedError,
+  type IngestErrorKind,
+  type MappedLibraryError,
+  type LibraryErrorKind,
+} from './errors';
 export type {
   IngestClipParams,
   ClipRow,
@@ -28,6 +44,10 @@ export type {
   HeatmapBucketDto,
   ContentMetaDto,
   SimilarContentDto,
+  LibraryCardDto,
+  LibrarySort,
+  FolderCountDto,
+  SourceCountDto,
 } from './types';
 export {
   DEMO_FOLDERS,
@@ -38,4 +58,14 @@ export {
   demoContentSocialClips,
   demoContentHeatmap,
   demoSimilarContent,
+  DEMO_LIBRARY_FOLDERS,
+  DEMO_FOLDER_COUNTS,
+  DEMO_SOURCE_COUNTS,
+  DEMO_LIBRARY_CARDS,
+  DEMO_INSIGHTS,
+  demoLibraryCards,
+  demoFolderCounts,
+  demoSourceCounts,
+  demoInsights,
+  type DemoInsightCard,
 } from './demo-data';

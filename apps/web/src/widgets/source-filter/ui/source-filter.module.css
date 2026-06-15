@@ -1,0 +1,29 @@
+/* SourceFilter — 측정 2117:22471 row align center gap16. */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8); /* 16 */
+}
+
+/* 세로 디바이더 — 측정 w0×h28 stroke rgba(255,255,255,.16) 1px. */
+.divider {
+  width: 1px;
+  height: 28px;
+  background: var(--color-border-breadcrumb-sep);
+  flex: none;
+}
+
+/* 출처 칩 행 — 측정 row align center gap8. */
+.chips {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4); /* 8 */
+  flex-wrap: wrap;
+}
+
+/* 우측 정렬 슬롯 — 행 끝으로 밀착. */
+.sort {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
