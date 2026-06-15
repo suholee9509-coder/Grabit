@@ -1,6 +1,6 @@
 # Unit: u3-clip-webapp
 
-> Sprint 1 · Wave 1 · owner=both · **mode=인터랙티브 워크트리(사용자 운전)** · Issue #<n> · dep=u0(디자인시스템·shared/ui)·u0b(데이터코어 `ingest_clip` RPC) 머지 후 · migration **없음**(u0b 계약 위에서 소비만)
+> Sprint 1 · Wave 1 · owner=both · **착수=FE Workflow 자동구현(시각확인)+BE 헤드리스 /goal** · **Issue #3** · dep=u0(디자인시스템·shared/ui)·u0b(데이터코어 `ingest_clip` RPC) 머지 후 · migration **없음**(u0b 계약 위에서 소비만)
 > 매 턴 spec + plan + 대상 Figma 프레임(2087:32073 · 2087:33548 · 2087:35127 · 2087:36708 · 2384:141451) reload.
 > ★ 데이터 계약 = u0b가 락한 ADR-0002. `clips`/`contents`/`folders`/`tags` 스키마·`ingest_clip()` RPC를 **변경 금지**, 호출만.
 

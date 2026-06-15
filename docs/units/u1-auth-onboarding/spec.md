@@ -1,7 +1,7 @@
 # u1-auth-onboarding — 성공조건 (/goal)
 
 > Sprint 0 · Wave (후행, 파운데이션 머지 후) · owner=both · **mode=인터랙티브 워크트리(사용자 운전)**
-> · Issue #TBD(게이트 ⓑ에서 PM 발급) · dep=u0(디자인시스템·shared/ui·앱셸/GNB·**u0c stepper/소셜버튼 포함**) + u0b(데이터코어·ADR-0002 락) 머지 후 · migration **유(profiles 코호트 + 온보딩 완료 플래그 — u0b 스키마 위 additive policy/RPC만)**
+> · **Issue #2** · 착수=FE Workflow 자동구현(시각확인)+BE 헤드리스 /goal · dep=u0(디자인시스템·shared/ui·앱셸/GNB·**u0c stepper/소셜버튼 포함**) + u0b(데이터코어·ADR-0002 락) 머지 후 · migration **유(profiles 코호트 + 온보딩 완료 플래그 — u0b 스키마 위 additive policy/RPC만)**
 > ★ **고위험(인증).** 매 턴 spec + 대상 Figma 6프레임 + u0 파운데이션(토큰·shared/ui·앱셸) + ADR-0001(Auth=Google+Kakao) / ADR-0002(#6 프로필 private/public 분리) reload. **인증 경로·토큰 처리는 추측 ❌** — 디자인 공백은 파운데이션으로 채우고, 인증/제공자 충돌은 §ESCALATION으로 결정 후 진행.
 
 ## L1 User Story  (검증의 north star — 각 인수기준이 여기로 추적된다)
