@@ -1,0 +1,95 @@
+/* SearchBar — 측정 정본: 2087:40407(디폴트) / 2087:38859·40137(쿼리칩).
+ * 외곽 520×48 · radius80 · surface-100 · border-default 1px · 내부 row gap6.
+ * 디폴트 pad 8/7/8/20(T/R/B/L) · 쿼리 pad 8/20. 토큰 변수만(레이아웃 고정폭 제외). */
+
+.wrap {
+  position: relative;
+  width: 520px; /* 측정: 520 */
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3); /* 측정: 내부 row gap 6 */
+  width: 520px; /* 측정: 520 */
+  height: var(--size-search); /* 측정: 48 */
+  /* 측정 디폴트: padding 8 7 8 20 (T/R/B/L) — 우측 7은 버튼 hug 여백 */
+  padding: var(--space-4) 7px var(--space-4) var(--space-10);
+  border: 1px solid var(--color-border-default); /* 측정: rgba(255,255,255,0.1) */
+  border-radius: var(--radius-search); /* 측정: 80 */
+  background-color: var(--color-surface-100); /* 측정: #1F1F1F */
+  box-sizing: border-box;
+}
+
+/* 쿼리칩 모드 — pad 8/20(좌우 대칭), Dismiss 우측 */
+.queryBar {
+  padding: var(--space-4) var(--space-10); /* 측정: 8 / 20 */
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  color: var(--color-text-secondary); /* 측정: placeholder 톤 #B4B4B4 근사(아이콘 그레이) */
+}
+
+/* 입력(디폴트) — placeholder 15/400/160%/-2.5% #B4B4B4 */
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-white); /* 입력 텍스트 #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-2-size); /* 15 */
+  line-height: 160%; /* 측정: 160% */
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+}
+.input::placeholder {
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  opacity: 1;
+}
+
+/* 쿼리 텍스트(결과/빈) — 15/400/160%/-2.5% #FAFAFA */
+.queryText {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--color-white); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-2-size); /* 15 */
+  font-weight: var(--font-weight-regular); /* 400 */
+  line-height: 160%; /* 측정: 160% */
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+}
+
+/* Dismiss(X) — 16×16 #999999 */
+.dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; /* 측정: 16 */
+  height: 16px;
+  flex: none;
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--color-text-tertiary); /* 측정: #999999 */
+  cursor: pointer;
+}
+.dismiss:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* "검색하기" 버튼 — 측정 2087:40411: 34h · pad14/16 · radius80(pill) · #66FF4B · 라벨14/600/130%/-2% #000.
+ * shared Button size=md(34h·#66FF4B·#000 neonLabel) 위에 radius80·lh130·padY14만 보정(픽셀-퍼펙트). */
+.submit {
+  flex: none;
+  border-radius: var(--radius-search); /* 측정: 80 (md 기본 8 → 80 보정) */
+  padding: 0 var(--space-8); /* 측정: padX 16 (height 34 고정이 padY 흡수) */
+  line-height: var(--text-button-sm-line); /* 측정: 130% (md 기본 160 → 130 보정) */
+}

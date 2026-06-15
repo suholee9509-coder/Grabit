@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ExtensionInstallModal } from '@/features/extension-install-modal';
 import { AppShell } from '@/widgets/app-shell';
 import { Sidebar } from '@/widgets/sidebar';
@@ -15,6 +15,7 @@ import styles from './home-page.module.css';
  */
 export function HomePage() {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   const cameFromOnboarding = params.get('onboarded') === '1';
   const flow = useClipAddFlow();
 
@@ -24,6 +25,9 @@ export function HomePage() {
         sidebar={
           <Sidebar
             activeMenu="home"
+            onMenuSelect={(key) => {
+              if (key === 'search') navigate('/search');
+            }}
             onAddContent={flow.open}
             folders={(flow.folders ?? []).map((f) => ({ id: f.id, label: f.name }))}
             profile={{ name: 'Grabit 사용자' }}

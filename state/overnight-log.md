@@ -27,12 +27,13 @@
 ## IN-FLIGHT (라이브 — 컴팩트 생존용 · 모든 체크포인트마다 갱신)
 > ★ Auto Compact 후엔 이 섹션 + `git worktree list` + `git log sprint/0-integration` + `/workflows` + 각 worktree status.md로 실제 상태 재구성(런북 §10). 기억 추측 ❌.
 
-**실행 중 워크플로** (watchdog 대상):
-- **u8-search FE** — Task `wzepgh9hh` · run `wf_60bb6715-68f` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u8-search-fe-wf_60bb6715-68f.js` · worktree feat/u8-search-fe(9be2b65 브랜치) · blast=apps/web/src · 측정→계획→구현→검증. **⚠ u4가 먼저 머지됨 → u8 머지 시 app.tsx·shared/api §5 union 해결**(양쪽 라우트/export 보존·grep '^<<<<<<<' 0).
-- ~~u4 FE `wedn36twz`~~ ✅ **완료·integration+main 머지**(아래 로그).
-- ~~u11 BE `wgzqi9bn9`~~ ✅ integration · ~~u7/u8 BE `woyt10t8h`~~ ✅ integration.
+**실행 중 워크플로** (watchdog 대상 · 둘 다 apps/web/src·app.tsx 공유 → 머지 시 §5 union):
+- **u8-search FE** — Task `wzepgh9hh` · run `wf_60bb6715-68f` · script `.../u8-search-fe-wf_60bb6715-68f.js` · worktree feat/u8-search-fe(9be2b65) · blast=apps/web/src.
+- **u7-library FE** — Task `w1vgklj0x` · run `wf_4a8ed391-0d8` · script `.../u7-library-fe-wf_4a8ed391-0d8.js` · worktree feat/u7-library-fe(88992ec·u4상세+0011 상속) · blast=apps/web/src.
+- ~~u4 FE `wedn36twz`~~ ✅ main `891d4cf` · ~~u2·u6~~ main · ~~u7/u8/u11 BE~~ integration.
 
-**다음 FE**: u8 머지 후 → **u7 라이브러리 FE**(u4 상세 재사용·0011 상속) → **u11 FE**(0013 상속). 그 후 Wave5 프로덕션화.
+**머지 순서(§5 union·app.tsx 라우트·shared/api export 양쪽 보존·grep 마커0)**: 완료 순서대로 1개씩(먼저 끝난 것부터). 각 머지 후 tsc/lint/fsd/build/vitest/pgTAP green 재확인 → push → 풀유닛 main 머지.
+**다음 FE**: u8·u7 머지 후 → **u11 FE**(0013 상속·디자인공백→파운데이션). 그 후 **Wave5 프로덕션화**.
 
 **완료 단위**: u2(home-feed)·u6(chrome-extension) [main `835e288`] · BE: u7·u8 마이그(0011·0012)[integration].
 **integration 상태**: `61dc7fa` + (이 턴 state docs 커밋) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0. origin 백업됨.

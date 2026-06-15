@@ -1,0 +1,130 @@
+/* ContentCard — 검색 결과/추천 공용 카드. 측정 정본: 결과 2087:38955 · 추천 3253:7338.
+ * 카드 252×232(grid 셀폭 채움) · column gap14 · 썸네일 142h radius6 · 정보블록 gap10.
+ * 토큰 변수만(레이아웃 고정값·lh130/160·rgba(0,0,0,.32) 1곳만 인라인). */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7); /* 측정: 14 (썸네일↔정보) */
+  width: 100%; /* 측정: 252 (그리드 셀폭) */
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+}
+.card:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* 썸네일 — width fill · height 142 · radius6 · cover */
+.thumb {
+  position: relative;
+  width: 100%;
+  height: 142px; /* 측정: 142 */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  overflow: hidden;
+  background-color: var(--color-surface-200); /* 빈 면 폴백 */
+  flex: none;
+}
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.thumbFallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-surface-200);
+}
+
+/* 출처 로고 배지 — 측정: (6,6) 30×28 rgba(0,0,0,.32)+blur2px radius6, 내부 로고 24 */
+.sourceBadge {
+  position: absolute;
+  top: 6px; /* 측정: y=6 */
+  left: 6px; /* 측정: x≈6 (추천은 5.93, 결과는 6) */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; /* 측정: 결과 30 (추천 29.64≈30) */
+  height: 28px; /* 측정: 28 */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background-color: rgba(0, 0, 0, 0.32); /* 측정: rgba(0,0,0,0.32) — .32 오버레이 토큰 부재(인라인 1곳) */
+  backdrop-filter: blur(2px); /* 측정: blur(2px) */
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* 정보 블록 — column gap10 */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5); /* 측정: 10 */
+}
+
+/* 제목 — 252 wrap · 15/500/130%/-2.5% #FAFAFA · 2줄 클램프 */
+.title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--color-white); /* 측정: #FAFAFA */
+  font-size: var(--text-tab-list-size); /* 15 (= 카드제목 15/500/130/-2.5 동일 메트릭) */
+  line-height: var(--text-tab-list-line); /* 130% */
+  font-weight: var(--font-weight-medium); /* 측정: 500 */
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+}
+
+/* 메타 행 — row gap12 (태그그룹 + 클립수) */
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6); /* 측정: 12 */
+}
+
+/* 태그 그룹 — row gap8 (태그칩 2개) */
+.tags {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4); /* 측정: 8 */
+  min-width: 0;
+}
+/* 태그칩 — 28h · pad10 · radius6 · surface-hover(.06) · 13/400/160%/-2% #CECECE (비인터랙티브 span) */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: var(--size-chip-tag); /* 측정: 28 */
+  padding: 0 var(--space-5); /* 측정: 10 (수평; 28h가 수직 결정) */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background-color: var(--color-surface-hover); /* 측정: rgba(255,255,255,0.06) */
+  color: var(--color-gray-550); /* 측정: #CECECE */
+  font-size: var(--text-chip-tag-size); /* 13 */
+  line-height: var(--text-chip-tag-line); /* 160% */
+  font-weight: var(--text-chip-tag-weight); /* 400 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+}
+
+/* 클립수 — row gap7 (아이콘블록 + "N개") · 아이콘↔숫자 내부 gap4 */
+.clipCount {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2); /* 측정: 내부 4 (아이콘↔숫자) */
+  flex: none;
+  color: var(--color-text-tertiary); /* 측정: #999999 */
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%; /* 측정: 130% */
+  font-weight: var(--font-weight-regular); /* 400 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
+.clipIcon {
+  display: inline-flex;
+  align-items: center;
+}

@@ -4,6 +4,7 @@ import { LoginPage, OAuthCallbackPage } from '@/pages/auth';
 import { OnboardingPage } from '@/pages/onboarding';
 import { HomePage } from '@/pages/home';
 import { ContentDetailPage } from '@/pages/content-detail';
+import { SearchPage } from '@/pages/search';
 import {
   RequireOnboarded,
   OnboardingRouteGuard,
@@ -16,6 +17,7 @@ import {
  *   /auth/callback  : OAuth 콜백(세션 확정 → 온보딩/홈 분기).
  *   /onboarding     : 4단계 프로필(인증 필수 · 이미 완료 시 홈 스킵).
  *   /               : 홈(인증 + 온보딩 완료 필수 — 미완료 시 온보딩 게이팅).
+ *   /search         : 검색(u8 — 회원 + 온보딩 완료 필수). GNB 검색 활성.
  *   /ui-preview     : u0 디자인 시스템 미리보기(공개).
  * routes(RouteObject[])만 export → 라우터 인스턴스는 main.tsx에서 생성.
  */
@@ -54,6 +56,15 @@ export const routes: RouteObject[] = [
           <OnboardingRouteGuard>
             <OnboardingPage />
           </OnboardingRouteGuard>
+        ),
+      },
+      {
+        // u8 검색(L1-a~d) — 홈과 동일 가드(회원 + 온보딩 완료).
+        path: 'search',
+        element: (
+          <RequireOnboarded>
+            <SearchPage />
+          </RequireOnboarded>
         ),
       },
       {

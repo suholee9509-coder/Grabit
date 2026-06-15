@@ -17,6 +17,11 @@ export {
   getContentHeatmap,
   getContentMeta,
 } from './content-read';
+export {
+  searchMyContent,
+  searchMyContentSources,
+  type SearchContentArgs,
+} from './search';
 export { mapIngestError, type MappedError, type IngestErrorKind } from './errors';
 export type {
   IngestClipParams,
@@ -28,6 +33,8 @@ export type {
   HeatmapBucketDto,
   ContentMetaDto,
   SimilarContentDto,
+  SearchRow,
+  SourceCountRow,
 } from './types';
 export {
   DEMO_FOLDERS,
@@ -39,3 +46,10 @@ export {
   demoContentHeatmap,
   demoSimilarContent,
 } from './demo-data';
+export {
+  DEMO_DISCOVERY,
+  demoDiscovery,
+  demoSearchMyContent,
+  demoSearchSources,
+  type DemoSearchArgs,
+} from './demo-search';

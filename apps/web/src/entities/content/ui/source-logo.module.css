@@ -1,0 +1,21 @@
+/* SourceLogo — 측정: 출처필터 박스 20×20(내부 img 18 radius4) · 카드 배지 24×24.
+ * 토큰 변수만(하드코딩 ❌, 단 Youtube 브랜드 HEX는 SVG 내부 — 자산색). */
+.logo {
+  display: block;
+  border-radius: var(--radius-xs); /* 측정: 4 (내부 이미지 radius) */
+  flex: none;
+}
+
+.mono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs); /* 측정: 4 */
+  background-color: var(--color-surface-200); /* [디자인공백] 폴백 면색 — #242424 */
+  color: var(--color-white); /* #FAFAFA */
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-snug);
+  line-height: 1;
+  flex: none;
+}
