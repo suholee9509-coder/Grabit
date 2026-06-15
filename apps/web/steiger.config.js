@@ -12,4 +12,13 @@ import { defineConfig } from 'steiger';
  */
 export default defineConfig([
   ...fsd.configs.recommended,
+  {
+    // insignificant-slice = "단일 참조 슬라이스 병합 권고"(어드바이저리).
+    // u1 스펙 Boundaries가 features/{social-login,onboarding-steps,extension-install-modal}·
+    // widgets/onboarding-stepper를 별도 슬라이스로 명시 요구 → 병합 금지. 후속 유닛(u2+)에서
+    // 참조가 늘어난다. 경계(레이어 방향·동일레이어 크로스슬라이스·공개 API) 규칙은 전부 유지.
+    rules: {
+      'fsd/insignificant-slice': 'off',
+    },
+  },
 ]);

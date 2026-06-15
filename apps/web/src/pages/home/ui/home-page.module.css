@@ -1,0 +1,14 @@
+/* 홈 자리표시 — u2 본문 구현 전 파운데이션. */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.note {
+  color: var(--color-text-tertiary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-1-size);
+  letter-spacing: var(--letter-spacing-snug);
+}

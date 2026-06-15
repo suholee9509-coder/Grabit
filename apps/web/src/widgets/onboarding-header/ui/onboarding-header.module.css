@@ -1,0 +1,27 @@
+/* 온보딩 헤더 — 측정 layout_BW4TVB/OQA6IX: row · x=32 y=28 · w902 · space-between · center. */
+.header {
+  position: absolute;
+  top: 28px;
+  left: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 902px;
+  max-width: calc(100% - 64px);
+}
+
+/* 로고 — 측정: 91×24.75(심볼+워드마크). */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 24.75px;
+}
+
+.wordmark {
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-snug);
+}

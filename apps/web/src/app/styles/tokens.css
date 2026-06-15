@@ -142,6 +142,12 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
+  /* 온보딩/로그인 전용 헤딩 (u1 측정 — 기존 type ramp에 부재한 36/30px 추가) */
+  /* 온보딩 4단계 제목: 36 / 600 / 130% / -2% (style_HBUARW / style_JU9BCR, 2087:8476 외) */
+  --text-onboarding-title-size: 36px; --text-onboarding-title-line: 130%; --text-onboarding-title-weight: 600;
+  /* 로그인 진입 헤딩: 30 / 600 / 130% / -2% (Display 2/Semibold, 2087:8442) — title-2(28)↔title-1(32) 사이, 부재 */
+  --text-login-heading-size: 30px;    --text-login-heading-line: 130%;    --text-login-heading-weight: 600;
+
   /* Title — style_0Y70FH/RM8FBP/V14KF6/D7UL58/RRQP7Q */
   --text-title-1-size: 32px;   --text-title-1-line: 42px;  /* style_0Y70FH */
   --text-title-2-size: 28px;   --text-title-2-line: 130%;  /* style_RM8FBP */
