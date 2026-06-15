@@ -92,3 +92,20 @@ export function resetMockOnboarding(): void {
   if (typeof sessionStorage === 'undefined') return;
   sessionStorage.removeItem(MOCK_KEY);
 }
+
+/**
+ * 현재 사용자 직군(라벨용, u2) — 자기 행 select(own row, RLS-safe). cross-user 아님.
+ * Supabase 미배선 시 목 상태(saveOnboarding이 보존한 job) 폴백. 없으면 null → 화면 폴백 라벨.
+ * profiles는 RLS로 본인 행만 read(0010 계약) — user_id 직접 노출 ❌(job 필드만 반환).
+ */
+export async function fetchMyProfileJob(): Promise<{ job: string | null }> {
+  if (!supabase) {
+    return { job: readMock().profile?.job ?? null };
+  }
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('job')
+    .maybeSingle();
+  if (error) throw error;
+  return { job: (data as { job: string | null } | null)?.job ?? null };
+}

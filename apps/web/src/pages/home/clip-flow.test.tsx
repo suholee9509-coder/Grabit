@@ -2,6 +2,7 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MemoryRouter } from 'react-router-dom';
 
 /**
  * clip-flow 통합 테스트 — Step1→Step2 전환·트림 상태·태그 추가/자동완성/제거·
@@ -27,9 +28,12 @@ import { HomePage } from '@/pages/home';
 
 function renderApp() {
   const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  // u2: HomePage가 useSearchParams + HomeFeed의 useNavigate를 쓰므로 Router 컨텍스트 필요.
   return render(
     <QueryClientProvider client={qc}>
-      <HomePage />
+      <MemoryRouter initialEntries={['/']}>
+        <HomePage />
+      </MemoryRouter>
     </QueryClientProvider>,
   );
 }

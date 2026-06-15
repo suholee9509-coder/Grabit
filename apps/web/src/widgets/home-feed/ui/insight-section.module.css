@@ -1,0 +1,30 @@
+/* insight-section — "현직자들의 인사이트"(피드). 측정 2087:73087.
+ * 제목(Bold24 #FAFAFA) + underline 탭(분야 전환) + CrossCard(인사이트) 카드행(row gap4). */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6); /* 측정: 제목↔탭 근사(12) */
+}
+.title {
+  margin: 0;
+  padding-left: var(--space-7); /* 측정: x14 */
+  color: var(--color-white);
+  font-size: var(--text-title-3-size); /* 24 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-tight);
+  font-weight: var(--font-weight-bold);
+}
+.carousel {
+  display: flex;
+  gap: var(--space-2); /* 측정: 카드 사이 4 */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}

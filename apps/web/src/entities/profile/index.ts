@@ -29,9 +29,11 @@ export {
   fetchIsOnboarded,
   saveOnboarding,
   resetMockOnboarding,
+  fetchMyProfileJob,
 } from './api/profile-api';
 export {
   profileKeys,
   useOnboardingGate,
   useCompleteOnboarding,
+  useMyProfileJob,
 } from './api/queries';

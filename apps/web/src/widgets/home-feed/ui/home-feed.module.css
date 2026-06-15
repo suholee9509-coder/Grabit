@@ -1,0 +1,37 @@
+/* home-feed — 홈 피드 오케스트레이터. 3컬럼: 중앙(취향관|피드) + 우레일(420).
+ * 측정 풀스크롤 2087:70384 §0: 중앙 콘텐츠 1214 · 우레일 420 · 컬럼 gap8.
+ * 셸 main이 flex-fill이므로 중앙은 자연 폭(반응형 안전), 우레일만 420 고정·gap8. */
+.layout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4); /* 측정: 컬럼 gap 8 */
+  padding: var(--space-4); /* 셸 내부 콘텐츠 inset(측정 골격: 컬럼 좌우 8) */
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+/* 중앙 콘텐츠 컬럼 — 자연 폭(우레일 제외 나머지). 상단 톱바56 아래부터. */
+.center {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1차 세그먼트(취향관/피드) — 좌 inset 40(측정 x40 y409) */
+.segment {
+  padding: var(--space-20) var(--space-20) var(--space-8); /* 측정: 좌 40 + 상하 여백 */
+}
+
+/* 우 레일 — 420 고정 */
+.rail {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 1180px) {
+  /* 좁은 폭: 우레일 숨김(레이아웃 안전 — 측정 외 반응형 가드) */
+  .rail {
+    display: none;
+  }
+}
