@@ -8,7 +8,8 @@
 > 기획 SoT: `docs/source/`(기능명세서·유저플로우 + manyfast) · 디자인 SoT: Figma(`docs/design/`).
 
 ## 1. Active Sprint
-- Sprint: **0 — 진행 중.** ✅ Figma 인벤토리(40프레임) + 게이트 ⓐ 스코프 확정 + **✅ ADR-0001 스택 락**(`/plan-eng-review`+Codex). **▶ 현재 = 모노레포 스캐폴딩 + u0/u0b spec 작성 → 병렬 착수(Lane A 인터랙티브 + Lane B 헤드리스).** 그다음: 화면 단위 spec 역설계 → 게이트 ⓑ.
+- Sprint: **0 — 파운데이션 완료.** ✅ 게이트 ⓐ + ADR-0001/0002 + 스캐폴드 + ✅ **u0 디자인시스템**(`9924300` — 실화면 픽셀측정·#66FF4B·흰색#FAFAFA·토글28, tsc/lint green, `/ui-preview` 사인오프) + ✅ **u0b 데이터코어**(`3225bc0` — 마이그9·pgTAP6·ingest, ADR-0002 10항목 락, pglite 38/0 + RLS 설계리뷰 PASS, **정본=CI** `u0b-canonical-tests.yml` push시 게이트). **▶ 다음 = 화면 단위(u1·u2·u3·u4·u6·u7·u8·u11) spec 역설계 → 게이트 ⓑ(sprint-kickoff).** u0b 결정점 3개(§6) 확인.
+- 워크트리: `.claude/worktrees/u0-design-system`(feat/u0-design-system) · `.claude/worktrees/u0b-data-core`(feat/u0b-data-core) ← sprint/0-integration(`313c9b4`).
 - 목표(S0): Figma 프레임 인벤토리(`docs/design/`) · 제품 스펙 역설계 · 스택/데이터 ADR · FSD 스캐폴딩 · 디자인 토큰 추출(§5). (코드 기능 단위 없음)
 - Milestone: _(미생성 — sprint-kickoff 시)_
 - 통합브랜치: `sprint/0-integration` _(미생성)_
@@ -64,14 +65,18 @@
 - 2026-06-15 · PM · **✅ Figma 역설계 완료**: "프로토타이핑" `2087:5987` 10플로우/40프레임을 병렬 워크플로(10 에이전트·렌더 판독) → 프레임 인벤토리(`docs/design/README.md`) + 유닛 11개 절단(§3) + 디자인공백 레지스터(§6).
 - 2026-06-15 · **사용자(게이트 ⓐ)** · **MVP 스코프 확정**: ❌AI 전면 · ❌대시보드(+GNB 탭) · ❌구독/결제·아티클클리핑·연간플랜. ✅u0 디자인시스템 풀 추출(토큰·effect·컴포넌트) 먼저 → 파운데이션으로 없는 UI/페이지(빈·로딩·에러·설정·계정·알림) 채움.
 - 2026-06-15 · PM(`/plan-eng-review` + Codex) · **✅ ADR-0001 스택 락**: pnpm 모노레포·**웹 우선 린 스타트**·React+Vite+TS+FSD(경량)·CSS변수+Modules·**WXT**(MV3)·**Supabase**(Postgres+RLS+Edge,view/RPC 우선)·OAuth **Google+Kakao**(Naver 후순위)·TanStack Query(+zustand 보류)·oEmbed 우선. 호스팅 = 인증 전 택1(Cloudflare/Vercel).
-- 2026-06-15 · **사용자(텐션 T1)** · **시퀀싱 = 병렬(A안)**: Codex가 짚은 코어 리스크(소셜애노테이션 vs RLS·dedup·히트맵·콜드스타트)를 **u0b 데이터-코어 스파이크(헤드리스)** 로 조기 락 + **u0 디자인시스템(인터랙티브)** 병렬. ADR-0002(데이터모델/RLS)는 u0b가 락. → 다음 = 모노레포 스캐폴딩 → u0·u0b spec 작성 → Lane A 핸드오프 + Lane B 헤드리스 스폰.
+- 2026-06-15 · **사용자(텐션 T1)** · **시퀀싱 = 병렬(A안)**: Codex가 짚은 코어 리스크(소셜애노테이션 vs RLS·dedup·히트맵·콜드스타트)를 **u0b 데이터-코어 스파이크(헤드리스)** 로 조기 락 + **u0 디자인시스템(인터랙티브)** 병렬. ADR-0002(데이터모델/RLS)는 u0b가 락.
+- 2026-06-15 · **사용자(u0 모드)** · **u0 = 하이브리드**: 백그라운드 디자이너 에이전트가 Figma 추출+1차(phase①) → 사용자가 워크트리에서 픽셀-퍼펙트 마감+게이트 ⓒ(phase②). 화면 단위(u1~)는 기본=사용자 운전.
+- 2026-06-15 · PM · **스캐폴드(`d04d356`) + 병렬 스폰**: pnpm 모노레포·apps/web(Vite·React·TS·FSD steiger lint:fsd)·supabase init — all green. 호스팅=Cloudflare Pages. 워크트리 2개 생성 → **Lane A 디자이너 에이전트(BG) + Lane B u0b 헤드리스(`acceptEdits`·opus4.8 max·7턴 캡=관찰)**. (skip-permissions는 분류기 차단 → acceptEdits.)
+- 2026-06-15 · PM+사용자 · **✅ u0 디자인시스템 완료**(`9924300`, feat/u0-design-system): 디자이너 에이전트 Figma `668:29` 추출 → 정밀 리팩토링 워크플로(실화면 픽셀측정 5병렬 + 프론트 에이전트) → 사용자 사인오프. 핵심: #00623A→#66FF4B 정정·흰색 #FAFAFA 통일·토글 28(탭정렬)·on-primary 2버전. tsc/lint/lint:fsd green, `/ui-preview` 라이브.
+- 2026-06-15 · PM(관찰)+사용자 · **✅ u0b 데이터코어 완료**(`3225bc0`, feat/u0b-data-core): ADR-0002 10항목 락(정준키·[start,end)·**정의자뷰 단일우회 sanitized read**·익명 N=5·히트맵 RPC·프로필분리·folder부착·soft-delete). **RLS 설계리뷰 PASS** + pglite로 정본 .sql 6종 실행·전수통과(38/0, rls 버그1 수정). **정본 = CI**(`u0b-canonical-tests.yml`) — 로컬 Docker가 디스크97%로 wedge·재기동실패 → push 시 클린러너 게이트로 이관. 결정점 3개 → §6.
 
 ## 5. Design System (Figma 추출)
 > **디자인 = 고정 Figma SoT** (`docs/design/README.md`). frontend가 **디자인-시스템 단위**에서 Figma MCP로 토큰을 추출 → `src/app/styles`. 보이스 시드: `config/brand_seed.md`.
 - 토큰 정밀 추출 SoT = Figma 페이지 **"디자인 시스템" `668:29`** (+ 컴포넌트 SECTION `2562:7927`). 인벤토리: `docs/design/README.md`.
-- 상태: **미추출** (u0-design-system 단위에서 추출 — 게이트 ⓐ 승인 후. 모든 화면 단위의 의존).
-- 관찰된 단서(판독 중): 배경 `#000`, 카드 `#121212`, 다크테마, primary 그린(`#66FF4B`/`#2E8B1E` 계열), 보라 액센트(`#8A38F5`/`#9747FF`). 정밀값은 u0에서 `668:29` 추출.
-- 토큰 네임스페이스(예정): `--color-*`, `--space-*`, `--text-*`, `--radius-*` · 보이스: config/brand_seed.md
+- 상태: **✅ 추출 완료** (u0 워크트리 `feat/u0-design-system` `9924300` → `apps/web/src/app/styles/tokens.css`). 정밀값은 거기 — integration 머지 시 이 섹션 동기화.
+- 확정 토큰(실화면 측정): primary 그린 **`#66FF4B`**(CTA)·on-primary `#242424`/`#121212`·다크(배경 `#000`/카드 `#121212`/모달 `#1F1F1F`)·흰색 통일 `#FAFAFA`·Pro 보라 `#6D5DFF`. 사이즈: button 42/38·input 42/search 48·toggle 28·radius sm6/lg12/pill100. 그림자 4(모달 3레이어·dropdown).
+- 토큰 네임스페이스: `--color-*`·`--text-*`·`--space-*`·`--radius-*`·`--shadow-*` (CSS 변수). shared/ui 11종(button·chip·card·tabs·toggle·input·dropdown·modal·toast·avatar·badge). 보이스: config/brand_seed.md
 
 ## 6. Escalations — 게이트 ⓐ ✅ 해소 (2026-06-15)
 | # | 결정 | 결과 |
@@ -83,9 +88,16 @@
 
 ### 보조 확인(스펙 작성 시): 익명화 충돌(실명 동반) · 상황↔목표 매핑 확정 · 영상 전용(아티클 제외) 일관.
 
+### u0b 데이터모델 결정점 (u0b가 제기 — 화면 단위 착수 시 확정. 전부 reversible)
+| # | 항목 | u0b 결정(잠정) | 확인 시점 |
+|---|---|---|---|
+| DM1 | **annotations 엔티티** | 클립과 분리된 *시점앵커 공개노트*로 모델링. 단 Figma 소셜사이드바는 "인기구간+인사이트(=공개 클립)+댓글/답글"만 → annotations 분리가 *추측 스코프*일 수 있음(클립에 흡수 가능) | **u4** 착수 시(실 프레임 2087:12538 사이드바 구조 확인) |
+| DM2 | **folder=클립 부착** | 클립에 folder_id(클립모달이 폴더+태그 동시설정). 한 콘텐츠 클립이 다른 폴더면 콘텐츠가 복수 폴더 표시 | **u7** 착수 시(콘텐츠-단일폴더로 조일지) |
+| DM3 | **익명화 N=5** | 코호트(직업10×연차6=60버킷) 5명 미만 라벨 숨김. 표본 적은 영상은 대부분 숨김 → 버킷 롤업 추가 여부 | 데이터 생기면 튜닝(`anonymization_threshold()`) |
+
 ## 7. Risks / WIP cap
 - WIP 상한: **2 동시 단위** (기본 — 스프린트 계획 시 조정).
-- 리스크: **R1 디자인 공백 광범위**(빈/로딩/에러 + 설정/구독/알림/아티클) → 게이트 ⓐ 미결 시 픽셀-퍼펙트 구현 차단. **R2 MV3 확장(u6)·멀티모델 AI(u5)=무거운 단위** → 서브-spec 분할, 사이징 게이트 주의. **R3 콜드스타트**(소셜애노테이션·또래비교·추천) → 데이터 없는 MVP에서 빈 화면. **R4 결제·인증=고위험** → 백그라운드 관찰 필수(unattended ❌). **R5 PRD↔Figma 충돌**(AI 범위·클립 경로·익명화) → 무엇=Figma 원칙으로 해소.
+- 리스크: **R1 디자인 공백 광범위**(빈/로딩/에러 + 설정/알림) → u0 파운데이션으로 채움(게이트 ⓐ 결정). **R2 MV3 확장(u6)=무거운 단위** → 서브-spec 분할, 사이징 게이트 주의. **R3 콜드스타트**(소셜애노테이션·또래비교·추천) → 데이터 없는 MVP에서 빈 화면(u0b 폴백 스텁). **R4 인증=고위험**(u1) → 백그라운드 관찰 필수. **R5 환경: 로컬 Docker wedge·디스크 빠듯** → supabase 정본은 CI로(로컬 supabase dev 시 Docker 복구 필요). **R6 TODO: 범용 `ci.yml`이 npm 기반(stale)** → pnpm + 실제 스크립트로 갱신 필요(integration 브랜치).
 
 ---
-Last updated: 2026-06-15 by PM (✅ 게이트 ⓐ 스코프 + **✅ ADR-0001 스택 락**[`/plan-eng-review`+Codex: pnpm 모노레포·웹우선·React/Vite/FSD·WXT·Supabase·Google+Kakao] + ADR-0002[데이터모델/RLS=u0b가 락] + **시퀀싱=병렬 A안**(u0 디자인시스템 + u0b 데이터코어). **다음 = 모노레포 스캐폴딩 → u0/u0b spec → Lane A 핸드오프 + Lane B 헤드리스 스폰**)
+Last updated: 2026-06-15 by PM (✅ **Sprint-0 두 파운데이션 완료** — u0 디자인시스템[`9924300`, 실화면 픽셀측정·사용자 사인오프] + u0b 데이터코어[`3225bc0`, ADR-0002 10항목 락·pglite 38/0·RLS리뷰 PASS·정본=CI]. 게이트 ⓐ+ADR-0001/0002 확정, 스캐폴드, 워크트리 2개. **다음 = 화면 단위(u1·u2·u3·u4·u6·u7·u8·u11) spec 역설계 → 게이트 ⓑ(sprint-kickoff)**. u0b 결정점 3개[§6 DM1-3] 화면 착수 시 확정)
