@@ -1,0 +1,70 @@
+/* Chip — 실화면 측정 정밀 리팩토링.
+ * default(온보딩 직업/관심분야, 측정 2087:8476·8968): 투명 bg + rgba(white,0.12) 1px 보더 +
+ *   흰 글자 · height 42 · pad 10/18 · radius 6 · 15/600/130%/-2%. ★pill 아님(정정).
+ * recommend(검색 추천칩, 측정 2087:40686): surface-ghost(0.04) bg + border-subtle(0.08) +
+ *   #FAFAFA · height 32 · pad 10/12 · radius 100(pill) · 14/500/130%.
+ * ⚠ selected(채움) 상태는 두 온보딩 프레임에 정적 export 부재 → 미측정(gap). 추측 색 ❌ →
+ *   브랜드 보더 강조로 표현(채움값 미정, status.md). disabled도 실화면 부재 → opacity.
+ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-5); /* 측정: 10 */
+  height: var(--size-chip); /* 측정: 42 */
+  padding: var(--space-5) var(--space-9); /* 측정: 10 / 18 */
+  border: 1px solid var(--color-border-chip); /* 측정: rgba(255,255,255,0.12) */
+  border-radius: var(--radius-sm); /* 측정: 6 (★pill 아님) */
+  background-color: transparent; /* 측정: 배경 없음 */
+  color: var(--color-white); /* 흰색 통일 #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-chip-size); /* 15 */
+  line-height: var(--text-chip-line); /* 130% */
+  font-weight: var(--text-chip-weight); /* 600 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.chip:hover:not(:disabled) {
+  /* gap: hover 측정 없음 → 보더만 강조 */
+  border-color: var(--color-border-strong);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+.chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Selected=True — ⚠ 채움 색 미측정. 브랜드 보더로 선택 표시(추측 채움 ❌, gap status.md). */
+.selected {
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
+}
+.selected:hover:not(:disabled) {
+  border-color: var(--color-brand-primary);
+}
+
+/* recommend — 검색 추천칩(측정: h32·radius pill·surface-ghost) */
+.recommend {
+  height: var(--size-chip-sm); /* 측정: 32 */
+  padding: var(--space-5) var(--space-6); /* 측정: 10 / 12 (좌 padLeft 10) */
+  gap: var(--space-2); /* 측정: 아이콘-텍스트 4 */
+  border-radius: var(--radius-pill); /* 측정: 100 */
+  border-color: var(--color-border-subtle); /* 측정: 0.08 */
+  background-color: var(--color-surface-ghost); /* 측정: 0.04 */
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium); /* 500 */
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+}

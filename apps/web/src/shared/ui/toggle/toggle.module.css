@@ -1,0 +1,39 @@
+/* Toggle (switch) — 높이 = 토글형 탭(시청정보/원본소스 2087:12538) 아이템 높이 28에 정렬
+ *   (탭 컨테이너 36 / 아이템 28 실측, 사용자 결정 2026-06-15). on=brand-primary, knob=white. */
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 46px;
+  height: 28px;
+  padding: 2px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-300);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.toggle:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+.knob {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+  transition: transform 0.15s ease;
+}
+
+.checked {
+  background-color: var(--color-brand-primary);
+}
+.checked .knob {
+  transform: translateX(18px);
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

@@ -1,0 +1,42 @@
+/* Card — 실화면 측정 정밀 리팩토링.
+ * 측정 카드 4종 공통: surface = rgba(255,255,255,0.04) overlay-white · radius 12.
+ *   인사이트(2087:12952): bg 0.04 · border rgba(white,0.08) · radius 12 · pad 20.
+ *   홈 가로(2087:69039): bg 0.04 · radius 12 · pad 18/14.
+ *   라이브러리 그리드(2117:22045): 컨테이너 투명(border 없음, flush 미디어형).
+ * ⚠ hover/선택/비활성 상태는 4종 모두 기본 1종만 측정(gap) → interactive hover는 합리값.
+ */
+.card {
+  background-color: var(--color-surface-ghost); /* 측정: rgba(255,255,255,0.04) */
+  border: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+  border-radius: var(--radius-lg); /* 측정: 12 */
+  padding: var(--space-10); /* 측정: 인사이트 20 (홈 가로는 18/14 → pad prop으로 조정) */
+  color: var(--color-text-primary);
+}
+
+/* 홈 가로 카드 패딩(측정: padX 14 / padY 18) */
+.compact {
+  padding: var(--space-9) var(--space-7); /* 18 / 14 */
+}
+
+/* flush — 라이브러리 그리드(컨테이너 투명·보더 없음, 썸네일 풀블리드) */
+.flush {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  overflow: hidden;
+}
+
+.interactive {
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.interactive:hover {
+  /* gap: hover 측정 부재 → overlay 한 단계 + drop shadow 합리값 */
+  border-color: var(--color-border-chip);
+  background-color: var(--color-surface-hover);
+  box-shadow: var(--shadow-drop);
+}
+.interactive:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}

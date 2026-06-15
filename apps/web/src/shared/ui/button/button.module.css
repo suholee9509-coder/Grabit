@@ -1,0 +1,117 @@
+/* Button — 실화면 측정 정밀 리팩토링.
+ * Primary = 네온 brand #66FF4B bg + 다크 글자(측정: 회원가입/모달/완료 CTA).
+ * Secondary = 투명/다크 + rgba(white,0.12) 1px 보더 + 밝은 글자(측정: 이전/나중에 하기).
+ * size lg = 42px / sm = 38px (측정). radius 6(측정). pill 변형 = radius 100(요금제 CTA).
+ * ⚠ disabled/hover/pressed·Tertiary는 실화면 프레임 부재 → 토큰 기반 합리값(gap, status.md).
+ */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5); /* 측정: 라벨↔아이콘 gap 10 */
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm); /* 측정: 6px */
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% */
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+/* Size — 측정: height fixed, padX 좌우 16~20(full-width stretch 아티팩트 제외한 권장값) */
+.medium {
+  height: var(--size-button-lg); /* 측정: 42px */
+  padding: 0 var(--space-9); /* 18px (라벨 센터, height가 진짜 제약) */
+  font-size: var(--text-button-lg-size);   /* 15 */
+  line-height: var(--text-button-lg-line); /* 100% */
+}
+
+.small {
+  height: var(--size-button-sm); /* 측정: 38px (버튼_38px_Short) */
+  padding: 0 var(--space-9); /* 측정: padX 18 */
+  gap: var(--space-3); /* 측정: 38px 버튼 gap 6 */
+  font-size: var(--text-button-sm-size);   /* 14 */
+  line-height: var(--text-button-sm-line); /* 130% */
+}
+
+/* compact width 페어(이전/다음) — 측정: 108px fixed */
+.compact {
+  width: var(--size-button-compact-w);
+}
+
+/* Resizing=Fill */
+.fullWidth {
+  width: 100%;
+}
+
+/* pill 변형 — 측정: 요금제 모달 CTA(Frame 4, radius 100·padY 8·padX 16·라벨 좌측) */
+.pill {
+  border-radius: var(--radius-pill);
+}
+.pill.medium,
+.pill.small {
+  padding: var(--space-4) var(--space-8); /* 측정: 8 / 16 */
+}
+
+/* Type=Primary — 네온 brand 그린(측정 정정: #66FF4B), 다크 글자 */
+.primary {
+  background-color: var(--color-brand-primary);
+  border-color: transparent;
+  color: var(--color-text-on-primary); /* 측정: #242424 (회원가입). 모달/완료는 #121212(alt) */
+}
+.primary:hover:not(:disabled) {
+  /* gap: 실화면 hover 측정 없음 → 명도 약간 낮춰 합리값 */
+  filter: brightness(0.94);
+}
+.primary:disabled {
+  /* gap: disabled 변형 실화면 부재 → 투명도로 표현(추측 색 ❌) */
+  opacity: 0.4;
+}
+
+/* Type=Secondary — 측정: 투명/다크 + rgba(white,0.12) 1px 보더 + 밝은 글자 */
+.secondary {
+  background-color: transparent;
+  border-color: var(--color-border-chip); /* 측정: rgba(255,255,255,0.12) */
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+}
+.secondary:hover:not(:disabled) {
+  background-color: var(--color-surface-hover); /* gap: hover 측정 없음 → overlay 6% */
+  border-color: var(--color-border-strong);
+}
+.secondary:disabled {
+  opacity: 0.4;
+}
+
+/* Secondary가 요금제 outline-pill일 때 보더 진하게 — 측정: 0.24 */
+.pill.secondary {
+  border-color: var(--color-border-strong);
+}
+
+/* Type=Tertiary — ghost (gap: 실화면 인스턴스 부재 → 합리값, status.md 표기) */
+.tertiary {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-secondary);
+}
+.tertiary:hover:not(:disabled) {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+.tertiary:disabled {
+  color: var(--color-text-disabled);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+}

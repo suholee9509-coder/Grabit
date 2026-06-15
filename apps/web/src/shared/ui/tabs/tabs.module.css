@@ -1,0 +1,71 @@
+/* Tabs — 실화면 측정 정밀 리팩토링.
+ * segment(측정 2087:12540/12542/12545): pill segmented control.
+ *   container = surface-ghost(0.04) bg · pad 4 · radius 100 · h36.
+ *   item h28 · pad 8/12 · radius 100 · selected bg #363636/#FAFAFA/600 · unselected 투명/#999999/500.
+ * underline(측정 2087:11010 카테고리 탭): 밑줄 인디케이터 — active #66FF4B/밑줄, inactive #B4B4B4.
+ * ⚠ hover/disabled 상태는 실화면 부재(gap).
+ */
+.tabs {
+  display: inline-flex;
+  align-items: center;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium); /* 측정: unselected 500 */
+  letter-spacing: var(--letter-spacing-tight); /* 측정: -2.5% */
+  color: var(--color-text-tertiary); /* 측정: #999999 */
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.tab:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* variant=segment — 측정 정준(세그먼트 pill) */
+.segment {
+  height: var(--size-tab); /* 측정: 36 */
+  padding: var(--space-2); /* 측정: 4 전방향 */
+  gap: var(--space-5); /* 측정: 10 */
+  border-radius: var(--radius-pill); /* 측정: 100 */
+  background-color: var(--color-surface-ghost); /* 측정: rgba(255,255,255,0.04) */
+}
+.segment .tab {
+  height: var(--size-tab-item); /* 측정: 28 */
+  padding: var(--space-4) var(--space-6); /* 측정: 8 / 12 */
+  border-radius: var(--radius-pill); /* 측정: 100 */
+  font-size: var(--text-caption-1-size); /* 측정: 13 */
+  line-height: 130%;
+}
+.segment .active {
+  background-color: var(--color-surface-tab-selected); /* 측정: #363636 */
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-weight: var(--font-weight-semibold); /* 측정: 600 */
+}
+
+/* variant=underline — 측정: 카테고리 탭(밑줄, active 브랜드 네온) */
+.underline {
+  gap: var(--space-12);
+  border-bottom: 1px solid var(--color-stroke-200);
+}
+.underline .tab {
+  padding: var(--space-6) 0;
+  font-size: var(--text-title-5-size);
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  color: var(--color-gray-500); /* 측정: inactive #B4B4B4 */
+}
+.underline .tab:hover {
+  color: var(--color-text-secondary);
+}
+.underline .active {
+  color: var(--color-brand-primary); /* 측정: active #66FF4B */
+  border-bottom-color: var(--color-brand-primary);
+  font-weight: var(--font-weight-semibold);
+}
