@@ -21,8 +21,9 @@
 ```
 
 ## 원칙
-- 각 화면의 **빈/로딩/에러 상태를 여기서 명시** → 나중에 "발견"되어 followup 티켓이 되는 걸 차단 (안티-증식과 직결).
-- 이 UX Spec이 sprint-kickoff의 단위 분해 + 성공조건 `[state]` 기준의 입력이 된다.
+- 각 화면의 Screens/States는 **Figma 프레임에서 열거(역설계)** — 여기서 발명 ❌. 빈/로딩/에러를 *프레임 기준으로* 명시 → 나중에 "발견"되어 followup 티켓이 되는 걸 차단 (안티-증식과 직결).
+- **프레임에 없는 상태/화면 = 디자인 공백** → 여기서 추측하지 말고 표시 → 사용자 디자인 결정/스코프 제외 (`figma-reverse-engineering.md` A1).
+- 이 UX Spec이 sprint-kickoff의 단위 분해 + 성공조건 `[state]`/`[fidelity]` 기준의 입력이 된다.
 
 ## 체크
 - [ ] Main Flows · Screens · Data Model · States · A11y 모두 작성

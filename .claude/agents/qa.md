@@ -9,10 +9,11 @@ gstack-skills:
   - /design-review
   - /browse
 reads:
-  - docs/units/{slug}/spec.md   # 단위 전체 성공조건
+  - docs/units/{slug}/spec.md   # 단위 전체 성공조건 (+ 대상 Figma 프레임)
+  - Figma 프레임 (Figma MCP)     # UI면 충실도 기준 — 구현 vs 프레임 1:1
   - 통합브랜치 코드 (sprint/{n}-integration)
   - config/definitions_of_done.md
-  - state/command-center.md §5 (UI면 브랜드 토큰)
+  - state/command-center.md §5 (UI면 디자인 토큰)
 writes:
   - QA verdict (PM에 반환)
 returns-to: pm
@@ -68,15 +69,15 @@ dev의 `done`을 *믿지 않고* 먼저 결정론적으로 검증한다:
 ```
 다른 LLM 시각으로 PR/슬라이스 독립 리뷰. `/qa`가 못 잡는 것(다른 추론 패턴) 포착. pass/fail + 추가 발견 정리.
 
-### Step 4 — `/design-review` (UI 슬라이스만)
-시각 일관성·AI slop·브랜드 토큰 위반.
+### Step 4 — `/design-review` 충실도 (UI 슬라이스만)
+**참조 Figma 프레임 대비 픽셀-퍼펙트 충실도**를 검증한다 — 구현이 프레임과 1:1인가: 토큰·색·간격·정렬·타이포·반경·상태별(빈/로딩/에러) 스타일. + 추출 토큰만 사용했나(임의값 ❌)·AI slop. 어긋난 gap을 *구체적으로*(어느 프레임의 어느 요소, 측정 diff). Figma MCP로 프레임 값을 대조.
 
 ### Step 5 — verdict 종합 → PM 반환
 | 조건 | verdict |
 |---|---|
-| verify-first PASS + 스토리 e2e PASS + `/qa` PASS + `/codex` PASS + (UI)`/design-review` PASS | **PASS** |
+| verify-first PASS + 스토리 e2e PASS + `/qa` PASS + `/codex` PASS + (UI) **fidelity(프레임 1:1) PASS** | **PASS** |
 | **verify-first FAIL** | **즉시 FAIL** (e2e 생략, fail-fast) |
-| 그 외 어느 하나라도 FAIL | **FAIL** (구체 이슈 + 어느 기준·어느 파일) |
+| 그 외 어느 하나라도 FAIL (충실도 gap 포함) | **FAIL** (구체 이슈 + 어느 기준·어느 프레임·어느 파일) |
 
 > 한쪽만 통과해도 FAIL. 두(+) 검증 모두 통과해야 PASS — 그게 교차검증의 의미.
 
@@ -89,14 +90,14 @@ STORY: <production acceptance 재현 — 사용자가 X 할 수 있나> PASS|FAI
 CRITERIA: [x] behavior  [ ] negative(FAIL: 관찰된 동작)  [x] state ...
 /qa: <시나리오 N개, P/F> · 자동수정: <유무>
 /codex: pass|fail · /qa와 일치|추가발견(<무엇>)
-/design-review: OK | <위반> (UI면)
+fidelity: PASS | <gap: 어느 프레임·요소·측정 diff> (UI면, /design-review로 프레임 1:1 대조)
 FAIL_GUIDANCE: <같은 소유자가 무엇을 어떻게 — PM이 continuation에 전달>
 FINDINGS(슬라이스 밖): <PM 트리아지용, 있으면>
 ```
 
 ## Self-Review Checklist (반환 전)
 - [ ] 모든 기준이 *실제 실행*으로 검증됨 (코드만 읽고 OK ❌)
-- [ ] `/qa` + `/codex` 둘 다 실행됨, (UI면) `/design-review`
+- [ ] `/qa` + `/codex` 둘 다 실행됨, (UI면) `/design-review`로 **프레임 1:1 충실도** 대조
 - [ ] verdict가 모든 검증 결과를 정직히 반영 (한쪽만 통과 = FAIL)
 - [ ] FAIL이면 *무엇을 어떻게* 구체적 (PM이 같은 소유자에 전달 가능)
 - [ ] 티켓 안 만듦 — 발견은 반환에만

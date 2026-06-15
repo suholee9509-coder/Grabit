@@ -22,7 +22,7 @@ L3  /goal 5섹션 성공조건 (spec.md)  — L1에서 도출·추적 (각 기�
 
 - **1 story ≈ 1 작업단위**: 스토리가 커서 多유닛이 되면 옛 증식 재발 신호 → 사이징 게이트에서 재검토. FE+BE는 *한 유닛, 두 소유자*.
 - **검증의 기준 = 스토리**: "테스트 통과"가 아니라 "사용자가 X를 프로덕션 수준에서 실제로 할 수 있나"가 최상위 DoD. → false-done을 강하게 차단(시나리오는 못 속임).
-- 디자인 가치처럼 *검증이 비싼* 인수기준은 자동 판정 부적합 → 사용자 게이트 ⓒ.
+- **디자인 = 고정된 Figma SoT('무엇')**: 화면·상태·컴포넌트·토큰은 Figma가 정한다(생성 ❌, 픽셀-퍼펙트 구현). 의도·스코프·데이터규칙('왜')은 기획문서. *충실도*(프레임 1:1)는 검증이 비싼 인수기준 → 사용자 게이트 ⓒ(충실도 사인오프).
 
 ---
 
@@ -47,7 +47,7 @@ L3  /goal 5섹션 성공조건 (spec.md)  — L1에서 도출·추적 (각 기�
 1. **관찰가능한 검증에 매핑**: 각 기준 = dev가 실제 실행·표출하는 명령/출력 (`npm test` exit 0, `tsc --noEmit`, `/qa` PASS, DOM/스크린샷). 주관어("잘 동작") 금지.
 2. **행위/인수 레벨, 구현 레벨 아님**: 최종 상태(사용자가 무엇을 할 수 있나) — *L1 User Story의 인수기준에서 도출*. "stop 시 즉시 멈추고 입력 잠금해제 — `*.spec.ts` 통과로 증명"(O) vs "useX에 abort 추가"(X).
 3. **수직 슬라이스 완전 커버**: BE+FE+상태+배선+테스트 *사전 열거*. → **이 목록이 곧 안티-증식 장치**(기준에 없는 상태가 나중에 followup 티켓을 낳음). 포괄적 기준 = followup 0.
-4. **품질 게이트를 명시적 기준으로**: 테스트 작성+통과 · 타입 clean · lint clean · 콘솔 에러 0 · 셀프 `/review` 무이슈 · (UI) `/design-review` PASS. "검증까지 루프"가 품질을 *올리려면* 품질 체크가 곧 검증 항목이어야 한다.
+4. **품질 게이트를 명시적 기준으로**: 테스트 작성+통과 · 타입 clean · lint clean · 콘솔 에러 0 · 셀프 `/review` 무이슈 · (UI) `/design-review` **충실도(Figma 프레임 1:1) PASS**. "검증까지 루프"가 품질을 *올리려면* 품질 체크가 곧 검증 항목이어야 한다.
 5. **경계 설정(stop)**: `--tokens` 예산 + `or stop after N turns` + 에스컬레이션 절. 무한·퇴행 루프 방지("무한 루프는 비용").
 6. **반증가능·구체적**: 측정 임계값, 명명된 파일/테스트, 구체 사용자 행동.
 7. **게이밍 방지**: "테스트 약화로 통과" 방어 — 테스트의 *의도* + "실제 시나리오 재현(동어반복 금지)" 명시 + **QA가 슬라이스 독립 재검증**(self-eval 외부 체크 = 심층 방어, §C).
@@ -62,23 +62,28 @@ L3  /goal 5섹션 성공조건 (spec.md)  — L1에서 도출·추적 (각 기�
 As <user>, I can <do X> so that <value>.
 Production acceptance (관찰가능): <prod-like 환경에서 사용자가 X를 실제로 할 수 있다>
 
+## Figma frames (디자인 SoT — '무엇', 픽셀-퍼펙트)
+  - <프레임 식별자/링크> (+ 빈/로딩/에러 상태 프레임)
+
 ---
 /goal --tokens <예산>  [위 스토리를 실현하는 목표 상태, 형용사 금지]
 
 Source of truth (매 턴 reload):
-  - read   docs/units/<slug>/spec.md     # 스토리·Acceptance(이 파일)
+  - read   docs/units/<slug>/spec.md     # 스토리·Acceptance·Figma 프레임(이 파일)
+  - view   Figma 프레임 (Figma MCP)        # 디자인 '무엇' — 토큰·간격·상태 정확 값
   - follow docs/units/<slug>/plan.md      # 구현 순서
-  - update docs/units/<slug>/status.md    # 변경·검증결과·리스크
+  - update docs/units/<slug>/status.md    # 변경·검증결과·충실도 gap·리스크
 
 Acceptance criteria (스토리에서 도출, 관찰 가능한 동작):
   - [behavior]        <사용자가 X 할 수 있다>            → story 인수기준 #
   - [negative]        <잘못된 입력/엣지에서 Y>
   - [non-regression]  <기존 Z 안 깨짐>
-  - [state]           빈/로딩/에러 각각 정의된 동작
+  - [state]           빈/로딩/에러 각각 정의된 동작 (프레임에 정의된 대로)
+  - [fidelity]        지정 Figma 프레임과 1:1 (토큰·간격·정렬·타이포·상태)
 
 Validation (증명 명령 — QA가 clean checkout에서 재실행할 바로 그 명령):
   - <test cmd> 종료코드 0  ·  tsc --noEmit 0  ·  lint 0
-  - (UI) /design-review PASS · 콘솔 에러 0
+  - (UI) /design-review 충실도(프레임 1:1) PASS · 콘솔 에러 0
   - 의미있는 테스트 — 동어반복 금지
 
 Boundaries:

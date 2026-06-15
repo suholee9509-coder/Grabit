@@ -1,9 +1,9 @@
 # Brand Seed — Grabit
 
-Frontend의 브랜드 파운데이션(`/design-consultation`) *전*에 참조하는 방향성 시드. 5섹션 brand-system(Command Center §5)의 출발점.
+**디자인 시스템은 Figma에 픽스(고정 SoT)**돼 있다. 이 시드는 디자인을 *생성*하기 위한 것이 아니라, **고정 디자인 뒤의 보이스·원칙**을 기록해 카피·톤 일관성을 잡기 위한 참조다. 시각 토큰(색·간격·타이포·컴포넌트)은 frontend가 **Figma에서 추출** → Command Center §5.
 
-> 사용자가 작성/조정. Frontend가 Foundation 시 read-only 참조. 시드와 다른 결론이 나면 사용자에 보고 후 §5 반영.
-> **현재 = 빈 템플릿.** 기획 문서 수령 + Brand Foundation에서 토큰/보이스/시각단서 도출 예정 (아래 대부분 TBD).
+> 시각 시스템 = Figma(`docs/design/README.md`의 링크). 보이스/카피 원칙 = 이 파일(+ 기획문서). 충돌 시 *시각은 Figma, 의도·스코프는 기획문서*.
+> **현재 = 빈 템플릿.** 기획 문서 + Figma에서 보이스/금기 도출 예정 (아래 대부분 TBD).
 
 ---
 
@@ -18,27 +18,24 @@ Frontend의 브랜드 파운데이션(`/design-consultation`) *전*에 참조하
 ## 감정적 약속 (가설)
 - 흩어진 영상 소비가 *내 것이 되는 클립*으로 축적되는 만족
 - 막연한 불안 → *체감되는 성장*으로 전환
-- _(TBD — Foundation)_
+- _(TBD — 기획문서(docs/source))_
 
 ## 핵심 컨셉
 - _(기획 문서 기반 — TBD: 클리핑 · 큐레이션 · 성장 체감 메커니즘 등)_
 
-## 닮고 싶은 브랜드
-- _(TBD — Foundation에서 후보 도출)_
+## 톤 / 보이스 (카피 일관성용)
+- _(TBD — 기획문서에서 도출 + Figma 카피 톤 관찰. 예: 명료 · 신중 · 정직)_
 
-## 톤 (1단어 후보)
-- _(TBD — 예: 명료 · 신중 · 정직 등 Foundation에서 확정)_
-
-## 시각 단서 (가설, Frontend가 검증)
-- _(TBD — 색/타이포/메타포는 Brand Foundation에서)_
+## 시각 시스템 (Figma 추출 — frontend가 토큰화)
+- 색·타이포·간격·반경·컴포넌트 = **Figma 고정 SoT**. frontend가 Figma MCP로 추출 → `src/app/styles` 토큰 + Command Center §5. (여기서 생성·추측 ❌)
 
 ## 금기 영역
 - 마케팅 헛소리("revolutionize", "supercharge", "AI-powered")
 - 이모지 폭격 🚀✨💡 · 무의미 그라디언트(purple-pink hero)
 - 불안 조장(FOMO 자극) 카피 — 제품이 *해소*하려는 감정을 마케팅이 악용 ❌
 - "Coming soon" hype
-- _(추가 금기 — Foundation)_
+- _(추가 금기 — 기획문서에서)_
 
 ---
 ## 변경 이력
-- 2026-06-15 — 초기 빈 Grabit 템플릿 (오케스트레이션 시스템 이식 시 생성. 기획 문서 + Brand Foundation에서 채울 예정).
+- 2026-06-15 — 초기 빈 Grabit 템플릿. **시각 시스템 = Figma 추출**(생성 ❌), 보이스/금기는 기획문서(docs/source)에서 도출 예정.

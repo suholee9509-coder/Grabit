@@ -9,27 +9,27 @@
 
 ## §2 Feature 작업단위 DoD (PM, 계획 시점)
 - [ ] **L1 User Story + production acceptance** 정의 (1 story ≈ 1 unit)
-- [ ] 수직 슬라이스로 분해 (BE+FE+상태+배선+테스트 사전 열거, 스토리에서 도출)
-- [ ] **성공조건 5섹션** 작성 (`work-unit-contract.md` §B) — 관찰가능·Boundaries 명시
+- [ ] 수직 슬라이스로 분해 (화면/플로우 단위 — BE+FE+상태(프레임에서 열거)+배선+테스트 사전 열거, 스토리에서 도출)
+- [ ] **성공조건 5섹션** 작성 (`work-unit-contract.md` §B) — 관찰가능·Boundaries 명시 · (UI면 **대상 Figma 프레임 + [fidelity](프레임 1:1) 기준**)
 - [ ] 사이징 게이트 통과 (한 소유자·한 세션)
 - [ ] `docs/units/<slug>/{spec,plan,status}.md` 생성 (spec = 성공조건)
 - [ ] GitHub Issue 1개(feature-unit) + 라벨 3종 + 마일스톤
 - [ ] **★ 게이트 ⓑ 사용자 분해 승인**
 
 ## §3 dev 완료 DoD (frontend/backend, goal-loop)
-- [ ] spec.md 모든 Acceptance criteria(behavior·negative·non-regression·state) 코드로 구현 + 매핑
+- [ ] spec.md 모든 Acceptance criteria(behavior·negative·non-regression·state·**(UI)[fidelity] 프레임 1:1**) 코드로 구현 + 매핑
 - [ ] **no-fake-done**: 미충족 기준은 `escalation` (done 선언 ❌). 검증은 실제 명령 출력으로 증명
 - [ ] **품질 게이트 전부**: `tsc --noEmit` 0 · lint 0 · 관련 테스트 통과(의미있는) · 셀프 `/review` 무이슈
-- [ ] (UI) `/design-review` PASS · 콘솔 에러 0 · 브랜드 토큰 사용 · FSD 준수
+- [ ] (UI) `/design-review` **충실도(지정 Figma 프레임 1:1) PASS** · 콘솔 에러 0 · **Figma 추출 토큰(§5)만 사용** · FSD 준수
 - [ ] (조건 해당 BE) `/codex review` 통과 + 명시
-- [ ] in-flight 발견 흡수됨 (새 티켓 0) · Boundaries 밖 미수정
+- [ ] in-flight 발견 흡수됨 (새 티켓 0) · Boundaries 밖 미수정 · 디자인 공백은 추측 ❌(escalation)
 - [ ] `status.md` 최신 · `/ship`으로 PR
-- [ ] (디자인 산출) **★ 게이트 ⓒ 사용자 리뷰** 거침
+- [ ] (UI 화면) **★ 게이트 ⓒ 충실도 사인오프**(Figma 프레임 1:1 픽셀-퍼펙트) 거침
 
 ## §4 기능 QA DoD (qa)
 - [ ] **verify-first**: Validation 명령을 clean checkout에서 재실행 통과 (fail-fast — false-done 차단)
 - [ ] **L1 스토리 production acceptance**를 e2e 재현 (사용자가 X를 실제로 할 수 있나)
-- [ ] 슬라이스 전체 기준이 *실제 실행*으로 검증 (`/qa` + `/codex`, UI면 `/design-review`)
+- [ ] 슬라이스 전체 기준이 *실제 실행*으로 검증 (`/qa` + `/codex`, UI면 `/design-review` **프레임 1:1 충실도**)
 - [ ] verdict가 모든 검증 정직 반영 (한쪽만 통과 = FAIL); PASS만 통합; FAIL은 같은 소유자 continuation
 
 ## §5 Security DoD (스프린트 말)

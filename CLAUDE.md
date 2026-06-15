@@ -3,7 +3,8 @@
 **1인 창업자 + PM 중심 5-에이전트 팀**으로 개발한다. 이 레포는 *오케스트레이션 시스템*(메타 레이어) + Grabit 제품 코드(Sprint 0부터)를 함께 담는다.
 
 > 제품 한 줄: 크롬 익스텐션 기반 영상 클리핑·큐레이션으로 성장 불안(FOMO)을 해소하는 커리어 콘텐츠 플랫폼.
-> 제품 스펙·기획 SoT는 별도 전달 예정 → `docs/source/`에 비치 후 Command Center §2에서 검증.
+> **워크플로우 = UI 역설계(디자인-퍼스트)**: UI가 Figma에 픽스(90%+). 디자인을 *생성하지 않고* Figma MCP로 연동해 **픽셀-퍼펙트 퍼블리싱**. PM이 Figma('무엇') + 기획문서('왜·스코프')에서 스펙을 역설계. → [docs/design/README.md](docs/design/README.md)
+> 디자인 SoT = Figma(`docs/design/`) · 기획 SoT = `docs/source/`(전달 예정) → Command Center §2에서 검증.
 
 ---
 
@@ -35,6 +36,12 @@
 - dev는 `/goal`로 성공조건 충족까지 자율 루프. spec.md 매 턴 reload, status.md 매 턴 갱신.
 - 강한 기준 = 독립적 루프. 약한 기준("make it work") = 끊임없는 clarification.
 
+## 워크플로우: UI 역설계 (디자인-퍼스트)
+- **디자인 = 고정 Figma SoT('무엇')**: 화면·상태·컴포넌트·토큰은 Figma가 정한다. 생성 ❌ → **Figma MCP로 추출해 픽셀-퍼펙트 구현**. 의도·스코프·데이터규칙('왜')은 기획문서. *충돌 시: 무엇=Figma, 왜·스코프=문서.*
+- **역설계**: PM이 Figma 프레임을 화면·상태별로 훑어 스펙(화면·상태·컴포넌트·데이터)을 도출 → 작업단위 = 화면/플로우 슬라이스. 절차: [.claude/skills/figma-reverse-engineering.md](.claude/skills/figma-reverse-engineering.md).
+- **디자인-시스템 단위 선행**: frontend가 Figma 토큰을 추출 → `src/app/styles` + Command Center §5 (모든 화면 단위의 의존).
+- **게이트 ⓒ = 충실도 사인오프**: 구현이 프레임과 1:1인가(픽셀-퍼펙트)를 사용자가 확인. QA도 프레임 대비 fidelity 검증.
+
 ## 아키텍처 / 스택 (Sprint 0 ADR로 확정)
 - **스택 정본 = Sprint 0 ADR** (`state/decisions.md`). 코드 작성 전 PM이 `/plan-eng-review`로 확정. *가정 ❌.*
 - 권장 베이스라인(확정 전): FSD 레이어드 구성 — `app → pages → widgets → features → entities → shared`. **하향 임포트만**, 동일레이어 크로스슬라이스 ❌. 배럴 경유. (크롬 익스텐션 구성 — MV3 background/content/popup — 은 Sprint 0에서 FSD에 매핑.)
@@ -61,9 +68,12 @@ GSTACK_MISSING이면 STOP. 사용자에 설치 안내:
 
 **웹 브라우징은 `/browse`만** (`mcp__claude-in-chrome__*` 금지).
 
+### Figma MCP (REQUIRED — frontend/qa/PM, 디자인-퍼스트)
+- **디자인 SoT = Figma**. frontend/qa/PM은 **Figma MCP**로 프레임을 직접 연동(노드·스타일·변수·측정값 추출)한다. Figma MCP 연결이 frontend 작업의 전제 — 미연결 시 `status.md` escalation. Figma 링크: `docs/design/README.md`.
+
 ### Skill 라우팅 (의도 → gstack)
 - 스펙/스코프: `/office-hours` `/plan-ceo-review` `/plan-eng-review` `/autoplan` `/spec`
-- 디자인: `/design-consultation` `/design-shotgun` `/design-html` `/design-review`
+- 디자인(퍼블리싱): **Figma MCP**(프레임 연동·토큰 추출) + `/design-review`(프레임 대비 **충실도**). *생성 스킬(design-shotgun/consultation/html) 미사용 — 디자인 고정 SoT.*
 - 개발: `/investigate` `/review` `/codex` `/ship` `/health`
 - QA/보안: `/qa` `/qa-only` `/cso`
 - 회고: `/retro` `/learn`

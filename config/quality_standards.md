@@ -34,11 +34,12 @@
 - 배럴(`index.ts`) 경유 공개. 슬라이스 내부 직접 임포트 ❌.
 - (크롬 익스텐션 MV3) background/content-script/popup/options 엔트리를 FSD 레이어에 매핑 — Sprint 0 스캐폴딩에서 확정.
 
-## §9 UI / 디자인 시스템 (Sprint 0 스택 확정 시 적용)
-- 권장 베이스라인: React + Vite + TypeScript + Tailwind + shadcn/ui (Sprint 0 ADR로 확정).
-- **브랜드 토큰 사용**: `var(--color-*)`, `var(--space-*)` 등. 임의 색/폰트/spacing ❌ (Command Center §5).
-- 빈/로딩/에러 상태 항상 구현. AI slop(균일 그라디언트·의미없는 카드) ❌.
-- `[copy:N]` 플레이스홀더 후 브랜드 보이스로 채움 (frontend 소유).
+## §9 UI / 디자인 시스템 — 고정 Figma SoT, 픽셀-퍼펙트 (스택은 Sprint 0 ADR)
+- **디자인 = Figma 1차 SoT.** 화면·상태·컴포넌트·토큰을 *생성하지 않고* Figma MCP로 정확 값을 추출해 구현. **픽셀-퍼펙트 충실도**가 인수기준([fidelity]).
+- 권장 스택 베이스라인: React + Vite + TypeScript + Tailwind + shadcn/ui (Sprint 0 ADR로 확정).
+- **디자인 토큰 = Figma 추출**: 색/간격/타이포/반경은 Figma에서 추출돼 `src/app/styles` 토큰으로(`var(--color-*)`, `var(--space-*)`, `var(--text-*)`). 눈대중 임의값 ❌ (Command Center §5).
+- 빈/로딩/에러 상태 항상 구현 — **프레임에 정의된 대로**(프레임에 없으면 추측 ❌ → 디자인 공백 escalation). AI slop(균일 그라디언트·의미없는 카드) ❌.
+- `/design-review` = **참조 프레임 대비 충실도 검증**(생성형 미적 평가 ❌). `[copy:N]`은 프레임 텍스트 우선, 동적 카피만 보이스 따름.
 
 ## §10 AI / 백엔드 특화
 - 외부 모델 추론은 *서버측 게이트웨이*로 단일화 — 키·에러·토큰/비용 로깅 일원화. 프로바이더 락인 회피(어댑터 경유).
