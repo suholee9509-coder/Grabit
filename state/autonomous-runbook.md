@@ -204,6 +204,6 @@
 | 단위 | Task ID | runId | scriptPath(요약) | blast |
 |---|---|---|---|---|
 | u4-content-detail FE | `wedn36twz` | `wf_88d76d11-58c` | u4-content-detail-fe-wf_88d76d11-58c.js | apps/web/src |
-| u11-settings BE | `wgzqi9bn9` | `wf_438a72c5-e6c` | u11-settings-be-wf_438a72c5-e6c.js | supabase/ |
 > scriptPath 전체경로 = `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/<위 파일>`. resume 시 사용.
-> **완료(통합됨)**: u2 FE(`wb11srjai`)·BE u7/u8(`woyt10t8h`)·u6(`w19nv8wq5`) → main `835e288`(u2/u6) + integration(u7/u8 BE).
+> **완료(통합됨)**: u2 FE(`wb11srjai`)·u6(`w19nv8wq5`)→main `835e288` · BE u7/u8(`woyt10t8h`)·u11(`wgzqi9bn9`)→integration `7707113`(main은 각 FE 풀유닛 시).
+> **남은 BE 병렬 후보**: (없음 — u7/u8/u11 BE 전부 완료) → 다음 병렬은 Wave5 prod 작업(ci.yml·e2e·.env.example) 또는 FE 순차.

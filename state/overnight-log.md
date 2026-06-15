@@ -29,7 +29,7 @@
 
 **실행 중 워크플로** (watchdog 대상):
 - **u4-content-detail FE** — Task `wedn36twz` · run `wf_88d76d11-58c` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u4-content-detail-fe-wf_88d76d11-58c.js` · worktree feat/u4-content-detail · blast=apps/web/src · 측정(2087:12538/13354/13772)→계획→구현→검증. 기존 u0b RPC(content_heatmap·content_clips_public) 소비·annotations 옵션1(UI+목킹).
-- **u11-settings BE** — Task `wgzqi9bn9` · run `wf_438a72c5-e6c` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u11-settings-be-wf_438a72c5-e6c.js` · worktree feat/u11-settings-be · blast=supabase/(0013 profile-update·soft-delete·알림). **FE와 충돌0**(blast 분리).
+- ~~u11-settings BE `wgzqi9bn9`~~ ✅ **완료·integration 머지**(0013·pgTAP 172/0·아래 로그). main 보류(u11 FE 풀유닛 시).
 
 **완료 단위**: u2(home-feed)·u6(chrome-extension) [main `835e288`] · BE: u7·u8 마이그(0011·0012)[integration].
 **integration 상태**: `61dc7fa` + (이 턴 state docs 커밋) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0. origin 백업됨.
@@ -68,6 +68,15 @@
 - 결정 로그: annotations 무관 / 메모 nullable(구간만 저장 허용·런북§6) / Step1·Step2(브라우저 크롬 UI)=affordance만 / 타임코드칩=u6 자체정의(u0c 공용 밖)
 - ESCALATION: (없음 — 코드 완비) · **PM 통합 잔여 큐**: ①apps/web install 안내페이지(2074:88587)+app.tsx 라우트(u2 충돌방지로 u6 미접촉 → 후속) ②env(WXT_SUPABASE_URL/ANON_KEY/WEB_APP_URL)+manifest externally_connectable 배포오리진 = Wave5 배선큐(현재 플레이스홀더·미인증 폴백 동작)
 - 다음: Wave3(u7·u8 FE) / Wave5에서 install페이지·env 배선
+
+## u11-settings-be (BE 부분) — 완료·integration 머지
+- 검증: pgTAP **172/0**(profile-update 13·notification-pref 9·soft-delete 11·soft-delete-excludes-public 8 추가 · 기존 131 무회귀) · 누출0 · 유예중 user 공개집계 제외 단언 통과 · pglite OK · apps/web tsc 0(무영향)
+- integration 머지: u11-be `7707113`(merge) (충돌0) · push origin sprint/0-integration **O**(`7707113`)
+- main 머지: **보류** — BE 부분만(u11 FE는 후속). additive·green → u11 FE 완료 시 풀유닛으로 main 전진
+- 결정 로그: 0013 = profiles 표시이름·deleted_at·notification pref / soft-delete=deleted_at(hard❌·멱등·30일유예) / 공개집계 제외 = sanitized view CREATE OR REPLACE(컬럼 보존·privacy 강화 additive·기존 pgTAP 무회귀 확인)
+- ESCALATION: (없음 — BE 범위) · u11 FE ESCALATION(계정메뉴 팝오버·설정 단일페이지·표시이름 수정·알림 저장만)은 런북 §6 기본값으로 FE에서
+- 다음: u11 FE(BE 0013 상속, 디자인공백→파운데이션) — Wave3 FE(u7·u8) 뒤 순차
+- 워크트리: feat/u11-settings-be 제거 완료
 
 ## u7-be + u8-be (BE 부분) — 완료·integration 머지 (BE 병렬 첫 산출)
 - 검증: pgTAP **131/0**(u7 library-folders 20/20 · u8 search-* 37 추가 · 기존 74 무회귀) · 누출0(cross-user) · pglite OK · tsc 0 · build 0(apps/web 무영향)
