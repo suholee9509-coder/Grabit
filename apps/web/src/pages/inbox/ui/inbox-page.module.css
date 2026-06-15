@@ -1,0 +1,121 @@
+/* InboxPage — 디자인 공백 → u0 토큰만(하드코딩 HEX ❌). library-page 빈/스켈레톤 패턴 승계. */
+
+.body {
+  width: 100%;
+  min-height: 100%;
+  padding: 8px;
+  background-color: var(--color-bg);
+}
+
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* 4 */
+  max-width: 712px;
+  padding: var(--space-16) var(--space-20) var(--space-12); /* 32/40/24 */
+}
+
+.pageTitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-2-size); /* 28 */
+  line-height: 130%;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-white-pure); /* #FFFFFF */
+}
+
+.pageSub {
+  margin: 0;
+  font-size: var(--text-body-2-size); /* 15 */
+  line-height: 150%;
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-gray-550); /* #CECECE */
+}
+
+/* 알림 목록 — 행 카드(시드/실데이터 시). */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3); /* 6 */
+  padding: 0 var(--space-20); /* 40 */
+  max-width: 760px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1); /* 2 */
+  padding: var(--space-7) var(--space-8); /* 14/16 */
+  border-radius: var(--radius-md); /* 8 */
+  background: var(--color-surface-ghost); /* rgba(255,255,255,.04) */
+  border: 1px solid var(--color-border-subtle); /* rgba(255,255,255,.08) */
+}
+
+.itemTitle {
+  font-size: var(--text-body-2-size); /* 15 */
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary); /* #FAFAFA */
+}
+
+.itemBody {
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 160%;
+  color: var(--color-text-secondary); /* #B4B4B4 */
+}
+
+.itemAt {
+  font-size: var(--text-body-4-size); /* 13 */
+  color: var(--color-text-tertiary); /* #999999 */
+}
+
+/* 스켈레톤 — library-page sideSkeleton 패턴(토큰 펄스). */
+.skeleton {
+  height: 64px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-ghost);
+  animation: inbox-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes inbox-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* 빈상태 — library-page empty 패턴(파운데이션 EmptyState). */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3); /* 6 */
+  padding: 96px var(--space-10);
+  text-align: center;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: var(--text-body-1-size); /* 16 */
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary); /* #FAFAFA */
+}
+
+.emptySub {
+  margin: 0;
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 160%;
+  color: var(--color-text-secondary); /* #B4B4B4 */
+}
+
+.toastWrap {
+  position: fixed;
+  left: 50%;
+  bottom: 88px;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+}

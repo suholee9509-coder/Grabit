@@ -6,6 +6,8 @@ import { HomePage } from '@/pages/home';
 import { ContentDetailPage } from '@/pages/content-detail';
 import { SearchPage } from '@/pages/search';
 import { LibraryPage } from '@/pages/library';
+import { SettingsPage } from '@/pages/settings';
+import { InboxPage } from '@/pages/inbox';
 import {
   RequireOnboarded,
   OnboardingRouteGuard,
@@ -82,6 +84,24 @@ export const routes: RouteObject[] = [
         element: (
           <RequireOnboarded>
             <LibraryPage />
+          </RequireOnboarded>
+        ),
+      },
+      {
+        // u11 설정 — 회원 + 온보딩 완료 필수(RequireOnboarded). GNB 프로필 카드 chevron → 계정메뉴 → 설정.
+        path: 'settings',
+        element: (
+          <RequireOnboarded>
+            <SettingsPage />
+          </RequireOnboarded>
+        ),
+      },
+      {
+        // u11 수신함 — 회원 + 온보딩 완료 필수(RequireOnboarded). GNB 수신함 nav(activeMenu=inbox).
+        path: 'inbox',
+        element: (
+          <RequireOnboarded>
+            <InboxPage />
           </RequireOnboarded>
         ),
       },
