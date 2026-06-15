@@ -1,0 +1,17 @@
+{
+  // Extend WXT's generated config — it provides strict, the auto-import globals (defineBackground,
+  // browser, createShadowRootUi via .wxt/wxt.d.ts), path aliases, and the correct include/exclude
+  // (globs are relative to .wxt/, so we must NOT override `include` here). We only add the React/CSS
+  // and chrome-types layers WXT leaves to the project. Build-time transform is Vite; `tsc --noEmit`
+  // is the type gate. Repo base (tsconfig.base.json) is applied at build by WXT/Vite via wxt.config.
+  "extends": "./.wxt/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "types": ["chrome"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  }
+}
