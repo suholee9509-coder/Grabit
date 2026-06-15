@@ -1,0 +1,73 @@
+/* RecentDropdown — [디자인공백] 파운데이션 Dropdown 패턴(프레임 미존재).
+ * 검색바 폭(520) 정렬 · surface-100 면 · border-default · radius12 · shadow-overlay. 토큰만. */
+.panel {
+  position: absolute;
+  top: calc(var(--size-search) + var(--space-2)); /* 검색바 아래 4 */
+  left: 0;
+  z-index: var(--z-dropdown);
+  width: 520px;
+  margin: 0;
+  padding: var(--space-2); /* 4 */
+  list-style: none;
+  background-color: var(--color-surface-100); /* #1F1F1F */
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg); /* 12 */
+  box-shadow: var(--shadow-overlay);
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3); /* 6 */
+  flex: 1 1 auto;
+  min-width: 0;
+  height: var(--size-nav-item); /* 32 */
+  padding: 0 var(--space-5); /* 10 */
+  border: none;
+  background: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-white);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  text-align: left;
+  cursor: pointer;
+}
+.item:hover {
+  background-color: var(--color-surface-hover);
+}
+.icon {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  color: var(--color-text-tertiary); /* #999 */
+}
+.text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-nav-item);
+  height: var(--size-nav-item);
+  flex: none;
+  border: none;
+  background: none;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+.remove:hover {
+  color: var(--color-white);
+}

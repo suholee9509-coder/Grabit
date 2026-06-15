@@ -1,0 +1,43 @@
+/* GridSkeleton — [디자인공백] 로딩 패턴. ContentCard 형태(썸네일142 + 2줄) 4열 · gap42/28. 토큰 면만. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: var(--space-14); /* 28 */
+  row-gap: 42px;
+  width: 100%;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7); /* 14 */
+}
+.thumb {
+  width: 100%;
+  height: 142px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-200);
+}
+.line {
+  height: 14px;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-surface-200);
+}
+.lineShort {
+  width: 60%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .thumb,
+  .line {
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,7 @@
+/* search-page — 앱 셸 호스트. 본문 면 #121212(셸 연속) — home-page 거울. 셸 content가 스크롤 담당. */
+.body {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--color-shell-bg); /* 측정: 본문 면 #121212 */
+}

@@ -1,0 +1,11 @@
+/* EmptyResults — 측정 2087:40185: 빈문구 18/400/130%/-2% #B4B4B4 LEFT. */
+.empty {
+  margin: 0;
+  text-align: left;
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-5-size); /* 18 */
+  line-height: var(--text-title-5-line); /* 130% */
+  font-weight: var(--font-weight-regular); /* 400 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}

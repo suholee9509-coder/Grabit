@@ -1,0 +1,7 @@
+/* SourceFilter — 측정 2087:38907: row · align center · gap 8 · hug(가로 일렬). */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4); /* 측정: 8 */
+  flex-wrap: wrap;
+}
