@@ -8,25 +8,51 @@
 > 기획 SoT: `docs/source/`(기능명세서·유저플로우 + manyfast) · 디자인 SoT: Figma(`docs/design/`).
 
 ## 1. Active Sprint
-- Sprint: **0 (디자인 인벤토리 + 아키텍처 결정 + 스캐폴딩) — 착수 준비 완료.** 기획 문서 2개 + Figma 링크 수령. **✅ Figma·manyfast MCP 연결됨(user 스코프).** 다음: **새 세션**(MCP 로드)에서 디자인 인벤토리 + 스펙 역설계(§2) → ADR → 게이트 ⓐ → 스캐폴딩 + 디자인-시스템 추출.
+- Sprint: **0 — 진행 중.** ✅ Figma 인벤토리(40프레임) + 게이트 ⓐ 스코프 확정 + **✅ ADR-0001 스택 락**(`/plan-eng-review`+Codex). **▶ 현재 = 모노레포 스캐폴딩 + u0/u0b spec 작성 → 병렬 착수(Lane A 인터랙티브 + Lane B 헤드리스).** 그다음: 화면 단위 spec 역설계 → 게이트 ⓑ.
 - 목표(S0): Figma 프레임 인벤토리(`docs/design/`) · 제품 스펙 역설계 · 스택/데이터 ADR · FSD 스캐폴딩 · 디자인 토큰 추출(§5). (코드 기능 단위 없음)
 - Milestone: _(미생성 — sprint-kickoff 시)_
 - 통합브랜치: `sprint/0-integration` _(미생성)_
 - 모드: Sprint 1 = 모드 2(트레이닝휠 — 각 dev 스폰 전 사용자 승인) → 이후 모드 1
 
-## 2. Validated Spec / PRD (역설계)
-> 상태: **수령됨·미검증.** 기획 문서 2개 + Figma 링크 + **MCP 연결 완료**. **새 세션에서**: Figma 프레임 인벤토리 → `/office-hours` → `/plan-ceo-review`(스코프) → prd-clarifier(화면·상태를 *프레임에서* 열거) → 여기 확정 → 게이트 ⓐ.
-- **디자인 SoT('무엇')**: Figma `5GGyKsjXEOpjKMLtUodeSs`(page `2087:5987`, proto start `2074:86591`) · 인벤토리: `docs/design/README.md`
-- **기획 SoT('왜·스코프·데이터규칙')**: `docs/source/기능명세서.md` · `docs/source/유저플로우.md` (+ manyfast MCP) · 포트폴리오(Notion)
-- In scope (기획문서 기준, 검증 전): ① 크롬확장 클리핑(영상 타임스탬프/아티클 DOM영역 + 플로팅 메모) ② 라이브러리(폴더·태그·검색·정렬) ③ AI 요약(한줄/3줄/상세)·키워드·자동태그 ④ 콘텐츠 상세(임베드 뷰어·소셜 애노테이션 히트맵/하이라이트) ⑤ 홈/트렌드 추천·또래 비교 ⑥ 대시보드/통계 ⑦ 인증·온보딩(직업·연차·관심분야) ⑧ 설정·구독(Pro 결제)
-- Out of scope / Open Questions: _(스코프 wedge·MVP 절단은 /office-hours에서 — TBD)_
-- UX Spec: prd-clarifier로 Screens/States(프레임 기반)/A11y 작성 예정. 충돌 시 *무엇=Figma, 왜·스코프=문서*.
+## 2. Validated Spec / PRD (역설계 — ✅ Figma 40프레임/10플로우 판독 완료 2026-06-15)
+> 상태: **역설계 완료·게이트 ⓐ 대기.** Figma "프로토타이핑"(`2087:5987`) 10개 플로우 SECTION을 병렬 렌더 판독 → 프레임 인벤토리 작성(`docs/design/README.md`) + manyfast 기획 원문 흡수. 다음 = **게이트 ⓐ(wedge·디자인공백 결정)** → 확정 후 유닛별 spec 역설계 → ADR → 스캐폴딩.
+- **디자인 SoT('무엇')**: Figma `5GGyKsjXEOpjKMLtUodeSs` · 페이지 "프로토타이핑" `2087:5987`(proto start `2074:86591`) · 토큰 SoT "디자인 시스템" `668:29` · **인벤토리: `docs/design/README.md`**
+- **기획 SoT('왜·스코프·데이터규칙')**: `docs/source/{기능명세서,유저플로우}.md` + manyfast(project `24744127-…`, 5 Req/15 Feat/27 Spec, Key Function 1~6) · 포트폴리오(Notion)
 
-## 3. Feature Work-Units (현 스프린트 — spec: docs/units/<slug>/spec.md)
-| slug | story(L1) | owner | status | branch/PR | wave | gate |
-|---|---|---|---|---|---|---|
-| _(없음 — Sprint 0/분해 전)_ | | | | | | |
-> 이슈/마일스톤/보드는 sprint-kickoff(게이트 ⓑ)에서 등록. 보드 = Grabit(#2).
+### ★ Figma 역설계 핵심 발견 (PRD와 차이 — 충돌 시 무엇=Figma)
+1. **AI = 멀티모델 대화형 "Grabit Assistant" 패널**(홈+콘텐츠상세 공용, GPT/Claude, Pro 게이팅) — PRD의 "3단계 요약"보다 훨씬 큼. 3단계요약은 라이브러리 'AI 노트'로 흡수.
+2. **클리핑 2경로**: ① 인앱 URL 모달(콘텐츠 추가) ② 크롬 확장(MV3). PRD는 확장 중심.
+3. **영상만 디자인됨** — 아티클(DOM 영역/1000자/하이라이트 오버레이)은 전 섹션 디자인 공백.
+4. **빈/로딩/에러 상태 거의 전무** + 설정/계정·구독관리·알림·연간플랜·페이월모달·아티클 = **디자인 공백**(레지스터 §6 / `docs/design/README.md`).
+
+### In scope (Figma 프레임으로 확정된 것)
+온보딩(소셜로그인+프로필4단계+요금제/확장 모달) · 홈(취향관/피드 + Assistant) · 인앱 클립 모달 · 콘텐츠 상세(뷰어+히트맵+소셜애노테이션+탭) · AI 어시스턴트(멀티모델·페이월) · 크롬확장(설치~클립) · 라이브러리(리스트+폴더+상세탭) · 검색(디폴트/결과/빈) · 대시보드(통계+또래+Pro팝업) · 결제(카드폼+완료).
+
+### Out of scope / 디자인 공백 (게이트 ⓐ 결정 대상 — §6)
+빈/로딩/에러 상태 · 설정·프로필수정·탈퇴(30일) · 구독관리/취소/영수증목록/연간플랜 · 알림/수신함 · 아티클 클리핑·하이라이트 · Pro 업그레이드 모달 · 주간리포트(Pro) · Naver/Kakao/이메일 인증화면 · MV3 popup UI.
+
+## 3. Feature Work-Units (Figma 구조에서 절단 — 11 단위. spec 작성 = wedge 확정 후)
+> 안티-증식: 1 story ≈ 1 unit, 수직 슬라이스, 한 소유자 end-to-end(FE+BE=한 유닛·두 소유자), 한 워크트리 세션. 무거운 유닛(u5·u6)=폴더 내 서브-spec(새 티켓 ❌). 절단 기준 = Figma 화면/플로우(기능 목록 ❌).
+
+> ★ **게이트 ⓐ 확정 스코프(2026-06-15)**: AI 전면 제외 · 대시보드 제외(+GNB 대시보드 탭 제거) · 구독/결제·아티클클리핑·연간플랜 제외. **디자인시스템(u0) 풀 추출 먼저** → 그 파운데이션으로 *없는 UI/페이지(빈·로딩·에러·설정·계정·알림)를 채워* 구현. 영상 콘텐츠만.
+
+| slug | story(L1 요지) | owner | 대상 프레임 | MVP | 비고 (게이트 ⓐ 반영) |
+|---|---|---|---|---|---|
+| **u0**-design-system | 토큰·모든 스타일(그림자 등)·컴포넌트를 Figma에서 추출·시스템화 + 앱 셸(좌 GNB[대시보드 탭 ❌]·톱바) | frontend | `668:29`+컴포넌트 `2562:7927` | ✅ **선행(Lane A)** | **하이브리드**: ① 디자이너 에이전트 추출+1차(BG) → ② 사용자 워크트리 충실도 마감+게이트 ⓒ. (화면 단위는 기본=사용자 운전) |
+| **u0b**-data-core | URL 정준화→content dedup→클립 구간 insert→**RLS-safe 익명 히트맵(view/RPC)**→확장 ingest contract 증명 | backend | (Supabase 스키마/RLS) | ✅ **선행(Lane B)** | **ADR-0002 락**. 헤드리스 `/goal` opus4.8 max. u3·u4·u7·u8·u6의 데이터 의존. u0와 **병렬** |
+| **u1**-auth-onboarding | 소셜 로그인 → 프로필4단계 → 홈 진입(+확장설치 모달) | both | 온보딩 8프레임(요금제 모달 ❌) | ✅ | 고위험(인증). **요금제 모달 제외**. Naver/Kakao/이메일·에러=공백→파운데이션으로 채움 |
+| **u2**-home-feed | 취향관/피드 탭으로 또래 트렌드·추천 콘텐츠를 발견 | both | 홈 5프레임(AI 패널 ❌) | ✅ | **AI 어시스턴트 패널 제거**. 빈/로딩/에러=채움. 중복 사본 정리 |
+| **u3**-clip-webapp | 인앱에서 URL 붙여 영상 구간 트림+메모+폴더+태그로 클립 저장 | both | 콘텐츠추가 5프레임 | ✅ | 영상만. **AI 요약 자리 제거**. URL검증/완료=채움 |
+| **u4**-content-detail | 콘텐츠를 뷰어+히트맵+소셜애노테이션+탭으로 깊게 소비 | both | 상세 3프레임(+라이브러리 상세탭) | ✅ | **AI 패널 제거**. 영상만(아티클 ❌). 빈상태=채움 |
+| ~~u5~~-ai-assistant | (멀티모델 AI 대화) | — | — | ❌ **제외** | 게이트 ⓐ — AI 전면 제외 |
+| **u6**-chrome-extension | 크롬 확장으로 영상 시청 중 즉시 구간 클립+메모를 서버 전송 | both | 확장 7프레임 | ✅ | **무거움(MV3)→서브-spec**. 영상만. popup UI=채움 |
+| **u7**-library | 클립한 콘텐츠를 폴더·검색·정렬로 관리하고 상세(컨텐츠/인사이트)로 재소비 | both | 라이브러리 9프레임 | ✅ | 상세탭=u4 재사용. **AI 노트 탭 제거**. 빈/폴더CRUD모달=채움 |
+| **u8**-search | 제목/메모/태그로 통합 검색(디폴트 발견/결과/빈) | both | 검색 3프레임 | ✅ | 최근검색어/자동완성/날짜·태그필터=채움 |
+| ~~u9~~-dashboard | (통계+또래비교) | — | — | ❌ **제외** | 게이트 ⓐ — 대시보드+차트+GNB 탭 제외 |
+| ~~u10~~-payment-subscription | (Pro 결제·구독) | — | — | ❌ **제외** | 게이트 ⓐ — 구독/결제·연간 제외(Pro 가치 부재) |
+| **u11**-settings-account | 프로필 조회·수정, 로그아웃, 탈퇴(30일), 알림/수신함 설정 | both | (프레임 없음 — 파운데이션으로 채움) | ✅ | **디자인 공백 채움 단위**. 구독관리 ❌. 토큰·컴포넌트 일관 |
+
+> **MVP = u0·u0b·u1·u2·u3·u4·u6·u7·u8·u11** · 제외 = u5(AI)·u9(대시보드)·u10(결제/구독). 선행 파운데이션 = **u0(FE 디자인시스템)+u0b(BE 데이터코어) 병렬**(Lane A·B). 이슈/보드 = sprint-kickoff(게이트 ⓑ). 보드 = Grabit(#2). 스택 = **ADR-0001 락**(`state/decisions.md`), 데이터모델/RLS = ADR-0002(u0b가 락).
 
 ## 4. Decisions This Sprint
 > 스프린트 중 라이브 추가 (date · who · what · why). 아키텍처 결정은 `state/decisions.md`(ADR)에도.
@@ -34,22 +60,32 @@
 - 2026-06-15 · 사용자 · **워크플로우 = UI 역설계(디자인-퍼스트)**. UI가 Figma에 픽스(90%+). frontend는 디자인 생성 ❌ → Figma MCP로 프레임 연동해 **픽셀-퍼펙트 퍼블리싱**. PM은 Figma에서 스펙 역설계. SoT: *무엇=Figma, 왜·스코프=기획문서*. 게이트 ⓒ = 충실도 사인오프.
 - 2026-06-15 · 사용자 · **실행모드 = 역할 고정**: UI/frontend = **인터랙티브 워크트리(사용자 직접 운전)**, backend/qa/security = **백그라운드**. ★ 백그라운드 에이전트 모델 = `claude-opus-4-8` + `--effort max`(Ultra Code 제외 최상위).
 - 2026-06-15 · 사용자 · **리소스 수령**: 기획문서 2개(`docs/source/{기능명세서,유저플로우}.md`) · Figma 링크(프로토타입+페이지, key `5GGyKsjXEOpjKMLtUodeSs`) · 포트폴리오(Notion).
-- 2026-06-15 · PM · **✅ MCP 연결 완료(user 스코프)**: `figma`(Framelink `figma-developer-mcp` + PAT, `~/.claude.json`·레포 커밋 ❌) · `manyfast`(HTTP `https://api.manyfast.io/mcp`). `claude mcp list` ✔✔. **MCP는 새 세션에서 로드** → 다음 = **새 PM 세션**에서 Sprint 0(디자인 인벤토리·스펙 역설계) 착수.
+- 2026-06-15 · PM · **✅ MCP 연결 완료(user 스코프)**: `figma`(Framelink `figma-developer-mcp` + PAT, `~/.claude.json`·레포 커밋 ❌) · `manyfast`(HTTP `https://api.manyfast.io/mcp`). `claude mcp list` ✔✔.
+- 2026-06-15 · PM · **✅ Figma 역설계 완료**: "프로토타이핑" `2087:5987` 10플로우/40프레임을 병렬 워크플로(10 에이전트·렌더 판독) → 프레임 인벤토리(`docs/design/README.md`) + 유닛 11개 절단(§3) + 디자인공백 레지스터(§6).
+- 2026-06-15 · **사용자(게이트 ⓐ)** · **MVP 스코프 확정**: ❌AI 전면 · ❌대시보드(+GNB 탭) · ❌구독/결제·아티클클리핑·연간플랜. ✅u0 디자인시스템 풀 추출(토큰·effect·컴포넌트) 먼저 → 파운데이션으로 없는 UI/페이지(빈·로딩·에러·설정·계정·알림) 채움.
+- 2026-06-15 · PM(`/plan-eng-review` + Codex) · **✅ ADR-0001 스택 락**: pnpm 모노레포·**웹 우선 린 스타트**·React+Vite+TS+FSD(경량)·CSS변수+Modules·**WXT**(MV3)·**Supabase**(Postgres+RLS+Edge,view/RPC 우선)·OAuth **Google+Kakao**(Naver 후순위)·TanStack Query(+zustand 보류)·oEmbed 우선. 호스팅 = 인증 전 택1(Cloudflare/Vercel).
+- 2026-06-15 · **사용자(텐션 T1)** · **시퀀싱 = 병렬(A안)**: Codex가 짚은 코어 리스크(소셜애노테이션 vs RLS·dedup·히트맵·콜드스타트)를 **u0b 데이터-코어 스파이크(헤드리스)** 로 조기 락 + **u0 디자인시스템(인터랙티브)** 병렬. ADR-0002(데이터모델/RLS)는 u0b가 락. → 다음 = 모노레포 스캐폴딩 → u0·u0b spec 작성 → Lane A 핸드오프 + Lane B 헤드리스 스폰.
 
 ## 5. Design System (Figma 추출)
 > **디자인 = 고정 Figma SoT** (`docs/design/README.md`). frontend가 **디자인-시스템 단위**에서 Figma MCP로 토큰을 추출 → `src/app/styles`. 보이스 시드: `config/brand_seed.md`.
-- Figma 파일: `5GGyKsjXEOpjKMLtUodeSs` (page `2087:5987`) — 링크·프레임 인벤토리: `docs/design/README.md`. ✅ Figma MCP 연결됨(Framelink·user).
-- 상태: **미추출** (디자인-시스템 단위 선행 — 모든 화면 단위의 의존).
-- 토큰: `--color-*`, `--space-*`, `--text-*`, `--radius-*` (Figma 추출 후 사전 기록) · 보이스: config/brand_seed.md
+- 토큰 정밀 추출 SoT = Figma 페이지 **"디자인 시스템" `668:29`** (+ 컴포넌트 SECTION `2562:7927`). 인벤토리: `docs/design/README.md`.
+- 상태: **미추출** (u0-design-system 단위에서 추출 — 게이트 ⓐ 승인 후. 모든 화면 단위의 의존).
+- 관찰된 단서(판독 중): 배경 `#000`, 카드 `#121212`, 다크테마, primary 그린(`#66FF4B`/`#2E8B1E` 계열), 보라 액센트(`#8A38F5`/`#9747FF`). 정밀값은 u0에서 `668:29` 추출.
+- 토큰 네임스페이스(예정): `--color-*`, `--space-*`, `--text-*`, `--radius-*` · 보이스: config/brand_seed.md
 
-## 6. Escalations Open
-| unit | question | awaiting |
+## 6. Escalations — 게이트 ⓐ ✅ 해소 (2026-06-15)
+| # | 결정 | 결과 |
 |---|---|---|
-| _(없음)_ | | |
+| D1 | MVP wedge + 클립 경로 | **AI·대시보드 제외, 나머지 전부 구현**(클립 2경로 u3+u6 모두). MVP = 9단위(§3) |
+| D2 | AI 어시스턴트 범위 | **AI 후순위 — 전면 제외**(어시스턴트·AI요약·AI노트 모두) |
+| D3 | 디자인 공백 처리 | **u0 디자인시스템/파운데이션 풀 추출 먼저 → 그 기반으로 없는 UI/페이지 채움**. 단 구독·아티클클리핑·연간플랜 제외 |
+| D4 | **결제/Pro (PM 기본값 — 확인 요청)** | Pro 가치(AI·대시보드·리포트) 전부 제외됨 → **결제·요금제 모달·페이월 전면 제외, 무료 MVP**로 처리(u10·u1 요금제모달 컷). *다르면 알려주세요.* |
+
+### 보조 확인(스펙 작성 시): 익명화 충돌(실명 동반) · 상황↔목표 매핑 확정 · 영상 전용(아티클 제외) 일관.
 
 ## 7. Risks / WIP cap
 - WIP 상한: **2 동시 단위** (기본 — 스프린트 계획 시 조정).
-- 리스크: _(스프린트 계획 시 기록)_
+- 리스크: **R1 디자인 공백 광범위**(빈/로딩/에러 + 설정/구독/알림/아티클) → 게이트 ⓐ 미결 시 픽셀-퍼펙트 구현 차단. **R2 MV3 확장(u6)·멀티모델 AI(u5)=무거운 단위** → 서브-spec 분할, 사이징 게이트 주의. **R3 콜드스타트**(소셜애노테이션·또래비교·추천) → 데이터 없는 MVP에서 빈 화면. **R4 결제·인증=고위험** → 백그라운드 관찰 필수(unattended ❌). **R5 PRD↔Figma 충돌**(AI 범위·클립 경로·익명화) → 무엇=Figma 원칙으로 해소.
 
 ---
-Last updated: 2026-06-15 by PM (시스템 이식 + UI 역설계 워크플로우 + 실행모드(UI=워크트리·BG=opus4.8 max) + 리소스 수령 + ✅ Figma/manyfast MCP 연결. 다음 = 새 PM 세션에서 Sprint 0 디자인 인벤토리·스펙 역설계 착수)
+Last updated: 2026-06-15 by PM (✅ 게이트 ⓐ 스코프 + **✅ ADR-0001 스택 락**[`/plan-eng-review`+Codex: pnpm 모노레포·웹우선·React/Vite/FSD·WXT·Supabase·Google+Kakao] + ADR-0002[데이터모델/RLS=u0b가 락] + **시퀀싱=병렬 A안**(u0 디자인시스템 + u0b 데이터코어). **다음 = 모노레포 스캐폴딩 → u0/u0b spec → Lane A 핸드오프 + Lane B 헤드리스 스폰**)
