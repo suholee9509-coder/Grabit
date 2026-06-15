@@ -118,4 +118,5 @@ STATUS = "<한 줄 요약 — 예: green: tsc0 · test 18/18 · fidelity PASS>"
 ---
 
 ## 5. 흐름 (UI 역설계)
-Figma(`docs/design/`) + 기획(`docs/source/`·manyfast) → PM이 **유닛 = 화면/플로우 슬라이스**로 분해 → 위 레퍼런스 스타일로 `spec.md` 작성(게이트 ⓑ) → dev가 `plan/status`로 관리하며 `/goal`(backend) 또는 인터랙티브 워크트리(frontend UI) → QA가 **각 L1-x**를 e2e 재현 → 게이트 ⓒ(충실도)/ⓓ(머지). **goal은 모든 L1 스토리가 충족될 때까지 루프.**
+**① PM이 Figma 구조를 *먼저* 파악**(화면 계층·내비게이션·플로우·컴포넌트) → **② *그 구조에서* 유닛 절단**(기능 목록 ❌) + 기획(`docs/source/`·manyfast)으로 스코프·규칙 검증 → ③ 위 레퍼런스 스타일로 `spec.md` 작성(게이트 ⓑ) → ④ dev가 `plan/status`로 관리하며 backend=헤드리스 `/goal`·**frontend(UI)=인터랙티브 워크트리(사용자 운전)** → ⑤ QA가 **각 L1-x**를 e2e 재현 → 게이트 ⓒ(충실도)/ⓓ(머지).
+> **PM(구조파악·절단·spec)·frontend(픽셀-퍼펙트 구현)·qa(충실도)가 모두 Figma를 직접 본다.** goal은 모든 L1 스토리가 충족될 때까지 루프.

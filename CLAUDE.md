@@ -38,7 +38,7 @@
 
 ## 워크플로우: UI 역설계 (디자인-퍼스트)
 - **디자인 = 고정 Figma SoT('무엇')**: 화면·상태·컴포넌트·토큰은 Figma가 정한다. 생성 ❌ → **Figma MCP로 추출해 픽셀-퍼펙트 구현**. 의도·스코프·데이터규칙('왜')은 기획문서. *충돌 시: 무엇=Figma, 왜·스코프=문서.*
-- **역설계**: PM이 Figma 프레임을 화면·상태별로 훑어 스펙(화면·상태·컴포넌트·데이터)을 도출 → 작업단위 = 화면/플로우 슬라이스. 절차: [.claude/skills/figma-reverse-engineering.md](.claude/skills/figma-reverse-engineering.md).
+- **역설계 (Figma 구조 *먼저* → 유닛 절단)**: PM이 ① Figma 구조(화면 계층·내비게이션·플로우·컴포넌트)를 먼저 파악 → ② *그 구조에서* 유닛 절단(기능 목록 ❌) → 스펙 도출. **PM(절단)·frontend(구현)·qa(충실도) 모두 Figma를 직접 본다.** 절차: [.claude/skills/figma-reverse-engineering.md](.claude/skills/figma-reverse-engineering.md).
 - **디자인-시스템 단위 선행**: frontend가 Figma 토큰을 추출 → `src/app/styles` + Command Center §5 (모든 화면 단위의 의존).
 - **게이트 ⓒ = 충실도 사인오프**: 구현이 프레임과 1:1인가(픽셀-퍼펙트)를 사용자가 확인. QA도 프레임 대비 fidelity 검증.
 
