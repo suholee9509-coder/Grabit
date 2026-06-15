@@ -28,11 +28,11 @@
 > ★ Auto Compact 후엔 이 섹션 + `git worktree list` + `git log sprint/0-integration` + `/workflows` + 각 worktree status.md로 실제 상태 재구성(런북 §10). 기억 추측 ❌.
 
 **실행 중 워크플로** (watchdog 대상):
-- **u4-content-detail FE** — Task `wedn36twz` · run `wf_88d76d11-58c` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u4-content-detail-fe-wf_88d76d11-58c.js` · worktree feat/u4-content-detail · blast=apps/web/src · 측정(2087:12538/13354/13772)→계획→구현→검증. 기존 u0b RPC(content_heatmap·content_clips_public) 소비·annotations 옵션1(UI+목킹).
-- **u8-search FE** — Task `wzepgh9hh` · run `wf_60bb6715-68f` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u8-search-fe-wf_60bb6715-68f.js` · worktree feat/u8-search-fe(9be2b65 브랜치·0012 상속) · blast=apps/web/src · 측정(2087:40320/38847/40125)→계획→구현→검증. **u4와 병렬**(독립·app.tsx/shared·api는 §5 union 머지).
-- ~~u11-settings BE `wgzqi9bn9`~~ ✅ **완료·integration 머지**(0013·pgTAP 172/0·아래 로그). main 보류(u11 FE 풀유닛 시).
+- **u8-search FE** — Task `wzepgh9hh` · run `wf_60bb6715-68f` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u8-search-fe-wf_60bb6715-68f.js` · worktree feat/u8-search-fe(9be2b65 브랜치) · blast=apps/web/src · 측정→계획→구현→검증. **⚠ u4가 먼저 머지됨 → u8 머지 시 app.tsx·shared/api §5 union 해결**(양쪽 라우트/export 보존·grep '^<<<<<<<' 0).
+- ~~u4 FE `wedn36twz`~~ ✅ **완료·integration+main 머지**(아래 로그).
+- ~~u11 BE `wgzqi9bn9`~~ ✅ integration · ~~u7/u8 BE `woyt10t8h`~~ ✅ integration.
 
-**⚠ u4·u8 FE 동시 머지 주의**: 둘 다 app.tsx(라우트)·shared/api(export) 건드림 → 머지 순서 u4 먼저, u8은 §5 union 해결(양쪽 라우트·export 보존·잔존 마커 grep 0). u7 FE는 u4 상세 surface 재사용 의존 → u4 머지 후 순차.
+**다음 FE**: u8 머지 후 → **u7 라이브러리 FE**(u4 상세 재사용·0011 상속) → **u11 FE**(0013 상속). 그 후 Wave5 프로덕션화.
 
 **완료 단위**: u2(home-feed)·u6(chrome-extension) [main `835e288`] · BE: u7·u8 마이그(0011·0012)[integration].
 **integration 상태**: `61dc7fa` + (이 턴 state docs 커밋) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0. origin 백업됨.
@@ -53,6 +53,15 @@
 
 ## 단위 진행 로그
 <!-- 각 단위 완료/스킵 시 §9 양식 append -->
+
+## u4-content-detail — 완료 (Wave2 풀유닛)
+- 검증: tsc 0·eslint 0·steiger✔·build 0 · vitest **86/86**(16파일·24신규: content-detail.contract 9·content-read 11 — RPC 정확인자·raw clips 우회·sanitized 키 부재·404·N<임계 cohort 숨김) · pgTAP 172/0 무회귀 · 콘솔0 · 충실도 자체검증(3프레임 1:1)
+- integration 머지: u4 커밋→merge (충돌0·apps/web vs supabase/state 분리) · push origin sprint/0-integration **O**(아래)
+- main 머지: (이 턴 진행) integration→main · push main
+- 게이트 ⓒ: ★사용자 사인오프 — 라우트 `/content/:id`. **확인 1건**: 히트맵 마커 색 = Figma 실측 **#26FA01**(녹색 25×18 피크)으로 구현(spec 텍스트 #ED1D24는 유사컨텐츠 YT play 오버레이 fill — 카디널 룰=Figma 정본대로 녹색 정당). 사이드바 펼침/접힘·탭 전환 시각 확인.
+- 결정 로그: annotations 옵션1(댓글/답글 UI+DEMO_COMMENTS 목킹·BE 미호출·신규 엔티티❌) / 비회원 열람가능(spec [state] IQDAKF — /content/:id RequireOnboarded 가드 제거·쓰기만 /login) / 비슷한콘텐츠=콜드스타트 폴백
+- ESCALATION: (없음 — spec 결정 범위) · design-review 별도 미수행(FE verify 자체 픽셀검증으로 갈음 — 사용자 지시)
+- 다음: u8 검색 FE(병렬 진행중) 머지 → u7 라이브러리 FE
 
 ## u2-home-feed — 완료 (Wave2 첫 풀유닛)
 - 검증: tsc 0·eslint 0·steiger✔·build 0 · pgTAP 131/0(무회귀) · vitest **62/62**(13파일) · 충실도(FE verify 자체검증) PASS(추천카드 334×334·세그먼트 pill100 = Figma 2087:70384/70515 실측 1:1) · 콘솔0
