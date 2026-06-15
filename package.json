@@ -12,7 +12,7 @@
     "build": "pnpm -C apps/web build",
     "tsc": "tsc -b",
     "lint": "pnpm -C apps/web lint",
-    "lint:fsd": "steiger ./apps/web/src",
+    "lint:fsd": "pnpm -C apps/web lint:fsd",
     "test": "pnpm -C apps/web test",
     "supabase": "supabase"
   },

@@ -1,0 +1,128 @@
+/* clip-tags — Step2 우측 태그 (측정 2087:35052 / 35127 / 36708 / 2384:141451).
+ * [추가] 칩·태그칩은 u0c Chip 재사용. 입력모드 칩·자동완성 패널은 토큰만(발명 ❌).
+ * 삽입 순서: [추가/입력] → 신규칩 → 기존칩(측정 §4.3).
+ */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 라벨 ↔ 칩 행 */
+}
+
+.label {
+  color: var(--color-text-primary); /* #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 측정: Medium 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+/* 칩 나열 — row gap8 wrap (측정: layout_GH6CFI gap 8) */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px; /* 측정: 8 */
+}
+
+/* 입력 모드 래퍼(입력칩 + 자동완성 패널 세로 스택, 측정: column gap4 w193) */
+.inputCol {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* 측정: 4 */
+  width: 193px; /* 측정: 입력칩 폭 193 */
+}
+
+/* 입력 칩(측정 2087:35127): 193×28 pad6/10/6/8 #242424 border.08 radius6 */
+.inputChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px; /* 측정: "+"↔입력 gap 3(add-chip 동일) */
+  width: 193px;
+  height: 28px;
+  padding: 6px 10px 6px 8px;
+  border: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background-color: var(--color-surface-200); /* 측정: #242424 */
+}
+.inputIcon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-white);
+  flex: none;
+}
+/* 인라인 input — 캐럿 #FAFAFA, placeholder #999999 (측정: Cap1_Rg 13/130%) */
+.inputField {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  caret-color: var(--color-white); /* 측정: 캐럿 #FAFAFA */
+  color: var(--color-text-primary); /* 측정: 입력값 #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-caption-1-size); /* 측정: 13 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+}
+.inputField::placeholder {
+  color: var(--color-text-tertiary); /* 측정: #999999 */
+}
+
+/* 자동완성 패널(측정 2384:141352): w193 pad4 bg.04 border.08 radius6 shadow Dropdown-100 */
+.menu {
+  width: 193px;
+  margin: 0;
+  padding: 4px; /* 측정: 4 */
+  list-style: none;
+  border: 1px solid var(--color-border-subtle); /* 측정: 0.08 */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background-color: var(--color-surface-ghost); /* 측정: rgba(255,255,255,0.04) */
+  box-shadow: var(--shadow-dropdown); /* 측정: 0 0 8 rgba(0,0,0,0.07) */
+}
+
+/* 추천 행(측정: row gap3 pad2/6 h28). hover/active = surface-hover(.06) radius4 */
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 3px; /* 측정: 3 */
+  width: 100%;
+  min-height: 28px; /* 측정: 28 */
+  padding: 2px 6px; /* 측정: 2/6 */
+  border: none;
+  border-radius: var(--radius-xs); /* 측정: 4 */
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-caption-1-size); /* 측정: 13 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  text-align: left;
+  cursor: pointer;
+}
+.menuItem:hover:not(:disabled),
+.menuItemActive {
+  background-color: var(--color-surface-hover); /* 측정: rgba(255,255,255,0.06) */
+}
+
+/* 부분 강조: 매칭=흰 #FAFAFA / 비매칭=디밍 #999999 (측정 — 색만, 볼드/밑줄 ❌) */
+.segMatched {
+  color: var(--color-text-primary); /* #FAFAFA */
+}
+.segDim {
+  color: var(--color-text-tertiary); /* #999999 */
+}
+
+/* 빈 상태(추천 0건) — 안내 행(프레임 공백 → 토큰) */
+.menuEmpty {
+  padding: 2px 6px;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-caption-1-size);
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+}

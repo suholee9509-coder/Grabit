@@ -1,0 +1,106 @@
+/* Step2 편집 모달 (측정 2087:33548, 998×702). Modal 셸(998) 재사용 + 커스텀 헤더 + 2단 본문.
+ * Modal body의 표준 inset(0 28 28)을 풀블리드로 되돌린 뒤(.bleed) 측정 좌표 1:1 배치.
+ */
+
+/* Modal body padding(0 28 28) 무력화 → 풀블리드 998 */
+.bleed {
+  margin: 0 -28px -28px; /* 우/하/좌 28 negate (top 0) */
+}
+
+/* 커스텀 헤더(측정 2087:35078): row space-between, pad 20/24/20/28, 하단보더 .08 */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 20px 28px; /* 측정: 20/24/20/28 */
+  border-bottom: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+}
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+/* 채널 썸네일/아바타 44×44(측정 2087:35080) */
+.thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  background-color: var(--color-surface-200);
+  flex: none;
+}
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* 측정: column gap4 */
+  min-width: 0;
+}
+.title {
+  margin: 0;
+  color: var(--color-text-primary); /* #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-4-size); /* 측정: Bold 20 */
+  line-height: 130%;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-snug);
+}
+.videoTitle {
+  color: var(--color-gray-550); /* 측정: #CECECE */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-4-size); /* 측정: Regular 13 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 480px;
+}
+/* 닫기 20px(측정 2087:35093) */
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  flex: none;
+}
+.close:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+/* 본문 2단 (측정: 좌 영상/타임라인 28 inset, 우 인사이트/공개/폴더/태그) */
+.content {
+  display: flex;
+  gap: 28px; /* 좌(405) ~ 우(499) 사이 여백(측정: 좌 끝 433 → 우 시작 461 ≈ 28) */
+  padding: 28px; /* 측정: 좌측 영상 x28 y111 = 헤더 후 28 inset */
+  align-items: flex-start;
+}
+.left {
+  flex: none;
+}
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* 인사이트 → 공개 → 폴더 → 태그 섹션 간격 */
+  min-width: 0;
+}
+
+/* 풋터 [완료](측정 2087:35094): 우정렬, 156×38 #66FF4B radius6 라벨 #121212 */
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 28px 28px;
+}
+.done {
+  width: var(--size-button-fixed-156); /* 측정: 156 */
+  color: var(--color-text-on-primary-alt); /* 측정: #121212 */
+}

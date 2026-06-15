@@ -77,6 +77,13 @@
   --color-toggle-knob: var(--color-white); /* ★FD2/FD3 측정: 토글 knob fill #FAFAFA(2087:35030 'Dark/Dark-White') = color-white */
   --color-stepper-inactive: #434343;   /* 측정: stepper 비활성 세그먼트(온보딩 2087:8490 fill_8LWHK2) — stroke-400 #4E4E4E·stroke-300 #363636과 다름, 미등재 */
 
+  /* 트림 타임라인 (u3 콘텐츠추가 Step2 좌측, 측정 2087:33548 — fills 직접 실측) */
+  --color-trim-select: #7fc573;        /* 측정: 트림 선택바·핸들 fill(2087:35122/35120/35124/35125 #7FC573) — 다크 스와치 미등재 */
+  --color-trim-playhead: #be1616;      /* 측정: 재생헤드 fill(2087:35126 #BE1616) — system-red #D35541와 다름, 미등재 */
+  --color-timeline-border: #434343;    /* 측정: 타임라인 트랙 하단 보더(2087:35097 #434343) = stepper-inactive와 동일 HEX */
+  --color-timeline-tick: rgba(255, 255, 255, 0.16); /* 측정: 타임라인 눈금선(2087:35099~35102 fill_QWC4BY) = breadcrumb-sep와 동일 */
+  --color-trim-grip: var(--color-white); /* 측정: 핸들 내부 grip #FAFAFA(2087:35122 내부) = color-white */
+
   /* 레거시 muted-green (2562:7927 비정준 섹션 — 호환용 보존, 실CTA엔 brand-primary 사용) */
   --color-accent: #00623a;             /* Dark-Main (4814) */
   --color-accent-stroke: #168353;      /* Dark-Stroke-Main (4856) */
