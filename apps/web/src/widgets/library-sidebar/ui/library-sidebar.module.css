@@ -1,0 +1,93 @@
+/* LibrarySidebar — 측정 2117:22557: 382×1080 · #121212 · radius8. */
+.sidebar {
+  position: relative;
+  width: 382px;
+  flex: none;
+  height: 100%;
+  background: var(--color-shell-bg);
+  border-radius: var(--radius-md); /* 8 */
+  overflow: hidden;
+}
+
+/* 헤더 — 측정: 제목 x20 y20 · 토글 x221 y15. row space-between(상단 정렬). */
+.header {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 15px 20px 0 20px;
+  min-height: 51px;
+}
+
+/* 제목 "내 라이브러리" — 측정 Bold 20/130%/-2.5% · #FFFFFF 순백(FD3, 픽셀-퍼펙트). y20 정렬 보정. */
+.title {
+  margin: 5px 0 0 0; /* y15(헤더 pad)+5 ≈ y20 */
+  font-size: var(--text-title-4-size); /* 20 */
+  line-height: 130%;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-white-pure); /* #FFFFFF 순백(측정) */
+}
+
+/* 토글 — Tabs segment sm. 측정 y15. */
+.tabs {
+  flex: none;
+}
+
+/* select 행 — 측정 x18 y81 · w344 · row space-between. */
+.selectRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: 15px 18px 0 18px; /* y81 ≈ 헤더(51) + 15 + gap */
+}
+
+/* "전체 폴더" 트리거 — 측정 298×38 · pad 12/10/12/14 · r6 · surface-ghost +border-subtle. */
+.selectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 298px;
+  height: var(--size-select); /* 38 */
+  padding: 12px 10px 12px 14px;
+  border-radius: var(--radius-sm); /* 6 */
+  background: var(--color-surface-ghost);
+  border: 1px solid var(--color-border-subtle);
+  cursor: pointer;
+  font-family: var(--font-family-base);
+}
+
+/* 트리거 라벨 — 측정 Medium 14/130%/-2% #FAFAFA. */
+.selectLabel {
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 검색 버튼 — 측정 38×38 · pad10 · r6 · surface-ghost · 아이콘 20×20. */
+.searchBtn {
+  width: 38px;
+  height: 38px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: var(--radius-sm); /* 6 */
+  background: var(--color-surface-ghost);
+  border: none;
+  cursor: pointer;
+}
+
+/* 폴더 리스트/트리 슬롯 — 측정 x20 y143. */
+.list {
+  margin: 24px 20px 0 20px; /* y143 ≈ select행(y81+38) + 24 */
+  overflow-y: auto;
+  max-height: calc(100% - 165px);
+}

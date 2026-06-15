@@ -68,6 +68,7 @@
    * ============================================================ */
   --color-brand-primary: #66ff4b;      /* 측정: 모든 Primary CTA bg·active 액센트·stepper active (다수 fill) */
   --color-brand-primary-50: rgba(102, 255, 75, 0.5); /* 측정: 카테고리 선택 링(2173:120844) */
+  --color-brand-primary-12: rgba(102, 255, 75, 0.12); /* 측정 u7: 폴더 추가 카드 원형 아이콘 bg(2117:22138/24821/22676 fill_MWU9BM) */
   --color-premium-green: #199e41;      /* 측정: Premium 인라인 배지 텍스트(2087:11028) */
 
   /* 컴포넌트 면색 (측정 — 버튼/토글/stepper 솔리드 fill, 다크 스와치 미등재) */
@@ -133,6 +134,7 @@
 
   /* overlay-black (측정) */
   --color-overlay-black-60: rgba(0, 0, 0, 0.6);      /* 측정: 썸네일 duration 배지·모달 백드롭(0.6) */
+  --color-overlay-black-32: rgba(0, 0, 0, 0.32);     /* 측정 u7: 라이브러리 컨텐츠 카드 썸네일 소스/재생 배지 bg(2117:22190/22724 fill, + backdrop blur 2px) */
 
   /* 딤(dimmed) 오버레이 — 668:29 */
   --color-dimmed-100: rgba(0, 0, 0, 0.1);  /* Dark-Dimmed-100 (5330) */
@@ -230,6 +232,7 @@
   --space-14: 28px;  /* 측정: 모달 좌 inset */
   --space-16: 32px;
   --space-20: 40px;  /* 히어로 카드 inset */
+  --space-grid-row: 42px; /* 측정 u7: 라이브러리 그리드 행간/그룹간(2117:22165/24898/23230 column gap 42) — 40·48 사이 미보유 */
 
   /* ============================================================
    * RADIUS — borderRadius 측정 빈도

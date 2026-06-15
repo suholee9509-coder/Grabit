@@ -1,0 +1,7 @@
+/* RenameFolderModal — u0c Modal 기반. */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-4); /* 8 */
+}

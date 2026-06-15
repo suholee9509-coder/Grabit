@@ -21,6 +21,38 @@ export function formatGrabCount(count: number): string {
   return `그랩 ${n}개`;
 }
 
+/** 컨텐츠 개수 라벨 "16개"(라이브러리 그리드 카드·폴더 카운트). 음수/NaN은 0. */
+export function formatCount(count: number): string {
+  const n = Math.max(0, Math.floor(Number.isFinite(count) ? count : 0));
+  return `${n}개`;
+}
+
+/** "N개의 컨텐츠" 라벨(폴더 카드·폴더별 뷰 헤더 서브). */
+export function formatContentCount(count: number): string {
+  const n = Math.max(0, Math.floor(Number.isFinite(count) ? count : 0));
+  return `${n}개의 컨텐츠`;
+}
+
+/**
+ * provider 정준키 → 출처 표시 라벨(라이브러리 출처 칩·카드 배지·사이드 카드).
+ * 측정 카피: Youtube / Long Black / Medium / EO planet / Publy.
+ */
+export function formatProviderLabel(provider: string | null | undefined): string {
+  const key = (provider ?? '').trim().toLowerCase();
+  const map: Record<string, string> = {
+    youtube: 'Youtube',
+    longblack: 'Long Black',
+    'long black': 'Long Black',
+    medium: 'Medium',
+    eoplanet: 'EO planet',
+    'eo planet': 'EO planet',
+    publy: 'Publy',
+  };
+  if (map[key]) return map[key];
+  if (key === '') return '기타';
+  return key.charAt(0).toUpperCase() + key.slice(1);
+}
+
 /**
  * 상대 시각 "1시간 전"(측정 인사이트 카드). 단순 폴백 — ISO 없으면 빈 문자열.
  * MVP: 분/시간/일만(주/월 이상은 "N일 전").

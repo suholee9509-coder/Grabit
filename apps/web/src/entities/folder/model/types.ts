@@ -6,3 +6,12 @@ export interface Folder {
   id: string;
   name: string;
 }
+
+/**
+ * 폴더 + 컨텐츠 카운트(u7) — 라이브러리 폴더 카드·좌 트리·드롭다운의 "N개의 컨텐츠".
+ * library_folder_counts 소비(distinct content per folder). Folder는 그대로(소비자 비파괴).
+ */
+export interface FolderWithCount extends Folder {
+  /** 폴더별 distinct content 수(DM2-A). */
+  contentCount: number;
+}

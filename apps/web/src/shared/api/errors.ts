@@ -56,3 +56,42 @@ export function mapIngestError(err: unknown): MappedError {
       return { kind: 'unknown', message: '저장에 실패했어요. 잠시 후 다시 시도해 주세요.' };
   }
 }
+
+/**
+ * 라이브러리 폴더 작업(생성/이름변경/삭제/이동) 에러 → 사용자 메시지(0011 errcode 거울).
+ *   23514 = 공백/중복명 또는 폴더 20개 초과
+ *   23503 = 이동 대상 폴더 비소유/미존재
+ *   28000 = 미인증
+ *   23505 = 중복(unique) — 무해 처리
+ */
+export type LibraryErrorKind =
+  | 'folder-limit'
+  | 'folder-name'
+  | 'target-folder'
+  | 'unauthenticated'
+  | 'unknown';
+
+export interface MappedLibraryError {
+  kind: LibraryErrorKind;
+  message: string;
+}
+
+export function mapLibraryError(err: unknown): MappedLibraryError {
+  const { code, message = '' } = asPgError(err);
+
+  switch (code) {
+    case '23514':
+      // folders_name_not_blank + enforce_folder_limit 모두 23514 → 메시지로 구분.
+      return /limit|max 20/i.test(message)
+        ? { kind: 'folder-limit', message: '폴더는 최대 20개까지 만들 수 있어요.' }
+        : { kind: 'folder-name', message: '폴더 이름을 다시 확인해 주세요.' };
+    case '23503':
+      return { kind: 'target-folder', message: '이동할 폴더를 찾을 수 없어요.' };
+    case '23505':
+      return { kind: 'folder-name', message: '이미 같은 이름의 폴더가 있어요.' };
+    case '28000':
+      return { kind: 'unauthenticated', message: '로그인이 필요합니다.' };
+    default:
+      return { kind: 'unknown', message: '작업에 실패했어요. 잠시 후 다시 시도해 주세요.' };
+  }
+}
