@@ -1,0 +1,59 @@
+/* 프로모 패널 — 측정 layout_MT76UV/XO3USN: x=966 y=8 · 946×1064 · radius 8 · bg .04. */
+.panel {
+  position: absolute;
+  top: 8px;
+  left: 966px;
+  width: 946px;
+  height: 1064px;
+  max-width: calc(100% - 966px);
+  border-radius: var(--radius-md); /* 측정: 8 */
+  background-color: var(--color-surface-ghost); /* 측정: rgba(255,255,255,0.04) */
+  overflow: hidden;
+}
+
+/* 콘텐츠 블록 — 측정 layout_CA63YF: x=303 y=213 · column · align center · gap 6 · w339. */
+.copy {
+  position: absolute;
+  top: 213px;
+  left: 303px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3); /* 측정: 6 */
+  width: 339px;
+  text-align: center;
+}
+
+/* 제목 — 측정 style_GLPRHV: 24/600/130%/-2% #FAFAFA. */
+.title {
+  margin: 0;
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-3-size); /* 24 */
+  line-height: var(--text-title-3-line); /* 130% */
+  font-weight: var(--font-weight-semibold); /* 600 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
+
+/* 부제 — 측정 style_BWPHH7: 14/400/160%/-2% #CECECE · center. */
+.subtitle {
+  margin: 0;
+  color: var(--color-gray-550); /* 측정: #CECECE */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 160%;
+  font-weight: var(--font-weight-regular); /* 400 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
+
+/* 하단 일러스트 — 측정 G7: x=36 y=336, 874×592 카드 + 하단 그라데이션(정적 자산 플레이스홀더). */
+.illustration {
+  position: absolute;
+  top: 336px;
+  left: 36px;
+  width: 874px;
+  height: 592px;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(180deg, var(--color-surface-100) 0%, rgba(27, 27, 27, 0) 100%);
+  box-shadow: 0px 12px 40px -12px rgba(0, 0, 0, 0.18); /* 측정: effect_EQ90KM */
+}

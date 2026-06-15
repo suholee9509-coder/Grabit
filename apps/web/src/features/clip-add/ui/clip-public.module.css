@@ -1,0 +1,33 @@
+/* clip-public — Step2 우측 "공개 범위 설정" (측정 2087:35024~35030).
+ * 행: 라벨블록(라벨 + 설명) space-between 토글. u0c Toggle(FD2 파랑) 재사용.
+ */
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* 측정: 라벨↔설명 gap 5 */
+}
+
+.label {
+  color: var(--color-text-primary); /* #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 측정: Medium 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+.desc {
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 측정: Regular 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-snug);
+}

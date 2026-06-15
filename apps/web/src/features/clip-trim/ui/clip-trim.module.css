@@ -1,0 +1,218 @@
+/* clip-trim — Step2 좌측 영상 + 트림 타임라인 (측정 2087:33548 §3, 절대좌표 1:1).
+ * u0c 프리미티브 없음 → 토큰만으로 구현(발명 ❌). 색: trim-select #7FC573·playhead #BE1616·
+ * tick rgba(255,255,255,.16)·timeline-border #434343. 치수: 영상 405×228·트랙 405×52.
+ */
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 405px; /* 측정: 좌측 컬럼 폭(영상/트랙 405) */
+}
+
+/* 영상 프리뷰 16:9 (측정: 405×228 radius 8) — YouTube iframe 자리 */
+.video {
+  position: relative;
+  width: 405px;
+  height: 228px;
+  border-radius: var(--radius-md); /* 측정: 8 */
+  overflow: hidden;
+  background-color: #000;
+}
+.video iframe,
+.video .videoFallback {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.videoFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface);
+  color: var(--color-text-tertiary);
+  font-size: var(--text-body-4-size);
+}
+
+/* 타임라인 (측정: 영상 하단 y353 = 영상 후 gap 14). */
+.timeline {
+  margin-top: 14px; /* 측정: 영상(228,y111) → 트랙(y353) = 14 gap */
+}
+
+/* 트랙(썸네일 스트립) 405×52 — 하단 1px #434343 (측정 2087:35097) */
+.track {
+  position: relative;
+  width: 405px;
+  height: 52px;
+  border-bottom: 1px solid var(--color-timeline-border); /* 측정: #434343 */
+  background-color: var(--color-surface-100); /* 썸네일 스트립 폴백 면 */
+  background-size: cover;
+  background-position: center;
+  user-select: none;
+  touch-action: none;
+}
+
+/* 트랙 외 영역 딤(선택구간 밖) */
+.dim {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: var(--color-overlay-black-60); /* 측정: 비선택 구간 어둡게 */
+  pointer-events: none;
+}
+
+/* 선택 구간 오버레이 그룹 (측정: 2087:35119 187×60, 트랙보다 위아래 4px 확장) */
+.selection {
+  position: absolute;
+  top: -4px;
+  height: 60px; /* 측정: 52 + 위아래 4 = 60 */
+  pointer-events: none;
+}
+
+/* 상/하단 테두리바 (측정: 8 offset, 4px 두께 #7FC573) */
+.selectionBarTop,
+.selectionBarBottom {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 4px;
+  background-color: var(--color-trim-select); /* 측정: #7FC573 */
+}
+.selectionBarTop {
+  top: 0;
+}
+.selectionBarBottom {
+  bottom: 0;
+}
+
+/* 핸들 14×60 radius(좌 0/4/4/0, 우 4/0/0/4) #7FC573 — grip 2×24 #FAFAFA (측정 2087:35120/35122) */
+.handle {
+  position: absolute;
+  top: 0;
+  width: 14px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-trim-select); /* 측정: #7FC573 */
+  cursor: ew-resize;
+  pointer-events: auto;
+  touch-action: none;
+}
+.handleStart {
+  left: 0;
+  border-radius: 0 4px 4px 0; /* 측정: 좌핸들 radius 0 4 4 0 */
+}
+.handleEnd {
+  right: 0;
+  border-radius: 4px 0 0 4px; /* 우핸들 대칭 */
+}
+.grip {
+  width: 2px;
+  height: 24px;
+  border-radius: var(--radius-pill); /* 측정: 100 */
+  background-color: var(--color-trim-grip); /* 측정: #FAFAFA */
+}
+
+/* 재생헤드 3×52 #BE1616 radius100 (측정 2087:35126) */
+.playhead {
+  position: absolute;
+  top: 0;
+  width: 3px;
+  height: 52px;
+  border-radius: var(--radius-pill); /* 측정: 100 */
+  background-color: var(--color-trim-playhead); /* 측정: #BE1616 */
+  pointer-events: none;
+}
+
+/* 눈금 라벨 행 (측정: y415, Regular 12) */
+.ticks {
+  position: relative;
+  height: 16px;
+  margin-top: 6px; /* 측정: 트랙 405 → 라벨 415 ≈ 트랙하단 직후 */
+}
+.tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  color: var(--color-text-primary); /* 측정: 가까운 눈금 #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-caption-2-size); /* 측정: 12 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  white-space: nowrap;
+}
+.tickDim {
+  color: var(--color-text-secondary); /* 측정: 먼 눈금 #B4B4B4 */
+}
+/* 첫 눈금은 좌측 정렬(0:00 잘림 방지) */
+.tickFirst {
+  transform: none;
+  left: 0 !important;
+}
+
+/* 구간 컨트롤 행 (측정: y453, gap16) — 시작칩 → 화살표 → 끝칩 → 길이 */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* 측정: row gap 16 */
+  width: 405px;
+  margin-top: 16px; /* 측정: 라벨(415+16) → 컨트롤(453) ≈ 16 */
+}
+
+/* 시작/끝칩 82×38 pad10/26 border .08 radius4 (측정 2087:35105/35108) */
+.timeChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 82px;
+  height: 38px;
+  padding: 10px 26px;
+  border: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+  border-radius: var(--radius-xs); /* 측정: 4 */
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 측정: 14 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  white-space: nowrap;
+}
+
+/* 화살표 구분(측정: 8px stroke rgba(255,255,255,.16)) */
+.arrow {
+  width: 8px;
+  height: 1px;
+  background-color: var(--color-timeline-tick); /* 측정: rgba(255,255,255,0.16) */
+  flex: none;
+}
+
+/* 길이 "29초" (측정: gap2 아이콘+텍스트, Regular 14) */
+.length {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size);
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  white-space: nowrap;
+}
+.lengthIcon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-primary);
+}
+
+/* 구간 0길이/역전 차단 피드백(프레임 공백 → 토큰 에러) */
+.invalid .timeChip {
+  border-color: var(--color-system-red);
+}
+.error {
+  margin-top: 8px;
+  color: var(--color-system-red);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-4-size);
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+}

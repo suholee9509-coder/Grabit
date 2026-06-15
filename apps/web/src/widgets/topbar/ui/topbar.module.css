@@ -1,0 +1,46 @@
+/* Topbar — 실화면 측정 정밀(SoT: 홈 톱바 2087:69671 · 상세 톱바 2087:13114).
+ * h56 · fill #121212 · radius 8/8/0/0 · border-bottom 1px rgba(255,255,255,0.12)(★상세값 정준, [GAP §2]).
+ * 좌측 브레드크럼(x:10 y:15) · 우측 pill 페어(gap 12, x우측 y:11).
+ * 측정 노드: layout_MFOHRE(h56) · fill_KRQ09B(#121212) · fill_IL4PPG(0.12 strokeWeight 0/0/1) ·
+ *   layout_TEFWFK(우측 gap12) · layout_E6F9SQ(좌측 브레드크럼).
+ */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--size-topbar); /* 측정: 56 */
+  padding: 0 var(--space-5); /* 측정: 좌측 브레드크럼 x:10 / 우측 페어 우측 inset(상세 1642−1411−페어폭≈ 우측 여백) — 좌우 10 */
+  background-color: var(--color-shell-bg); /* 측정: #121212 */
+  border-bottom: 1px solid var(--color-topbar-border); /* 측정: rgba(255,255,255,0.12) (★상세 정준) */
+  border-radius: var(--radius-md) var(--radius-md) 0 0; /* 측정: 8 8 0 0 */
+}
+
+/* 좌측 슬롯 — 브레드크럼(측정: x:10 y:15) */
+.left {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+/* 우측 pill 페어 — 측정: row gap 12 (layout_TEFWFK) */
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6); /* 측정: 12 */
+}
+
+/* 톱바 pill 보정 — Button(size md+pill)은 h34/radius100을 제공하나
+ * 측정 톱바 pill은 pad 8/16 · lh 130%(style_WKR80D)로 GNB CTA(pad6/16·lh160)와 상이.
+ * shared/ui Button을 재사용하되 톱바 컨텍스트 padding/lineHeight만 실측값으로 덮음.
+ * ★.right 하위로 스코프(0,2,0) → Button .md(0,1,0)보다 특이도 우선 = 삽입 순서 무관하게 보정 적용. */
+.right .pill {
+  padding: var(--space-4) var(--space-8); /* 측정: 8/16 (layout_6PN9VG) */
+  line-height: var(--text-button-sm-line); /* 측정: 130% (style_WKR80D) */
+}
+
+/* 로그인 pill 라벨색 — 측정: #121212 (fill_KRQ09B, 톱바 로그인). Button primary 기본 #242424와 분기 → 덮음. */
+.right .loginPill {
+  color: var(--color-text-on-primary-alt); /* 측정: #121212 */
+}

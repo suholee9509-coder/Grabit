@@ -1,0 +1,36 @@
+/* clip-folder — Step2 우측 "저장 폴더" 셀렉트 (측정 2087:35043).
+ * 셀렉트 박스는 u0c Dropdown(trigger h38·pad12/10/12/14·border.08·radius6). 라벨+박스 세로 스택.
+ */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 라벨 ↔ 셀렉트 */
+}
+
+.label {
+  color: var(--color-text-primary); /* #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 측정: Medium 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+/* Dropdown root를 풀폭으로(측정: 셀렉트 509폭 = 우측 컬럼 풀폭) */
+.dropdown {
+  display: block;
+  width: 100%;
+}
+.dropdown > button {
+  width: 100%;
+}
+
+/* 트리거 현재값 텍스트(측정: Medium 14 #FAFAFA, space-between) */
+.current {
+  flex: 1;
+  text-align: left;
+  color: var(--color-text-primary);
+}
+.placeholder {
+  color: var(--color-text-tertiary); /* 미선택 시 #999999 */
+}

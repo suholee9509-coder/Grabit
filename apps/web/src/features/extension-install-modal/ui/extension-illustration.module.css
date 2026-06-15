@@ -1,0 +1,67 @@
+/* 확장 모달 좌측 일러스트 플레이스홀더 — 정적 자산 대체(G7). 토큰만 사용. */
+.scene {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface-200);
+}
+
+.window {
+  width: 360px;
+  height: 240px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-100);
+  box-shadow: var(--shadow-overlay);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 36px;
+  padding: 0 var(--space-6);
+  background: var(--color-surface-200);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-stroke-400);
+}
+
+.urlbar {
+  flex: 1;
+  height: 18px;
+  margin: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-300);
+}
+
+.puzzle {
+  display: inline-flex;
+}
+
+.viewport {
+  position: relative;
+  flex: 1;
+  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-base) 100%);
+}
+
+.clipBadge {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-brand-primary);
+}

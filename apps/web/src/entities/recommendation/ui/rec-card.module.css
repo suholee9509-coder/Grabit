@@ -1,0 +1,147 @@
+/* RecCard — 추천 캐러셀 카드(취향관). 측정 정본: 풀스크롤 2087:70384 §4 / 재필터 2278:135621 §4-1.
+ * 카드 외곽 334×334 radius12 · 내부 inset 14(306×306) · 썸네일 306×172 r6 · 본문 306×120.
+ * 하드코딩 HEX ❌ — 토큰/인라인 측정 주석(고정 치수). */
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 334px; /* 측정 2087:70515 */
+  flex: 0 0 334px;
+  padding: var(--space-7); /* 측정: inset 14 */
+  border: none;
+  border-radius: var(--radius-lg); /* 측정: 12 */
+  background-color: transparent; /* 측정: 카드 외곽 채움 없음(셸 위) */
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+}
+.card:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* 썸네일 306×172 r6 (측정 2087:70517) */
+.thumb {
+  position: relative;
+  width: 306px;
+  height: 172px;
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  overflow: hidden;
+  background-color: var(--color-surface-200);
+  flex: none;
+}
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 클립수 배지(썸네일 우하단) — 측정 2087:69636: h24 pad6/10 r100 overlay-black-60 */
+.clipBadge {
+  position: absolute;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  display: inline-flex;
+  align-items: center;
+  gap: 2px; /* 측정: 아이콘↔숫자 2 */
+  height: 24px;
+  padding: var(--space-3) var(--space-5); /* 측정: 6 / 10 */
+  border-radius: var(--radius-pill);
+  background-color: var(--color-overlay-black-60); /* 측정: rgba(0,0,0,0.6) */
+  color: var(--color-white);
+  font-size: var(--text-body-4-size); /* 13 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+}
+.clipBadge svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 본문 블록 — y186(썸네일+14) 306×120 */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* 측정: 4 (텍스트 블록 gap) */
+  width: 306px;
+  margin-top: var(--space-7); /* 측정: 썸네일↔본문 14 */
+}
+/* 카드 제목(2087:70528) — 14 / 400 / lh18.2px(130%) / #B4B4B4. 순백 변형은 풀스크롤 일부, 본문 카드 = secondary */
+.title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%; /* 측정: 18.2px = 130% */
+  letter-spacing: var(--letter-spacing-tight);
+  font-weight: var(--font-weight-regular);
+}
+/* 작성자 행 — 이름(직군) + divider + 소속 */
+.authorRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3); /* 측정: 7 근사(6) */
+  font-size: var(--text-body-2-size); /* 15 */
+  line-height: 24px; /* 측정: lh24 */
+  letter-spacing: var(--letter-spacing-snug);
+}
+.role {
+  font-weight: var(--font-weight-regular);
+}
+.divider {
+  width: 1px;
+  height: 16px;
+  background-color: var(--color-border-divider); /* 측정: rgba(255,255,255,0.2) */
+  flex: none;
+}
+.affiliation {
+  color: var(--color-white); /* 측정: #FAFAFA */
+  font-weight: var(--font-weight-regular);
+}
+/* 요약(2087:70539) 15 / lh24 / #FAFAFA */
+.summary {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--color-white);
+  font-size: var(--text-body-2-size);
+  line-height: 24px;
+  letter-spacing: var(--letter-spacing-snug);
+  font-weight: var(--font-weight-regular);
+}
+/* 태그 행 */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4); /* 측정: 태그 그룹 gap 8 */
+  margin-top: var(--space-1);
+}
+/* 태그 칩(시각 전용 — 카드 버튼 내부라 인터랙티브 ❌). 측정 §9: h28 pad10 r6 .06 13/400/160% #CECECE */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: var(--size-chip-tag); /* 측정: 28 */
+  padding: 0 var(--space-5); /* 측정: 10 */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background-color: var(--color-surface-hover); /* 측정: rgba(255,255,255,0.06) */
+  color: var(--color-gray-550); /* 측정: #CECECE */
+  font-size: var(--text-chip-tag-size); /* 13 */
+  line-height: var(--text-chip-tag-line); /* 160% */
+  font-weight: var(--text-chip-tag-weight); /* 400 */
+  letter-spacing: var(--letter-spacing-snug);
+  white-space: nowrap;
+}
+
+/* 직군 라벨 가변색 — 측정 mint/violet/magenta */
+.toneMint {
+  color: var(--color-accent-mint);
+}
+.toneViolet {
+  color: var(--color-author-violet);
+}
+.toneMagenta {
+  color: var(--color-author-magenta);
+}

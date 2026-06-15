@@ -1,0 +1,63 @@
+/* 카드 상태 프리미티브 — 로딩 스켈레톤 / 빈 / 에러. 디자인 공백 → 파운데이션 토큰만.
+ * 카드 치수는 실측 고정(rec 334×334·grid 356×461·cross 280·grab 380). */
+.skeletonRow {
+  display: flex;
+  gap: var(--space-2);
+  overflow: hidden;
+}
+.skeleton {
+  flex: none;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface-segment); /* 측정: #1B1B1B(정적 dim, shimmer 없음) */
+}
+.rec {
+  width: 334px;
+  height: 334px;
+}
+.grid {
+  width: 356px;
+  height: 461px;
+}
+.cross {
+  width: 280px;
+  height: 240px;
+}
+.grab {
+  width: 380px;
+  height: 132px;
+  border-radius: var(--radius-10);
+}
+.stream {
+  width: 467px;
+  height: 160px;
+}
+
+/* 빈 상태 — 섹션 자리 placeholder 문구(+ 선택 CTA) */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-12) 0;
+  color: var(--color-text-secondary); /* #B4B4B4 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 160%;
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+/* 에러 상태 — 문구 + 재시도 버튼 */
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-12) 0;
+  font-family: var(--font-family-base);
+}
+.errorMsg {
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-3-size);
+  line-height: 160%;
+  letter-spacing: var(--letter-spacing-snug);
+}

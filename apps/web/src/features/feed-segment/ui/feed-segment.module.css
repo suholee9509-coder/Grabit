@@ -1,0 +1,9 @@
+/* feed-segment — 취향관/피드 1차 세그먼트.
+ * shared/ui Tabs(variant=segment size=lg)는 lh160% 토큰을 쓰나 홈 실측 lh=130%(2087:70406).
+ * → widget CSS override(line-height:130%). 컨테이너 폭 167(측정). */
+.segment {
+  /* 측정 2087:70406: 컨테이너 width 167 hug */
+}
+.segment :global([role='tab']) {
+  line-height: 130%; /* 측정: 취향관/피드 탭 텍스트 lh 130%(토큰 segment-lg=160% override) */
+}

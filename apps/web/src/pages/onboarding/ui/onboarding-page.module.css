@@ -1,0 +1,48 @@
+/* 온보딩 페이지 — 측정 4프레임 동일 그리드(2087:8476/8726/8968/9228). 1920×1080 · bg #121212. */
+.page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-shell-bg); /* 측정: #121212 */
+  overflow: hidden;
+}
+
+/* Stepper — 측정 layout_98AEVV: x=164 y=230. */
+.stepperSlot {
+  position: absolute;
+  top: 230px;
+  left: 164px;
+}
+
+/* 헤딩(제목+부제) — 측정 layout_65NNEJ/IPIBJK: x=162 y=340. */
+.headingSlot {
+  position: absolute;
+  top: 340px;
+  left: 162px;
+}
+
+/* 본문(칩 그리드 + ③ 직접입력) — 측정 layout_8JOWVE/FEIYSZ: x=162 y=461. */
+.bodySlot {
+  position: absolute;
+  top: 461px;
+  left: 162px;
+}
+
+/* 이전/다음·완료 버튼 행 — 측정 layout_3JLCB1/EV2DRO: x=162 y=850 · row · gap 12. */
+.buttonRow {
+  position: absolute;
+  top: 850px;
+  left: 162px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6); /* 측정: 12 */
+}
+
+/* 토스트 슬롯 — 차단/실패 안내(파운데이션 E2/E6). 하단 중앙. */
+.toastSlot {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+}

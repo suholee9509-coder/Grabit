@@ -1,0 +1,126 @@
+/* 확장 설치 모달 본문 — 측정 2087:10931 (998×702 2단).
+ * u0c Modal의 .body 패딩(0 28 28)을 상쇄해 카드 전체(998×702)를 절대배치 그리드로 채운다.
+ * 좌 일러스트(x=0~) · 우 콘텐츠(x=525~).
+ */
+.layout {
+  position: relative;
+  /* Modal .body padding(0 28px 28px) 상쇄 → 패널 안쪽 전체 사용 */
+  margin: 0 calc(-1 * var(--space-14)) calc(-1 * var(--space-14));
+  width: 998px;
+  height: 702px;
+  max-width: 100%;
+}
+
+/* 좌 일러스트 — 측정: 카드 좌측 ~절반(정적 자산, 콘텐츠 영역 외 G7). */
+.illustration {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 500px;
+  height: 702px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* 우 콘텐츠 컬럼 — 측정: 콘텐츠 좌측 시작 x=525. */
+.content {
+  position: absolute;
+  left: 525px;
+  top: 0;
+  width: 383px; /* 측정: 체크행 폭 383 (콘텐츠 컬럼) */
+  height: 702px;
+}
+
+/* 섹션 라벨 — 측정: x=525 y=116, "확장 프로그램 설치" 14/130% #66FF4B. */
+.sectionLabel {
+  position: absolute;
+  top: 116px;
+  display: block;
+  color: var(--color-brand-primary); /* 측정: #66FF4B */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+/* 제목 블록 — 측정: x=525 y=150, column gap 8, w 347. */
+.titleBlock {
+  position: absolute;
+  top: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4); /* 측정: 8 */
+  width: 347px;
+}
+
+/* 제목 — 측정 style_UQKYQ1: 28/700(Bold)/130%/-2% #FAFAFA. */
+.title {
+  margin: 0;
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-2-size); /* 28 */
+  line-height: var(--text-title-2-line); /* 130% */
+  font-weight: var(--font-weight-bold); /* 측정: 700 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
+
+/* 부제 — 측정 style_HBFNFO: 16/400/130%/-2% #CECECE. */
+.subtitle {
+  margin: 0;
+  color: var(--color-gray-550); /* 측정: #CECECE */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-1-size); /* 16 */
+  line-height: 130%;
+  font-weight: var(--font-weight-regular); /* 400 */
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+/* 체크 리스트 — 측정: x=525 y=278, column hug. */
+.checkList {
+  position: absolute;
+  top: 278px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 383px; /* 측정 */
+}
+
+/* 체크 행 — 측정 layout_OSKXUV: row · align center · gap 6 · pad 20/0 · w383. */
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3); /* 측정: 6 */
+  padding: var(--space-10) 0; /* 측정: 20/0 */
+  width: 383px;
+}
+
+/* 앞 2행 = 하단 보더 rgba(255,255,255,0.08)(측정 strokeWeight 0 0 1px). */
+.bordered {
+  border-bottom: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+}
+
+.checkIcon {
+  display: inline-flex;
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+/* 체크 텍스트 — 측정 style_XJ4GKE: 16/500(Medium)/130%/-2% #FAFAFA. */
+.checkText {
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-1-size); /* 16 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium); /* 측정: 500 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
+
+/* 버튼 행 — 측정 layout_LU0K85: x=525 y=576, row · align center · gap 12. */
+.footer {
+  position: absolute;
+  top: 576px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6); /* 측정: 12 */
+}

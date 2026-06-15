@@ -1,0 +1,30 @@
+/* cross-trend-section — "직군별 크로스 트렌드"(취향관). 측정 2087:69497 / 재필터 2278:136026.
+ * 제목(Bold24 #FAFAFA) + underline 탭(column gap12) + 가로 캐러셀(row gap4). */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3); /* 측정: 제목블록↔캐러셀 근사(6) */
+}
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6); /* 측정: 제목↔탭 12 */
+}
+.title {
+  margin: 0;
+  padding-left: var(--space-7); /* 측정: x14 */
+  color: var(--color-white); /* 측정: #FAFAFA */
+  font-size: var(--text-title-3-size); /* 측정: 24 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-tight);
+  font-weight: var(--font-weight-bold); /* 측정: 700 */
+}
+.carousel {
+  display: flex;
+  gap: var(--space-2); /* 측정: 카드 사이 4 */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,7 @@
+/* home-page — 앱 셸 호스트. 본문 = <HomeFeed/>(u2). 셸 content가 스크롤을 담당. */
+.body {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--color-shell-bg); /* 측정: 본문 면 #121212(셸과 연속) */
+}

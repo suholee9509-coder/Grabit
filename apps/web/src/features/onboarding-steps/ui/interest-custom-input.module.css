@@ -1,0 +1,33 @@
+/* 관심분야 직접입력 섹션 — 측정 2087:9222(Row 7) + divider 2087:9227.
+ * divider y=643 · 헬퍼/입력 y=667 → divider와 inner 사이 간격 = 667-643 ≈ 24.
+ * inner = column gap 10(헬퍼↔입력박스). 전체 w 642(페이지 칼럼 폭). */
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 642px;
+}
+
+/* divider — 측정: w642 · 1px · rgba(255,255,255,0.08). 칩 그리드 하단과 24px 간격. */
+.divider {
+  width: 100%;
+  height: 1px;
+  margin-top: var(--space-12); /* 칩 그리드 하단 ↔ divider(461+칩 ~158 → 643) 근사 */
+  margin-bottom: var(--space-12); /* divider(643) ↔ 헬퍼(667) = 24 */
+  background-color: var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5); /* 측정: 10 (헬퍼↔입력박스) */
+}
+
+/* 헬퍼 — 측정 style_ICYSEH: 14/400/130%/-2% #CECECE. */
+.helper {
+  margin: 0;
+  color: var(--color-gray-550); /* 측정: #CECECE */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}

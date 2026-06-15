@@ -1,0 +1,86 @@
+/* 로그인 진입 — 측정 2087:8221. 프레임 1920×1080 · bg #121212. */
+.page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-shell-bg); /* 측정: #121212 */
+  overflow: hidden;
+}
+
+/* 좌측 컬럼 — 측정 layout_MHKLKJ: x=276 y=251 · w414 · column · gap 24.
+ * ★E1 컷 후 구성: 헤딩 블록 → 소셜 버튼 그룹 → 약관(이메일/divider/계속 제거). gap 24 유지. */
+.leftColumn {
+  position: absolute;
+  top: 251px;
+  left: 276px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12); /* 측정: 24 */
+  width: 414px;
+}
+
+/* 헤딩 블록 — 측정 layout_JT2Y0A: column · gap 6 · w339. */
+.headingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3); /* 측정: 6 */
+  width: 339px;
+}
+
+/* 제목 — 측정 Display 2/Semibold: 30/600/130%/-2% #FAFAFA. */
+.heading {
+  margin: 0;
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-login-heading-size); /* 30 (신규 토큰) */
+  line-height: var(--text-login-heading-line); /* 130% */
+  font-weight: var(--text-login-heading-weight); /* 600 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
+
+/* 부제 — 측정 Body 1/Regular: 16/400/160%/-2% #B4B4B4. */
+.subheading {
+  margin: 0;
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-1-size); /* 16 */
+  line-height: 160%;
+  font-weight: var(--font-weight-regular); /* 400 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
+
+/* 약관 문구 — 측정 style_5P7B2K: 13/400/130%/-2% center #B4B4B4. 링크 강조(ts2). */
+.terms {
+  margin: 0;
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-4-size); /* 13 */
+  line-height: 130%;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  text-align: center;
+}
+
+/* 약관/개인정보 링크 — 강조(ts2). 목적지 E6 플레이스홀더(env). */
+.link {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* 에러 토스트 슬롯 — 파운데이션 Toast(E6). 화면 하단 중앙. */
+.toastSlot {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+}
+
+.toastClose {
+  border: none;
+  background: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+}

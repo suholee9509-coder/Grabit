@@ -1,0 +1,24 @@
+/* clip-insight — Step2 우측 "인사이트" 메모 (측정 2087:35013).
+ * 라벨 + 콜아웃 textarea(509×174, border #363636, radius6). u0c Textarea(mode lg) 재사용 + 높이 고정.
+ */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 측정: 라벨 ↔ 입력 wrap gap 10 */
+}
+
+.label {
+  color: var(--color-text-primary); /* #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 측정: Medium 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+/* 콜아웃 textarea 고정 높이 174(측정). u0c Textarea(mode lg) 위에 height override. */
+.memo {
+  width: 100%;
+  height: 174px; /* 측정: 콜아웃 509×174 */
+  padding: 10px 12px; /* 측정: 10/12 */
+}
