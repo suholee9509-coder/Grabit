@@ -1,0 +1,45 @@
+name: u0b data-core — canonical tests (pgTAP + deno)
+
+# ADR-0002 데이터모델·RLS 정본 검증(un-gameable·비-LLM 게이트, work-unit-contract §C).
+# 배경: 로컬 Docker가 디스크 제약으로 wedge → 정본 러너를 CI로 이관(2026-06-15).
+#   로컬은 pglite 34/34 PASS(바이트 동일 마이그레이션·뷰·함수) + PM RLS 설계리뷰 PASS.
+#   CI는 supabase 정본 Postgres(pgTAP) + deno로 *클린 러너*에서 재확인.
+
+on:
+  push:
+    branches: [feat/u0b-data-core, "sprint/**"]
+  pull_request:
+    branches: [main, "sprint/**"]
+    paths:
+      - 'supabase/**'
+      - '.github/workflows/u0b-canonical-tests.yml'
+
+jobs:
+  pgtap:
+    name: supabase pgTAP (rls-isolation · derived-api-no-leak · dedup · interval · heatmap · threshold)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: supabase start (local stack — clean runner)
+        run: supabase start
+      - name: supabase db reset (마이그레이션 0001~0009 클린 적용)
+        run: supabase db reset --no-seed
+      - name: supabase test db (pgTAP — supabase/tests/*.sql)
+        run: supabase test db
+      - name: supabase stop
+        if: always()
+        run: supabase stop
+
+  deno:
+    name: deno test (clip-ingest contract — 웹/확장 동일 payload)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: deno test (supabase/functions)
+        run: deno test --allow-all supabase/functions/
