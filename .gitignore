@@ -1,9 +1,14 @@
 # deps / build
 node_modules/
 dist/
+apps/web/dist/
 build/
 .vite/
 *.tsbuildinfo
+
+# supabase (로컬 상태 — 커밋 ❌)
+supabase/.temp/
+supabase/.branches/
 
 # env / secrets
 .env
@@ -24,3 +29,6 @@ build/
 coverage/
 playwright-report/
 test-results/
+
+# figma reverse-engineering renders (throwaway — inventory only)
+docs/design/.render/

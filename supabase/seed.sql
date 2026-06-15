@@ -1,0 +1,1 @@
+-- Supabase seed (로컬 개발용). u0b-data-core가 채운다.

@@ -1,0 +1,15 @@
+/*
+ * 디자인 토큰 — 비움 (의도적).
+ * u0-design-system 유닛이 Figma "디자인 시스템"(노드 668:29)에서 추출해 채운다.
+ * 채울 그룹(ADR-0001 스타일 결정):
+ *   --color-*   (color)
+ *   --text-*    (typography: size/weight/line-height/family)
+ *   --space-*   (spacing scale)
+ *   --radius-*  (border radius)
+ *   --shadow-*  (elevation)
+ * 테마 = 다크. CSS 변수 + CSS Modules. UI킷 ❌ → shared/ui를 Figma 컴포넌트로.
+ *
+ * :root {
+ *   --color-...: ...;
+ * }
+ */

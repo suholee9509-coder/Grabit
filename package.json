@@ -1,0 +1,24 @@
+{
+  "name": "grabit",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm -C apps/web dev",
+    "build": "pnpm -C apps/web build",
+    "tsc": "tsc -b",
+    "lint": "pnpm -C apps/web lint",
+    "lint:fsd": "steiger ./apps/web/src",
+    "test": "pnpm -C apps/web test",
+    "supabase": "supabase"
+  },
+  "devDependencies": {
+    "steiger": "^0.5.13",
+    "supabase": "^2.106.0",
+    "typescript": "^5.9.3"
+  }
+}
