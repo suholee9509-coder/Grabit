@@ -203,8 +203,7 @@
 ### 현재 IN-FLIGHT 워크플로 (watchdog 대상 — overnight-log와 동기)
 | 단위 | Task ID | runId | scriptPath(요약) | blast |
 |---|---|---|---|---|
-| u11-settings FE | `wo3tjlwb0` | `wf_e4217f40-39c` | u11-settings-fe-wf_e4217f40-39c.js | apps/web/src |
+| wave5-e2e | `wa9lzmq7f` | `wf_7a92f62d-285` | wave5-e2e-wf_7a92f62d-285.js | apps/web(통합트리 직접) |
 > scriptPath 전체경로 = `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/<위 파일>`. resume 시 사용.
-> ⚠ u11 머지 시 app.tsx(/settings·/inbox) §5 union 가능.
-> **완료(통합됨)**: u2·u4·u6·u7·**u8**→main `bb66def` · BE u7/u8/u11→main(포함).
-> **남은 단위**: u11 FE(진행중·마지막 화면) · **Wave5 프로덕션화**(목킹→실배선 isSupabaseReady 폴백·Playwright e2e·.env.example·ci.yml pnpm[R6]·docs/SETUP.md 배선큐). Wave5=supabase/ci/docs 중심.
+> **완료(통합됨)**: MVP 화면 9단위(u1·u2·u3·u4·u6·u7·u8·u11 + 파운데이션 u0/u0b/u0c) + 전 BE → main `35a775b`(태그 `wave2-4-stable`).
+> **Wave5**: ✅ci.yml(R6)·✅docs/SETUP.md·✅.env.example·✅마이그 idempotent·✅isSupabaseReady 폴백 / ▶Playwright e2e(`wa9lzmq7f`). e2e 완료·무회귀 시 Wave5 main 머지 → **MVP 전체 완료(키만 꽂으면 구동)**.

@@ -27,7 +27,10 @@
 ## IN-FLIGHT (라이브 — 컴팩트 생존용 · 모든 체크포인트마다 갱신)
 > ★ Auto Compact 후엔 이 섹션 + `git worktree list` + `git log sprint/0-integration` + `/workflows` + 각 worktree status.md로 실제 상태 재구성(런북 §10). 기억 추측 ❌.
 
-**실행 중 워크플로**: (없음 — 전 화면단위 완료) → **Wave5 프로덕션화 착수**.
+**실행 중 워크플로**:
+- **wave5-e2e** — Task `wa9lzmq7f` · run `wf_7a92f62d-285` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/wave5-e2e-wf_7a92f62d-285.js` · **통합트리 직접 작업**(워크트리 아님·blast=apps/web e2e/·package.json) · Playwright 로그인→온보딩→홈→클립→라이브러리→검색(목 경로) + isSupabaseReady 폴백 감사. 환경차단 시 시나리오 완성+blocked 보고(Skip-and-continue).
+
+**Wave5 진행**: ✅ ci.yml R6 pnpm 갱신(`c5b955b`) · ✅ docs/SETUP.md 배선가이드(`c5b955b`) · ✅ .env.example(기존) · ✅ 마이그 0001~0013 idempotent(pgTAP 172/0 검증) · ✅ 목킹→실배선 isSupabaseReady 폴백(전 features 이미 일관 — e2e 감사로 재확인 중) · ▶ Playwright e2e(진행중).
 
 **★ MVP 화면 9단위 전부 완료** (main `35a775b` · 태그 `wave2-4-stable`):
 - FE: u1 인증/온보딩 · u2 홈피드 · u3 인앱클립 · u4 콘텐츠상세 · u6 크롬확장(WXT) · u7 라이브러리 · u8 검색 · u11 설정/계정
