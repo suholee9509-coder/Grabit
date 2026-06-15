@@ -1,0 +1,16 @@
+/* 인라인 스피너 — 파운데이션 채움(전용 프레임 부재, E6). 토큰만 사용. */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-border-chip);
+  border-top-color: var(--color-text-primary);
+  border-radius: var(--radius-full);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

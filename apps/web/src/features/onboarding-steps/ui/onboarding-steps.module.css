@@ -1,0 +1,22 @@
+/* 온보딩 단계 본문 — 헤딩(y=340) → 칩 그리드(y=461) 간격 측정: 461-340-부제높이 ≈ 칩 그리드는
+ * 페이지 레이아웃이 절대 위치를 잡으므로 여기선 헤딩↔본문 간격만(측정 근사 ~75 → space-20 묶음).
+ * 실제 좌표 정렬은 onboarding-page가 담당(헤딩 y=340 / 그리드 y=461 / 버튼 y=850). */
+.step {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ③ 관심분야 — 칩 그리드 + 직접입력 태그 + 입력박스(섹션 내부 gap은 각 컴포넌트가 측정값으로). */
+.interests {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 직접입력 추가 태그(removable) 행 — 칩 그리드와 직접입력 사이. */
+.customTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4); /* 8 (태그칩 간격) */
+  margin-top: var(--space-6); /* 칩 그리드와 분리 */
+  width: 642px;
+}

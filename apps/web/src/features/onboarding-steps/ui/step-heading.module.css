@@ -1,0 +1,28 @@
+/* 단계 헤딩 — 측정 layout_65NNEJ/IPIBJK: column · gap 6. */
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3); /* 측정: 6 */
+}
+
+/* 제목 — 측정 style_HBUARW: 36/600/130%/-2% #FAFAFA. */
+.title {
+  margin: 0;
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-onboarding-title-size); /* 36 (신규 토큰) */
+  line-height: var(--text-onboarding-title-line); /* 130% */
+  font-weight: var(--text-onboarding-title-weight); /* 600 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
+
+/* 부제 — 측정 style_02O3RI: 16/400/160%/-2% #CECECE. */
+.subtitle {
+  margin: 0;
+  color: var(--color-gray-550); /* 측정: #CECECE */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-1-size); /* 16 */
+  line-height: 160%;
+  font-weight: var(--font-weight-regular); /* 400 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
