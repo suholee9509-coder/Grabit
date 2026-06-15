@@ -77,6 +77,11 @@
 - 상태: **✅ 추출 완료** (u0 워크트리 `feat/u0-design-system` `9924300` → `apps/web/src/app/styles/tokens.css`). 정밀값은 거기 — integration 머지 시 이 섹션 동기화.
 - 확정 토큰(실화면 측정): primary 그린 **`#66FF4B`**(CTA)·on-primary `#242424`/`#121212`·다크(배경 `#000`/카드 `#121212`/모달 `#1F1F1F`)·흰색 통일 `#FAFAFA`·Pro 보라 `#6D5DFF`. 사이즈: button 42/38·input 42/search 48·toggle 28·radius sm6/lg12/pill100. 그림자 4(모달 3레이어·dropdown).
 - 토큰 네임스페이스: `--color-*`·`--text-*`·`--space-*`·`--radius-*`·`--shadow-*` (CSS 변수). shared/ui 11종(button·chip·card·tabs·toggle·input·dropdown·modal·toast·avatar·badge). 보이스: config/brand_seed.md
+- ⚠ **픽셀 충실도 감사 완료(2026-06-15, 전수 54프레임)** → **`docs/design/u0-fidelity-audit.md` (190 findings: HIGH48/MED66/LOW76)**. **u0 파운데이션 추가 작업 필요**(게이트 ⓒ 전):
+  - **버튼**: ★`--size-button-md=34`(radius8) 신설 — 34px가 전 화면 정준 small(GNB·톱바·상세·검색). compact width 128 추가. 변형 누락(라이트솔리드 #EFEFEF·소셜솔리드다크 #242424). 네온 글자색 3종(#000000/#242424/#121212).
+  - **앱 셸 미구현**(`widgets/` 비어있음): GNB(254/226px·item h32·active #242424)·톱바(h56)·프로필카드·브레드크럼 구축 필요.
+  - **칩**: selected 채움색=#FAFAFA+#111111(실측). 사이즈 누락 h30/h28(.06채움·#CECECE). **탭**: underline active=#FAFAFA(네온 아님)·segment bg #1B1B1B/15px. **stepper**(온보딩 진행바 40×4) 미구현. **input** textarea변형(h64/h174·border solid #363636) 없음.
+  - 토큰 갭: #1B1B1B·#CECECE·#434343·#000000·radius10·shadow-popover.
 
 ## 6. Escalations — 게이트 ⓐ ✅ 해소 (2026-06-15)
 | # | 결정 | 결과 |
@@ -95,9 +100,16 @@
 | DM2 | **folder=클립 부착** | 클립에 folder_id(클립모달이 폴더+태그 동시설정). 한 콘텐츠 클립이 다른 폴더면 콘텐츠가 복수 폴더 표시 | **u7** 착수 시(콘텐츠-단일폴더로 조일지) |
 | DM3 | **익명화 N=5** | 코호트(직업10×연차6=60버킷) 5명 미만 라벨 숨김. 표본 적은 영상은 대부분 숨김 → 버킷 롤업 추가 여부 | 데이터 생기면 튜닝(`anonymization_threshold()`) |
 
+### u0 충실도 감사 결정점 (Figma SoT ↔ 기존 결정 충돌 — u0 수정 전 확정. 상세: `docs/design/u0-fidelity-audit.md`)
+| # | 충돌 | 옵션 | awaiting |
+|---|---|---|---|
+| FD1 | **대시보드 탭** — Figma GNB엔 '대시보드' 탭 명시 존재(라이브러리·수신함 사이) vs 게이트 ⓐ "대시보드 제거" | 탭 두되 페이지 미구현 / 탭도 제거 유지 / 대시보드 부활 | 사용자 |
+| FD2 | **토글 색** — Figma 토글=Fluent2 외부킷 잔재(ON 파랑 #2563EB·track44×22·knob18) vs 구현 브랜드그린 #66FF4B·46×28 | 브랜드그린 유지(치수만 44×22로) / Figma 파랑 채택 | 사용자 |
+| FD3 | **흰색** — 온보딩 칩 라벨 실측 #FFFFFF vs 사용자 결정 #FAFAFA 통일 | #FAFAFA 유지 / #FFFFFF 환원 | 사용자(미세) |
+
 ## 7. Risks / WIP cap
 - WIP 상한: **2 동시 단위** (기본 — 스프린트 계획 시 조정).
 - 리스크: **R1 디자인 공백 광범위**(빈/로딩/에러 + 설정/알림) → u0 파운데이션으로 채움(게이트 ⓐ 결정). **R2 MV3 확장(u6)=무거운 단위** → 서브-spec 분할, 사이징 게이트 주의. **R3 콜드스타트**(소셜애노테이션·또래비교·추천) → 데이터 없는 MVP에서 빈 화면(u0b 폴백 스텁). **R4 인증=고위험**(u1) → 백그라운드 관찰 필수. **R5 환경: 로컬 Docker wedge·디스크 빠듯** → supabase 정본은 CI로(로컬 supabase dev 시 Docker 복구 필요). **R6 TODO: 범용 `ci.yml`이 npm 기반(stale)** → pnpm + 실제 스크립트로 갱신 필요(integration 브랜치).
 
 ---
-Last updated: 2026-06-15 by PM (✅ **Sprint-0 두 파운데이션 완료** — u0 디자인시스템[`9924300`, 실화면 픽셀측정·사용자 사인오프] + u0b 데이터코어[`3225bc0`, ADR-0002 10항목 락·pglite 38/0·RLS리뷰 PASS·정본=CI]. 게이트 ⓐ+ADR-0001/0002 확정, 스캐폴드, 워크트리 2개. **다음 = 화면 단위(u1·u2·u3·u4·u6·u7·u8·u11) spec 역설계 → 게이트 ⓑ(sprint-kickoff)**. u0b 결정점 3개[§6 DM1-3] 화면 착수 시 확정)
+Last updated: 2026-06-15 by PM (✅ Sprint-0 두 파운데이션 머지(`388546d`, 통합 트리 green) + ✅ **u0 픽셀 충실도 감사(전수 54프레임)** → `docs/design/u0-fidelity-audit.md` 190건. **⚠ u0 추가 작업 필요**(§5): 34px 버튼·앱셸 위젯·칩 selected/사이즈·언더라인탭색·stepper·textarea + 토큰갭. **결정 3건**(§6 FD1 대시보드탭·FD2 토글색·FD3 흰색). **다음 = (a) u0 감사 반영 수정 → 게이트 ⓒ, (b) 화면 단위 spec → 게이트 ⓑ**. u0b 결정점 §6 DM1-3.)
