@@ -1,0 +1,116 @@
+/* SocialSidebar — 측정 2557:23064(펼침 450) / 2087:14297(접힘 60).
+ * 슬라이스 로컬 토큰: --color-tab-border #2D2D2D(탭바 하단 보더). */
+.sidebar {
+  --color-tab-border: #2d2d2d; /* 12538§8 / 13354§7a fill_MMKKDD */
+  position: relative;
+  flex: 0 0 auto;
+  width: 450px;
+  align-self: stretch;
+  box-sizing: border-box;
+  background-color: var(--color-shell-bg); /* #121212 */
+  border-left: 1px solid var(--color-border-chip); /* rgba(255,255,255,0.12) */
+  border-radius: 0 0 var(--radius-md) 0; /* 우하단만 8 */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* 작성 버튼 row — 탭바 위 우측 정렬(측정: x686 y41 우측 상단) */
+.writeRow {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-5) var(--space-7) 0; /* 상단 여백 + 우측 inset */
+}
+
+/* 탭바: h56, space-between, pad 16/14/16/0, border-bottom 1px #2D2D2D */
+.tabBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  box-sizing: border-box;
+  padding: 0 var(--space-7) 0 0; /* 우 14 (탭은 자체 pad) */
+  border-bottom: 1px solid var(--color-tab-border); /* #2D2D2D */
+}
+/* underline Tabs 컨테이너의 하단 보더는 탭바가 담당 → Tabs 자체 보더 무력화 */
+.tabs {
+  border-bottom: none;
+  align-self: stretch;
+}
+.tabCount {
+  font-size: var(--text-tab-underline-size); /* 16 */
+  line-height: var(--text-tab-underline-line); /* 130% */
+  font-weight: var(--font-weight-regular); /* 400 */
+  color: var(--color-gray-500); /* #B4B4B4 */
+}
+
+/* collapse 토글: 32w, pad 3/6, radius6, 아이콘 20×20 */
+.collapseToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  padding: var(--space-1_5) var(--space-3); /* 3 / 6 */
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm); /* 6 */
+  color: var(--color-white); /* #FAFAFA */
+  cursor: pointer;
+}
+.collapseToggle:hover {
+  background-color: var(--color-surface-ghost);
+}
+.collapseToggle:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* 댓글/답글 카드 리스트: x20 y84, w410, col gap28, 스크롤 */
+.list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14); /* 28 */
+  padding: var(--space-10) var(--space-10) 48px; /* 20 좌우, 하단 페이드 여유 */
+}
+
+/* 하단 페이드: 449×48, linear-gradient(180deg, transparent, #121212), backdrop blur 2px */
+.bottomFade {
+  position: absolute;
+  left: 1px;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 18, 18, 0) 0%,
+    rgba(18, 18, 18, 1) 100%
+  );
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+
+/* ── 접힘(60px) ── */
+.collapsed {
+  width: 60px;
+  align-items: center;
+  padding: var(--space-7) 0;
+  gap: var(--space-5);
+}
+.collapsed .collapseToggle {
+  width: auto;
+}
+.collapsedWrite {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 14px;
+  line-height: 130%;
+  font-weight: var(--font-weight-semibold); /* 600 */
+  color: var(--color-white-pure); /* #FFFFFF */
+  background-color: var(--color-btn-solid-gray); /* #333333 */
+  border-radius: var(--radius-btn-write); /* 7 */
+  padding: var(--space-9) var(--space-5); /* 18 / 10 (세로 배치) */
+}

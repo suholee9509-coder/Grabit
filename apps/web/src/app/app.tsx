@@ -1,9 +1,9 @@
 import { Outlet, type RouteObject } from 'react-router-dom';
 import { UiPreviewPage } from '@/app/ui-preview/ui-preview';
-import { ContentDetailStub } from '@/app/content-detail-stub/content-detail-stub';
 import { LoginPage, OAuthCallbackPage } from '@/pages/auth';
 import { OnboardingPage } from '@/pages/onboarding';
 import { HomePage } from '@/pages/home';
+import { ContentDetailPage } from '@/pages/content-detail';
 import {
   RequireOnboarded,
   OnboardingRouteGuard,
@@ -57,14 +57,11 @@ export const routes: RouteObject[] = [
         ),
       },
       {
-        // u2 카드 클릭 → 상세 라우팅(L1-e). 상세 화면 자체는 u4가 교체(스텁).
-        // 홈과 동일 가드(회원만 — E2 정책 일관).
+        // u2 카드 클릭 → 상세 라우팅. u4 콘텐츠 상세 페이지(시청정보/원본소스 + 우 소셜 사이드바).
+        // 가드 없음(spec [state] 비로그인: 상세는 비회원도 열람 가능 — 역할에 비회원 포함).
+        // 페이지 내부에서 쓰기(좋아요·클립추가·작성)만 로그인 유도(onRequireLogin → /login).
         path: 'content/:id',
-        element: (
-          <RequireOnboarded>
-            <ContentDetailStub />
-          </RequireOnboarded>
-        ),
+        element: <ContentDetailPage />,
       },
       {
         path: 'ui-preview',

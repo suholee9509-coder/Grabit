@@ -12,6 +12,11 @@ export {
 export { ingestClip } from './ingest-clip';
 export { fetchFolders } from './folders';
 export { searchTags } from './tags';
+export {
+  getContentSocialClips,
+  getContentHeatmap,
+  getContentMeta,
+} from './content-read';
 export { mapIngestError, type MappedError, type IngestErrorKind } from './errors';
 export type {
   IngestClipParams,
@@ -19,10 +24,18 @@ export type {
   FolderRow,
   TagRow,
   VideoMetaDto,
+  PublicClipDto,
+  HeatmapBucketDto,
+  ContentMetaDto,
+  SimilarContentDto,
 } from './types';
 export {
   DEMO_FOLDERS,
   DEMO_TAGS,
   demoSearchTags,
   demoVideoMeta,
+  demoContentMeta,
+  demoContentSocialClips,
+  demoContentHeatmap,
+  demoSimilarContent,
 } from './demo-data';

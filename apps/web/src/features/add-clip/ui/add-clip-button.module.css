@@ -1,0 +1,28 @@
+/* 클립 추가 — 측정 2087:12538 §5 (라이트 솔리드, h34, pad 8/14/8/11, gap6, radius8). */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3); /* 6 */
+  height: var(--size-button-md); /* 34 */
+  box-sizing: border-box;
+  padding: var(--space-4) var(--space-7) var(--space-4) var(--space-5_5); /* 8/14/8/11 */
+  background-color: var(--color-btn-light-solid); /* #EFEFEF */
+  border: none;
+  border-radius: var(--radius-md); /* 8 */
+  color: var(--color-text-on-light-solid); /* #171717 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-button-action-size); /* 15 */
+  line-height: var(--text-button-action-line); /* 130% */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  font-weight: var(--text-button-action-weight); /* 500 */
+  cursor: pointer;
+  white-space: nowrap;
+}
+.button:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+.icon {
+  display: inline-flex;
+  color: var(--color-text-on-light-solid);
+}

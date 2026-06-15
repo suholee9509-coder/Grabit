@@ -1,0 +1,58 @@
+/* ClipHeatmap — 측정 2875:19656 (컨테이너 h18, 트랙 h6 y12, 피크 25×18 #26FA01, 틱 21×15 #26FA01).
+ * 슬라이스 로컬 토큰: --color-heatmap-track(#777777 진행), --color-heatmap-peak(#26FA01 마커). */
+.container {
+  --color-heatmap-track: #777777; /* 12538§4 layout_PZ0UPU / 13772§6 fill_6B5SZJ */
+  --color-heatmap-peak: #26fa01; /* 12538§4 fill_LNUG7B / 13354§2 fill_4LCYJH / 13772§6 fill_XSVWBF */
+  position: relative;
+  width: 100%;
+  height: 18px;
+}
+
+/* 베이스 트랙: h6, y12(컨테이너 하단 정렬), rgba(255,255,255,0.12) */
+.track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0; /* y12 = 18-6 */
+  height: 6px;
+  background-color: var(--color-border-chip); /* rgba(255,255,255,0.12) */
+}
+
+/* 진행 세그먼트(시청밀도): h6, #777777, 트랙과 같은 줄 */
+.played {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 6px;
+  background-color: var(--color-heatmap-track); /* #777777 */
+}
+
+/* 마커 — 클릭 가능. 피크 25×18 / 틱 21×15, 색 #26FA01. */
+.marker {
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  line-height: 0;
+}
+.marker:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+.markerGlyph {
+  display: block;
+  background-color: var(--color-heatmap-peak); /* #26FA01 */
+  /* ▼ 화살표형 마커(측정: SVG 그린 마커) — clip-path 삼각형 + 막대 */
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.peak .markerGlyph {
+  width: 25px;
+  height: 18px;
+}
+.tick .markerGlyph {
+  width: 21px;
+  height: 15px;
+}

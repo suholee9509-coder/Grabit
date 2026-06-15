@@ -18,6 +18,11 @@ export function formatIntervalLength(interval: ClipInterval): string {
   return `${intervalLengthSec(interval)}초`;
 }
 
+/** 구간 → "10:11~12:42" 라벨(인사이트/인기구간 카드, 측정 style_1AOWBZ). */
+export function formatClockInterval(interval: ClipInterval): string {
+  return `${formatClock(interval.startSec)}~${formatClock(interval.endSec)}`;
+}
+
 /** [start,end) 유효: 정수·start>=0·end>start (RPC 22023 거울). */
 export function isValidInterval(interval: ClipInterval): boolean {
   const { startSec, endSec } = interval;
