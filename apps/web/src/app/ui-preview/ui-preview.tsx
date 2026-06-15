@@ -39,7 +39,6 @@ const COLOR_GROUPS: { title: string; items: { name: string; var: string }[] }[] 
       { name: 'gray-600 #DBDBDB', var: '--color-gray-600' },
       { name: 'gray-700 #ECECEC', var: '--color-gray-700' },
       { name: 'white #FAFAFA', var: '--color-white' },
-      { name: 'pure-white #FFF', var: '--color-pure-white' },
     ],
   },
   {

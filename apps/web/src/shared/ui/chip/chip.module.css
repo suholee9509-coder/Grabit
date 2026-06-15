@@ -15,7 +15,7 @@
   border: 1px solid var(--color-border-chip); /* 측정: rgba(255,255,255,0.12) */
   border-radius: var(--radius-sm); /* 측정: 6 (★pill 아님) */
   background-color: transparent; /* 측정: 배경 없음 */
-  color: var(--color-pure-white); /* 측정: #FFFFFF */
+  color: var(--color-white); /* 흰색 통일 #FAFAFA */
   font-family: var(--font-family-base);
   font-size: var(--text-chip-size); /* 15 */
   line-height: var(--text-chip-line); /* 130% */

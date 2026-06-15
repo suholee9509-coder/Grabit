@@ -1,9 +1,8 @@
 import styles from './toggle.module.css';
 
 /**
- * Toggle — on/off 스위치 (설정·알림 화면 = u11 공백-fill 의존).
- * ⚠ Figma 컴포넌트 SECTION에 전용 switch 변형이 명시적으로 잡히지 않음(Selected=true/false만 존재).
- *    → 토큰 기반 스켈레톤. 정확 트랙/노브 치수는 phase ② 사용자 확인 필요(inventory 공백).
+ * Toggle — on/off 스위치 (off=surface, on=brand-primary, knob=white).
+ * Figma 전용 switch 프레임 부재 → 디자인시스템 토큰 기반으로 확정(사용자 결정 2026-06-15).
  */
 export interface ToggleProps {
   checked: boolean;

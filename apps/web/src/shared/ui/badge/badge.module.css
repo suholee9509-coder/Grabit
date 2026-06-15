@@ -87,7 +87,7 @@
 }
 .violet.solid {
   background-color: var(--color-accent-violet-pro);
-  color: var(--color-pure-white);
+  color: var(--color-white);
 }
 
 /* danger — 668:29 system-red (soft는 합리 파생) */
@@ -97,5 +97,5 @@
 }
 .danger.solid {
   background-color: var(--color-system-red);
-  color: var(--color-pure-white);
+  color: var(--color-white);
 }

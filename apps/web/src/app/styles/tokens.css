@@ -31,8 +31,7 @@
   --color-gray-500: #b4b4b4;           /* Dark-Gray-500 (4640) — sub text 다수 */
   --color-gray-600: #dbdbdb;           /* Dark-Gray-600 (4684) */
   --color-gray-700: #ececec;           /* Dark-Gray-700 (4728) */
-  --color-white: #fafafa;              /* Dark-White (4772) */
-  --color-pure-white: #ffffff;         /* 측정: 칩/카드 본문 텍스트 실측 #FFFFFF (Dark-White #FAFAFA와 구분 — gap) */
+  --color-white: #fafafa;              /* Dark-White (4772) — ★흰색 통일(사용자 결정 2026-06-15): 모든 흰색 = #FAFAFA */
 
   /* 모달/오버레이 surface (측정) */
   --color-surface-modal: #1f1f1f;      /* 측정: 모달 카드 면색(2087:12474·33537) (=surface-100) */
