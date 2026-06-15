@@ -1,0 +1,48 @@
+/* Step1 링크 입력 모달 (측정 2087:32073, 582×364). Modal 셸 재사용 + body 내 라벨/헬퍼/입력. */
+
+/* 라벨 블록(측정: column gap4) */
+.labelBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* 측정: 4 */
+  margin-bottom: 10px; /* 측정: 라벨블록(y90) → 입력(y142) 사이 */
+}
+.label {
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-2-size); /* 측정: SemiBold 15 */
+  line-height: 130%;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-snug);
+}
+.helper {
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-4-size); /* 측정: Regular 13 */
+  line-height: 130%;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+/* URL 입력(측정: w530 멀티라인). u0c Textarea(mode link) — 폭은 body 풀폭. */
+.input {
+  width: 100%;
+  min-height: 52px; /* 측정: 단일행 hug ~ 멀티라인. pad14 + 13/130% */
+}
+
+/* 입력 에러 텍스트(프레임 공백 → u0c input invalid + 토큰 에러색) */
+.error {
+  margin-top: 6px;
+  color: var(--color-system-red);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-4-size);
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+}
+
+/* [다음] 버튼 — 측정: 156×38·#66FF4B·radius6·라벨 #121212(T2_Sb 14/130%).
+ * u0c Button primary+small(38px·radius6·SemiBold14/130%) 위에 폭156·라벨#121212만 보강. */
+.next {
+  width: var(--size-button-fixed-156); /* 측정: 156 */
+  color: var(--color-text-on-primary-alt); /* 측정: #121212 (모달 '다음') */
+}

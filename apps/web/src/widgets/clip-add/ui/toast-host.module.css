@@ -1,0 +1,14 @@
+/* toast-host — 화면 우하단 토스트 스택(프레임 공백 → u0c Toast + 토큰 배치). */
+.host {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.host > * {
+  pointer-events: auto;
+}

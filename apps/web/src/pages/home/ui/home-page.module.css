@@ -1,14 +1,28 @@
-/* 홈 자리표시 — u2 본문 구현 전 파운데이션. */
-.placeholder {
+/* home-page — 앱 셸 호스트 + 콘텐츠 추가 진입점(이 단위 스코프 = add 플로우 트리거).
+ * 홈 피드 본문은 범위 밖(u4/u8) → 간단한 안내 본문(파운데이션 토큰).
+ */
+.body {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   min-height: 60vh;
+  padding: 40px;
+  text-align: center;
 }
-
-.note {
-  color: var(--color-text-tertiary);
+.heading {
+  color: var(--color-text-primary);
   font-family: var(--font-family-base);
-  font-size: var(--text-body-1-size);
+  font-size: var(--text-title-4-size);
+  line-height: 130%;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-snug);
+}
+.sub {
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size);
+  line-height: 160%;
   letter-spacing: var(--letter-spacing-snug);
 }
