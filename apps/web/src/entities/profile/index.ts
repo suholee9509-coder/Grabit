@@ -9,12 +9,14 @@ export {
   GOAL_OPTIONS,
   INTERESTS_MIN,
   INTERESTS_MAX,
+  NOTIFICATION_CATEGORIES,
 } from './model/options';
 export type {
   JobOption,
   YearsOption,
   InterestOption,
   GoalOption,
+  NotificationCategoryOption,
 } from './model/options';
 export {
   emptyOnboardingInput,
@@ -23,6 +25,9 @@ export type {
   OnboardingInput,
   CompleteOnboardingArgs,
   Profile,
+  ProfileEditInput,
+  UpdateProfileArgs,
+  NotificationPref,
 } from './model/types';
 export {
   toCompleteArgs,
@@ -30,10 +35,25 @@ export {
   saveOnboarding,
   resetMockOnboarding,
   fetchMyProfileJob,
+  toUpdateArgs,
+  getMyProfile,
+  updateProfile,
+  softDeleteAccount,
+  restoreAccount,
+  getNotificationPrefs,
+  setNotificationPref,
+  resetMockNotificationPrefs,
+  mergeNotificationState,
 } from './api/profile-api';
 export {
   profileKeys,
   useOnboardingGate,
   useCompleteOnboarding,
   useMyProfileJob,
+  useMyProfile,
+  useUpdateProfile,
+  useSoftDelete,
+  useRestoreAccount,
+  useNotificationPrefs,
+  useSetNotificationPref,
 } from './api/queries';

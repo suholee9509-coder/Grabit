@@ -1,0 +1,119 @@
+/* ProfileEditSection — 디자인 공백 → u0 토큰만(하드코딩 HEX ❌). 온보딩 칩/인풋 폼팩터 승계. */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8); /* 16 — 섹션 내 필드 간격 */
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3); /* 6 — 라벨↔필드 */
+  max-width: 642px; /* 온보딩 칩 그리드 폭 승계 */
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3); /* 6 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-text-primary); /* #FAFAFA */
+}
+
+/* private/public 시각 분리 — 색 발명 ❌. 면=surface-200·테두리=border-subtle·텍스트=tertiary. */
+.privacyTag {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 var(--space-4); /* 0/8 */
+  border-radius: var(--radius-sm); /* 6 */
+  background: var(--color-surface-200); /* #242424 */
+  border: 1px solid var(--color-border-subtle); /* rgba(255,255,255,.08) */
+  font-size: var(--text-caption-3-size); /* 11 */
+  line-height: 130%;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-tertiary); /* #999999 — 나만 보기(private) */
+}
+
+/* public 코호트 — premium-green 승계(프로필 카드 배지 색, 추측 ❌). */
+.publicTag {
+  color: var(--color-premium-green); /* #199E41 */
+  border-color: var(--color-border-subtle);
+}
+
+.counter {
+  margin-left: auto;
+  font-size: var(--text-body-4-size); /* 13 */
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-secondary); /* #B4B4B4 */
+}
+
+/* 칩 wrap — 온보딩 chip-grid 측정(gap 14 row wrap). */
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-7); /* 14 */
+  align-items: flex-start;
+}
+
+.divider {
+  margin: 0;
+  border: none;
+  height: 1px;
+  background: var(--color-border-subtle);
+}
+
+.fieldHint {
+  margin: 0;
+  font-size: var(--text-body-4-size); /* 13 */
+  line-height: 150%;
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-text-secondary); /* #B4B4B4 — 색 발명 없이 카피로 안내 */
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-5); /* 10 */
+  margin-top: var(--space-4);
+}
+
+/* 로딩 스켈레톤 — library-page sideSkeleton 패턴(토큰 펄스). */
+.skeletonWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  max-width: 642px;
+}
+
+.skeleton {
+  height: 42px; /* 인풋/칩 높이 */
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-ghost); /* rgba(255,255,255,.04) */
+  animation: profile-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes profile-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.errorState {
+  padding: var(--space-12) 0;
+}
+
+.errorText {
+  margin: 0;
+  font-size: var(--text-body-2-size);
+  color: var(--color-text-secondary);
+}

@@ -61,3 +61,41 @@ export type JobOption = (typeof JOB_OPTIONS)[number];
 export type YearsOption = (typeof YEARS_OPTIONS)[number];
 export type InterestOption = (typeof INTEREST_OPTIONS)[number];
 export type GoalOption = (typeof GOAL_OPTIONS)[number];
+
+/**
+ * 알림 카테고리 카탈로그 (u11 설정 '알림' 섹션 — L1-e) — 비결제만(게이트 ⓐ).
+ * 0013 notification_settings CHECK가 billing/subscription/subscription_expiry/receipt/payment 거부 →
+ * 여기엔 결제 계열 0건(트렌드·추천·활동 등 비결제 카테고리만). category 키 = BE 저장 값(영문 키).
+ * label = 설정 화면 표기. enabledByDefault = prefs 0건일 때 기본 표기(0013 default true 정합).
+ */
+export interface NotificationCategoryOption {
+  /** BE 저장 키(0013 set_notification_pref p_category) — 비결제만. */
+  category: string;
+  /** 설정 화면 라벨. */
+  label: string;
+  /** 보조 설명(설정 행 서브텍스트). */
+  description: string;
+  /** prefs 미설정 시 기본값(0013 컬럼 default true 정합). */
+  enabledByDefault: boolean;
+}
+
+export const NOTIFICATION_CATEGORIES: readonly NotificationCategoryOption[] = [
+  {
+    category: 'trend',
+    label: '트렌드 알림',
+    description: '내 직군·관심분야에서 주목받는 컨텐츠를 알려드려요.',
+    enabledByDefault: true,
+  },
+  {
+    category: 'recommendation',
+    label: '추천 컨텐츠',
+    description: '나와 비슷한 사람들이 많이 본 컨텐츠를 추천해 드려요.',
+    enabledByDefault: true,
+  },
+  {
+    category: 'activity',
+    label: '활동 알림',
+    description: '내 클립·메모에 달린 반응을 알려드려요.',
+    enabledByDefault: false,
+  },
+] as const;
