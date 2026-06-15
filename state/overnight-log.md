@@ -29,7 +29,10 @@
 
 **실행 중 워크플로** (watchdog 대상):
 - **u4-content-detail FE** — Task `wedn36twz` · run `wf_88d76d11-58c` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u4-content-detail-fe-wf_88d76d11-58c.js` · worktree feat/u4-content-detail · blast=apps/web/src · 측정(2087:12538/13354/13772)→계획→구현→검증. 기존 u0b RPC(content_heatmap·content_clips_public) 소비·annotations 옵션1(UI+목킹).
+- **u8-search FE** — Task `wzepgh9hh` · run `wf_60bb6715-68f` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u8-search-fe-wf_60bb6715-68f.js` · worktree feat/u8-search-fe(9be2b65 브랜치·0012 상속) · blast=apps/web/src · 측정(2087:40320/38847/40125)→계획→구현→검증. **u4와 병렬**(독립·app.tsx/shared·api는 §5 union 머지).
 - ~~u11-settings BE `wgzqi9bn9`~~ ✅ **완료·integration 머지**(0013·pgTAP 172/0·아래 로그). main 보류(u11 FE 풀유닛 시).
+
+**⚠ u4·u8 FE 동시 머지 주의**: 둘 다 app.tsx(라우트)·shared/api(export) 건드림 → 머지 순서 u4 먼저, u8은 §5 union 해결(양쪽 라우트·export 보존·잔존 마커 grep 0). u7 FE는 u4 상세 surface 재사용 의존 → u4 머지 후 순차.
 
 **완료 단위**: u2(home-feed)·u6(chrome-extension) [main `835e288`] · BE: u7·u8 마이그(0011·0012)[integration].
 **integration 상태**: `61dc7fa` + (이 턴 state docs 커밋) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0. origin 백업됨.
