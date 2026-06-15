@@ -1,0 +1,28 @@
+/* AppShell — 앱 전역 레이아웃(GNB + 톱바 + 본문 슬롯).
+ * 측정 정준: 홈 2087:70381(GNB 254) + 톱바 56. 좌측 GNB 고정폭, 우측 column(톱바 → 본문).
+ * 셸 베이스 = #121212(--color-shell-bg). 본문은 children 슬롯이 채움.
+ */
+.shell {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-bg); /* 앱 베이스(#000000) — GNB/톱바가 #121212 면을 얹음 */
+  overflow: hidden;
+}
+
+/* 우측 영역 — column(톱바 고정 56 + 본문 fill) */
+.main {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* 본문 슬롯 — 톱바 아래, 남은 영역 스크롤 */
+.content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  background-color: var(--color-shell-bg); /* 본문 면 = 톱바와 연속(#121212) */
+}

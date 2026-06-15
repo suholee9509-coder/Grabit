@@ -1,39 +1,45 @@
-/* Toggle (switch) — 높이 = 토글형 탭(시청정보/원본소스 2087:12538) 아이템 높이 28에 정렬
- *   (탭 컨테이너 36 / 아이템 28 실측, 사용자 결정 2026-06-15). on=brand-primary, knob=white. */
+/* Toggle (switch) — ★FD2 전면 교체: Figma 파랑 토글 100% 채택.
+ *   실측 출처: 콘텐츠추가 2087:35027~35030 / 확장 2074:88468~88471 (6 인스턴스 전수 동일, 모두 ON).
+ *   track 44×22 · radius 1000(pill) · padding 2/2/2/8 · ON #2563EB(Light-Primary).
+ *   knob 18×18 · #FAFAFA(Dark/Dark-White) · stroke rgba(0,0,0,.24) 0.5px · 이중 그림자.
+ *   (이전 46×28 / knob24 / ON #66FF4B 구현 폐기.) */
 .toggle {
   position: relative;
   display: inline-flex;
   align-items: center;
-  width: 46px;
-  height: 28px;
-  padding: 2px;
+  width: var(--size-toggle-track-w);   /* 44px */
+  height: var(--size-toggle-track-h);  /* 22px */
+  /* 측정 padding 2/2/2/8 — OFF knob을 left:8 위치에 정렬(비대칭) */
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4); /* 2px 2px 2px 8px */
   border: none;
-  border-radius: var(--radius-pill);
-  background-color: var(--color-surface-300);
+  border-radius: var(--radius-pill);   /* 100px → 22h pill (Figma 1000과 동일 효과) */
+  background-color: var(--color-toggle-off); /* OFF [GAP §4]: #313131 디자인시스템 채움 */
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
 .toggle:focus-visible {
-  outline: 2px solid var(--color-brand-primary);
+  outline: 2px solid var(--color-toggle-on);
   outline-offset: 2px;
 }
 
 .knob {
-  width: 24px;
-  height: 24px;
+  width: var(--size-toggle-knob);      /* 18px */
+  height: var(--size-toggle-knob);     /* 18px */
   border-radius: var(--radius-full);
-  background-color: var(--color-white);
+  background-color: var(--color-toggle-knob);   /* #fafafa */
+  border: var(--size-toggle-knob-stroke) solid var(--color-toggle-knob-stroke); /* 0.5px rgba(0,0,0,.24) */
+  box-shadow: var(--shadow-toggle-knob);        /* 0 2 1 rgba(0,0,0,.04), 0 1 6 rgba(0,0,0,.06) */
   transition: transform 0.15s ease;
 }
 
 .checked {
-  background-color: var(--color-brand-primary);
+  background-color: var(--color-toggle-on);     /* #2563EB ★FD2 */
 }
 .checked .knob {
-  transform: translateX(18px);
+  transform: translateX(var(--size-toggle-knob-travel)); /* 16px (검산: 44−2−18−8) */
 }
 
 .disabled {
-  opacity: 0.4;
+  opacity: 0.4;            /* [GAP §4] Figma 부재 — 디자인시스템 관례 유지 */
   cursor: not-allowed;
 }

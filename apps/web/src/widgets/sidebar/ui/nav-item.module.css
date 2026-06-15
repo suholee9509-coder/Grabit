@@ -1,0 +1,60 @@
+/* NavItem (GNB 메뉴 항목) — 실화면 측정 정밀(SoT: 홈 GNB 2087:70381 layout_L4P6XT).
+ * 공통(2상태): h32 · pad 8/10 · gap8(아이콘↔라벨) · radius8 · 아이콘 20×20 · width fill(226).
+ * active(선택): bg #242424 · 텍스트 #FAFAFA · Body3/Medium(14/500/lh160%/-2%) · 아이콘 solid.
+ * inactive: bg transparent · 텍스트 #B4B4B4 · Body3/Regular(14/400/lh160%/-2%) · 아이콘 outline.
+ * 측정 노드: layout_L4P6XT(h32/pad8·10/gap8) · fill_ZYNWWS(#242424) · fill_LYBFSM(#FAFAFA) ·
+ *   fill_MR45I3(#B4B4B4) · layout_YM9W7Q(아이콘 20) · Body3/Medium·Regular(160%).
+ * ★타이포 정준 = 홈 auto-layout 160%(검색 절대배치 130%는 임포트 잔재, [GAP §3]).
+ */
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4); /* 측정: 8 (아이콘↔라벨) */
+  box-sizing: border-box;
+  width: 100%; /* 측정: fill (226) */
+  height: var(--size-nav-item); /* 측정: 32 */
+  padding: var(--space-4) var(--space-5); /* 측정: 8/10 */
+  border: none;
+  border-radius: var(--radius-md); /* 측정: 8 */
+  background-color: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-family-base);
+  font-size: var(--text-nav-item-size);   /* 측정: 14 */
+  line-height: var(--text-nav-item-line);  /* 측정: 160% */
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% */
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* 아이콘 슬롯 — 측정: 20×20 (layout_YM9W7Q) */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px; /* 측정: 20 */
+  height: 20px;
+}
+
+.label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* inactive(비선택) — 측정: transparent · #B4B4B4 · Regular(400) */
+.inactive {
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 (fill_MR45I3) */
+  font-weight: var(--font-weight-regular); /* 측정: 400 */
+}
+.inactive:hover {
+  /* gap: hover 실화면 부재 → overlay 4%로 합리값 */
+  background-color: var(--color-surface-ghost);
+}
+
+/* active(선택) — 측정: bg #242424 · #FAFAFA · Medium(500) */
+.active {
+  background-color: var(--color-nav-active-bg); /* 측정: #242424 (fill_ZYNWWS) */
+  color: var(--color-text-primary); /* 측정: #FAFAFA (fill_LYBFSM) */
+  font-weight: var(--font-weight-medium); /* 측정: 500 */
+}

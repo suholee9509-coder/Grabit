@@ -1,8 +1,13 @@
 /* Input — 실화면 측정 정밀 리팩토링.
  * default(이메일 인풋, 측정 2087:8469): h42 · pad 18/14 · radius 6 · bg #242424 ·
  *   border rgba(white,0.08) · placeholder #999999 · 14/160%/-2%.
- * search(둥근 검색바, 측정 2087:40407): h48 · pad 8/7/8/20 · radius 80(pill) · bg #1F1F1F ·
+ * search(둥근 검색바, 측정 2087:40407): h48 · pad 8/20 · radius 80(pill) · bg #1F1F1F ·
  *   border rgba(white,0.10) · placeholder #B4B4B4 · 좌측 18px 아이콘.
+ * search size=sm(라이브러리 검색바, 측정 2117:22132): h38 · pad 10/14 · radius 100 · bg 투명 ·
+ *   border rgba(white,0.10) · placeholder 14/130% · gap 6 · 좌측 18px 아이콘.
+ * search selected(쿼리 채워진, 측정 2087:38859): 채워진 텍스트 #FAFAFA 15/160%/-2.5% · 우 X dismiss 16px(#999999).
+ * textarea 멀티라인(측정 §1 2087:9224 / §2 2074:88456 / §3 2087:33541):
+ *   border solid #363636 · radius 6 공유. lg(h64·pad10/12·14px/160%) / link(pad14·13px/130%·hug).
  * ⚠ focus 스트로크는 실화면 부재(gap) → 668:29 Dark-Stroke-Typing(#1F6FEB) 합리값.
  */
 .wrapper {
@@ -27,10 +32,10 @@
   border-color: var(--color-stroke-typing);
 }
 
-/* search 변형 — 측정: 둥근 검색바 */
+/* search 변형 — 측정: 둥근 검색바(2087:38859/40407) */
 .search {
   height: var(--size-search); /* 측정: 48 */
-  padding: 0 var(--space-10); /* 측정: padLeft 20 (우측은 임베드 버튼) */
+  padding: var(--space-4) var(--space-10); /* 측정: 8/20 (2087:38859 layout_VOPEZB) */
   gap: var(--space-3); /* 측정: 6 */
   border-radius: var(--radius-search); /* 측정: 80(pill) */
   border-color: var(--color-border-default); /* 측정: rgba(255,255,255,0.10) */
@@ -41,6 +46,47 @@
 }
 .search .input::placeholder {
   color: var(--color-gray-500); /* 측정: #B4B4B4 */
+}
+
+/* search size=sm — 측정: 라이브러리 검색바(2117:22132 layout_XCD7ZY)
+ * h38 · radius 100 · pad 10/14 · bg 투명 · placeholder 14/130%. (좌 18px 아이콘·gap 6·border .10은 search 공통) */
+.searchSm {
+  height: var(--size-search-sm); /* 측정: 38 */
+  padding: var(--space-5) var(--space-7); /* 측정: 10/14 */
+  border-radius: var(--radius-pill); /* 측정: 100 */
+  background-color: transparent; /* 측정: fills 미존재(투명) */
+}
+.searchSm .input {
+  font-size: var(--text-body-3-size); /* 측정: 14 */
+  line-height: 130%; /* 측정: 130% */
+}
+
+/* search selected — 측정: 쿼리 채워진 상태(2087:38859)
+ * 채워진 쿼리 텍스트 #FAFAFA 15/160%/-2.5% (placeholder 아님). 우측 X dismiss 노출. */
+.selected .input {
+  color: var(--color-text-primary); /* 측정: #FAFAFA (채워진 값) */
+  font-size: var(--text-body-2-size); /* 측정: 15 */
+  line-height: 160%; /* 측정: 160% */
+  letter-spacing: var(--letter-spacing-tight); /* 측정: -2.5% */
+}
+
+/* X(dismiss) 버튼 — 측정: 16px 프레임·글리프 #999999(2087:38863 layout_FESW7X / fill_265I6N) */
+.dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; /* 측정: 16 */
+  height: 16px; /* 측정: 16 */
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text-tertiary); /* 측정: #999999 */
+  cursor: pointer;
+  flex-shrink: 0;
+}
+/* gap: dismiss hover/active 색 변화 프레임 부재 → 정적 #999999(노트) */
+.dismiss:hover {
+  color: var(--color-text-secondary);
 }
 
 .input {
@@ -62,7 +108,8 @@
 .invalid {
   border-color: var(--color-system-red);
 }
-.invalid:focus-within {
+.invalid:focus-within,
+.invalid:focus {
   border-color: var(--color-system-red);
 }
 
@@ -70,7 +117,8 @@
 .disabled {
   opacity: 0.5;
 }
-.disabled .input {
+.disabled .input,
+textarea.disabled {
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
@@ -80,4 +128,43 @@
   align-items: center;
   color: var(--color-text-tertiary);
   flex-shrink: 0;
+}
+
+/* ── textarea 멀티라인 변형 ────────────────────────────────────────────
+ * 공유: border solid #363636 · radius 6 · top 정렬 · 채워진 본문 #FAFAFA · placeholder #999999.
+ * lg(2087:9224, 기본): h64 고정 · pad 10/12 · 14px/160%/-2%. (callout 509×174 = width/height prop으로 고정) */
+.textarea {
+  display: block;
+  width: 100%;
+  height: var(--size-input-lg); /* 측정: 64 (텍스트 44 + pad 10×2) */
+  padding: var(--space-5) var(--space-6); /* 측정: 10/12 */
+  border: 1px solid var(--color-stroke-300); /* 측정: solid #363636 (Dark/Dark-Stroke-300) */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background: transparent; /* 측정: fills 미존재(투명) */
+  color: var(--color-text-primary); /* 측정: 채워진 본문 #FAFAFA(§2 2074:88457) */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 측정: 14 */
+  line-height: 160%; /* 측정: 160% */
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% */
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.textarea::placeholder {
+  color: var(--color-text-tertiary); /* 측정: #999999(§1 fill_R0TWAB) */
+}
+/* gap: 멀티라인 focus/hover/invalid 보더 실화면 부재 → default 인풋과 동일 토큰 일관 적용 */
+.textarea:hover:not(.disabled) {
+  border-color: var(--color-stroke-400);
+}
+.textarea:focus {
+  border-color: var(--color-stroke-typing);
+}
+
+/* link(2087:33541): pad 14(전방향) · 13px/130%/-2% · column hug(가변, w530은 인스턴스 고정 → width prop) */
+.textareaLink {
+  height: auto; /* 측정: vertical=hug(내용 가변) */
+  padding: var(--space-7); /* 측정: 14(전방향) */
+  font-size: var(--text-body-4-size); /* 측정: 13 (Cap1_Rg) */
+  line-height: 130%; /* 측정: 130% */
 }
