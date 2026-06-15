@@ -1,25 +1,46 @@
-/* Input — State machine via :focus-within / 값. tokens.css만 사용. */
+/* Input — 실화면 측정 정밀 리팩토링.
+ * default(이메일 인풋, 측정 2087:8469): h42 · pad 18/14 · radius 6 · bg #242424 ·
+ *   border rgba(white,0.08) · placeholder #999999 · 14/160%/-2%.
+ * search(둥근 검색바, 측정 2087:40407): h48 · pad 8/7/8/20 · radius 80(pill) · bg #1F1F1F ·
+ *   border rgba(white,0.10) · placeholder #B4B4B4 · 좌측 18px 아이콘.
+ * ⚠ focus 스트로크는 실화면 부재(gap) → 668:29 Dark-Stroke-Typing(#1F6FEB) 합리값.
+ */
 .wrapper {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-5); /* 측정: 10 */
   width: 100%;
-  height: 48px;
-  padding: 0 var(--space-8);
-  border: 1px solid var(--color-stroke-300);
-  border-radius: var(--radius-sm); /* 6px */
-  background-color: var(--color-surface-100);
+  height: var(--size-input); /* 측정: 42 */
+  padding: 0 var(--space-7); /* 측정: padX 14 */
+  border: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  background-color: var(--color-surface-200); /* 측정: #242424 */
   transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .wrapper:hover:not(.disabled) {
-  border-color: var(--color-stroke-400);
+  border-color: var(--color-border-chip);
 }
 
-/* State=Focused/Typing — Dark-Stroke-Typing */
+/* State=Focused/Typing — gap: 실화면 부재 → Dark-Stroke-Typing 합리값 */
 .wrapper:focus-within {
   border-color: var(--color-stroke-typing);
-  background-color: var(--color-surface-200);
+}
+
+/* search 변형 — 측정: 둥근 검색바 */
+.search {
+  height: var(--size-search); /* 측정: 48 */
+  padding: 0 var(--space-10); /* 측정: padLeft 20 (우측은 임베드 버튼) */
+  gap: var(--space-3); /* 측정: 6 */
+  border-radius: var(--radius-search); /* 측정: 80(pill) */
+  border-color: var(--color-border-default); /* 측정: rgba(255,255,255,0.10) */
+  background-color: var(--color-surface-100); /* 측정: #1F1F1F */
+}
+.search .input {
+  font-size: var(--text-body-2-size); /* 측정: 15 */
+}
+.search .input::placeholder {
+  color: var(--color-gray-500); /* 측정: #B4B4B4 */
 }
 
 .input {
@@ -30,12 +51,12 @@
   outline: none;
   color: var(--color-text-primary);
   font-family: var(--font-family-base);
-  font-size: var(--text-body-1-size);
-  line-height: var(--text-body-1-line);
-  letter-spacing: var(--letter-spacing-tight);
+  font-size: var(--text-body-3-size); /* 측정: 14 */
+  line-height: 160%; /* 측정: 160% */
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% */
 }
 .input::placeholder {
-  color: var(--color-text-tertiary);
+  color: var(--color-text-tertiary); /* 측정: #999999 */
 }
 
 .invalid {
@@ -45,10 +66,9 @@
   border-color: var(--color-system-red);
 }
 
+/* gap: disabled 인풋 실화면 부재 → opacity */
 .disabled {
-  background-color: var(--color-surface);
-  border-color: var(--color-stroke-200);
-  opacity: 0.6;
+  opacity: 0.5;
 }
 .disabled .input {
   color: var(--color-text-disabled);
@@ -59,4 +79,5 @@
   display: inline-flex;
   align-items: center;
   color: var(--color-text-tertiary);
+  flex-shrink: 0;
 }

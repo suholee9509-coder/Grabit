@@ -2,9 +2,9 @@ import type { ReactNode } from 'react';
 import styles from './modal.module.css';
 
 /**
- * Modal — 오버레이 다이얼로그 (클립 추가·요금제·확장 설치 등).
- * Dimmed-200 백드롭 + surface 패널 + shadow-overlay + radius-xl.
- * phase ① 스켈레톤: 구조/토큰. 포커스 트랩·esc·포털은 phase ②(또는 후속 인프라).
+ * Modal — 오버레이 다이얼로그 (측정: 요금제 998×731 lg · 링크/검색 582×364 sm).
+ * 측정 정밀: bg #1F1F1F · radius 12 · backdrop rgba(0,0,0,0.6) · shadow '모달'(3레이어) · inset 28.
+ * 포커스 트랩·esc·포털은 후속 인프라.
  */
 export interface ModalProps {
   open: boolean;
@@ -12,11 +12,11 @@ export interface ModalProps {
   title?: ReactNode;
   children?: ReactNode;
   footer?: ReactNode;
-  /** 패널 최대 폭(px). 기본 480. */
+  /** 패널 최대 폭(px). 측정: sm=582 / lg=998. 기본 582(작은 모달). */
   width?: number;
 }
 
-export function Modal({ open, onClose, title, children, footer, width = 480 }: ModalProps) {
+export function Modal({ open, onClose, title, children, footer, width = 582 }: ModalProps) {
   if (!open) return null;
 
   return (

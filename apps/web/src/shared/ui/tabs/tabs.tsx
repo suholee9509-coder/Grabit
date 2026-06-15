@@ -1,9 +1,9 @@
 import styles from './tabs.module.css';
 
 /**
- * Tabs — Figma 2562:7927 Tab/FilterTab/Item.
- * variant 'underline' = 홈 취향관↔피드 / 상세 시청정보↔원본소스(밑줄 인디케이터).
- * variant 'pill' = 필터 탭(선택 시 채움).
+ * Tabs — 실화면 측정 정밀(phase ②).
+ * variant 'segment' = 세그먼트 pill 컨트롤(측정 2087:12540: 선택 탭이 #363636 채움 pill).
+ * variant 'underline' = 카테고리 밑줄 탭(측정 2087:11010: active #66FF4B 밑줄).
  */
 export interface TabItem {
   id: string;
@@ -14,7 +14,7 @@ export interface TabsProps {
   items: TabItem[];
   value: string;
   onValueChange?: (id: string) => void;
-  variant?: 'underline' | 'pill';
+  variant?: 'segment' | 'underline';
   className?: string;
 }
 
@@ -22,7 +22,7 @@ export function Tabs({
   items,
   value,
   onValueChange,
-  variant = 'underline',
+  variant = 'segment',
   className,
 }: TabsProps) {
   const classes = [styles.tabs, styles[variant], className ?? '']

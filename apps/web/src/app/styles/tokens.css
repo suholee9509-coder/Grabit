@@ -1,47 +1,80 @@
 /*
- * Grabit 디자인 토큰 — Figma "디자인 시스템" 페이지 668:29에서 추출 [phase ①].
- * SoT: file 5GGyKsjXEOpjKMLtUodeSs · page 668:29 (Color System - Dark Mode, 02_사용폰트, 03_폰트컬러)
- * 추출 방식: get_figma_data → globalVars.styles(정확값) + 다크모드 스와치 노드(시맨틱명).
- * 테마 = 다크. 눈대중 ❌ — 모든 원시값에 Figma 출처 주석.
+ * Grabit 디자인 토큰 — phase ② 정밀 리팩토링 (실화면 프레임 픽셀 측정 기반).
  *
- * ⚠ 컴포넌트 SECTION 2562:7927은 html.to.design 임포트 산출물로 Tailwind-grey/#66FF4B 등
- *   비정준 팔레트를 쓴다 → 토큰 SoT 아님. 정준 색은 668:29 "Color System - Dark Mode".
- *   (extraction-inventory.md "디자인 공백/불확실" 참조)
+ * 2계층 SoT:
+ *   (1) 색·그림자 정준 = Figma "디자인 시스템" 668:29 "Color System - Dark Mode" (다크 모드).
+ *       file 5GGyKsjXEOpjKMLtUodeSs · page 668:29 · globalVars.styles(정확값) + 다크 스와치(시맨틱명).
+ *   (2) 치수(높이·패딩·반경·타이포)·실사용 액센트색 정준 = **실화면 프레임 픽셀 측정**
+ *       (온보딩 2087:8221/8476/9468/11010·홈 2087:69031·라이브러리 2117:22041·상세 2087:12538 등).
+ *       측정에서 발견됐으나 668:29 다크 스와치엔 미등재인 색(point-green #66FF4B, overlay-white/black,
+ *       모달 surface, accent violet/mint 등)을 신규 토큰으로 추가 — 각 토큰에 측정 출처 주석.
+ *
+ * ⚠ 컴포넌트 SECTION 2562:7927(html.to.design 임포트)은 비정준 → 토큰 SoT 아님.
+ *   1차 추출이 그 섹션의 muted-green(#00623A)·pill 칩을 채웠으나, 실화면 측정 결과 brand=네온
+ *   #66FF4B·칩=42h 보더형으로 정정됨. 레거시 muted-green 토큰은 호환 위해 남기되 주석으로 표기.
  */
 
 :root {
   /* ============================================================
-   * COLOR — Dark Mode (668:29 "Color System - Dark Mode")
+   * COLOR — Dark Mode 그레이 스케일 (668:29 "Color System - Dark Mode")
    * ============================================================ */
-
-  /* 표면(surface) / 그레이 스케일 — Dark-Black ~ Dark-Gray-700 */
   --color-bg: #000000;                 /* Dark-Black (alt, 5672) — 앱 베이스 */
-  --color-surface: #171717;            /* Dark-Black (4420) — 기본 surface */
-  --color-surface-100: #1f1f1f;        /* Dark-Gray-100 (4464) */
-  --color-surface-200: #242424;        /* Dark-Gray-200 / Stroke-100 (4508) */
+  --color-surface-base: #0a0a0a;       /* 측정: 홈 피드 히어로 베이스(2087:71867 fill_836ARH) — 페이지 베이스 변형 */
+  --color-surface: #171717;            /* Dark-Black (4420) — 기본 surface (=인사이트 카드 클립칩 #171717) */
+  --color-surface-100: #1f1f1f;        /* Dark-Gray-100 (4464) — 검색바·모달 면색 */
+  --color-surface-200: #242424;        /* Dark-Gray-200 / Stroke-100 (4508) — 인풋 bg·추가칩 bg */
   --color-surface-300: #313131;        /* Dark-Gray-300 (4552) */
+  --color-surface-tag: #2e2e2e;        /* 측정: DS Tag/선택칩 채움 bg(#2E2E2E, =Dark-Stroke-200) */
+  --color-surface-tab-selected: #363636; /* 측정: 세그먼트 탭 선택 채움(2087:12542) (=Dark-Stroke-300) */
   --color-gray-400: #898989;           /* Dark-Gray-400 (4596) */
-  --color-gray-500: #b4b4b4;           /* Dark-Gray-500 (4640) */
+  --color-gray-450: #999999;           /* 측정: placeholder·메타카운트(#999999) — 400/500 사이, 다크 스와치 미등재 */
+  --color-gray-500: #b4b4b4;           /* Dark-Gray-500 (4640) — sub text 다수 */
   --color-gray-600: #dbdbdb;           /* Dark-Gray-600 (4684) */
   --color-gray-700: #ececec;           /* Dark-Gray-700 (4728) */
   --color-white: #fafafa;              /* Dark-White (4772) */
+  --color-pure-white: #ffffff;         /* 측정: 칩/카드 본문 텍스트 실측 #FFFFFF (Dark-White #FAFAFA와 구분 — gap) */
 
-  /* 텍스트 — 다크 기준 (밝은 글자), 03_폰트컬러 위계 다크 매핑 */
+  /* 모달/오버레이 surface (측정) */
+  --color-surface-modal: #1f1f1f;      /* 측정: 모달 카드 면색(2087:12474·33537) (=surface-100) */
+
+  /* 텍스트 — 다크 기준 (03_폰트컬러 위계 다크 매핑) */
   --color-text-primary: #fafafa;       /* Main Text — Dark-White */
   --color-text-secondary: #b4b4b4;     /* Sub Text — Dark-Gray-500 */
-  --color-text-tertiary: #898989;      /* Sub Text 2 — Dark-Gray-400 */
-  --color-text-disabled: #5e5e5e;      /* Disabled — Dark-Stroke-500 (위계상 최저) */
-  --color-text-on-accent: #ffffff;     /* 강조 위 텍스트 (fill_TSBHXX) */
+  --color-text-tertiary: #999999;      /* 측정: placeholder·비선택 탭·메타(#999999) — 정정(기존 #898989→#999999) */
+  --color-text-quaternary: #898989;    /* Dark-Gray-400 — 더 흐린 보조 */
+  --color-text-dim: #5d5d5d;           /* 측정: 메타 구분점(#5D5D5D, ≈Dark-Stroke-500) */
+  --color-text-disabled: #5e5e5e;      /* Disabled — Dark-Stroke-500 */
+  --color-text-on-primary: #242424;    /* 측정: 네온 그린 버튼 위 다크 글자(회원가입 CTA #242424) */
+  --color-text-on-primary-alt: #121212; /* 측정: 모달·완료 CTA 위 다크 글자(#121212) — #242424와 미세差, 통합검토 gap */
+  --color-text-on-accent: #ffffff;     /* muted-green(레거시) 위 텍스트 (fill_TSBHXX) */
+  --color-text-inverse: #242424;       /* 흰 배경(선택 폴더 #FAFAFA) 위 다크 글자 */
 
-  /* 메인/액센트 (브랜드 그린) — Dark-Main 계열 */
+  /* ============================================================
+   * BRAND / ACCENT — 측정 정준: point-green = 네온 #66FF4B
+   *   (CTA·선택 링·Pro 라벨·active 카테고리 전반. 668:29 다크 스와치 미등재라 신규.)
+   * ============================================================ */
+  --color-brand-primary: #66ff4b;      /* 측정: 모든 Primary CTA bg·active 액센트 (다수 fill) */
+  --color-brand-primary-50: rgba(102, 255, 75, 0.5); /* 측정: 카테고리 선택 링(2173:120844) */
+  --color-premium-green: #199e41;      /* 측정: Premium 인라인 배지 텍스트(2087:11028) */
+
+  /* 레거시 muted-green (2562:7927 비정준 섹션 — 호환용 보존, 실CTA엔 brand-primary 사용) */
   --color-accent: #00623a;             /* Dark-Main (4814) */
   --color-accent-stroke: #168353;      /* Dark-Stroke-Main (4856) */
   --color-accent-100: #2f7453;         /* Dark-Main-100 (4898) */
-  --color-accent-stroke-100: #3ecf8e;  /* Dark-Stroke-Main-100 (4940) — 가장 밝은 그린 */
+  --color-accent-stroke-100: #3ecf8e;  /* Dark-Stroke-Main-100 (4940) */
   --color-accent-disabled: rgba(0, 98, 58, 0.4);     /* Dark-Main-Disabled (5024) */
   --color-accent-stroke-disabled: rgba(22, 131, 83, 0.4); /* Dark-Stroke-Main-Disabled (5066) */
 
-  /* 보더/스트로크 — Dark-Stroke 계열 */
+  /* accent (카테고리별 작성자 태그색 — 측정, 화면별 가변) */
+  --color-accent-violet: #727ad0;      /* 측정: 라이브러리 인사이트 카드 작성자 태그(2087:12952) */
+  --color-accent-mint: #72d0a6;        /* 측정: 홈 가로 카드 작성자 태그(2087:69039) */
+  --color-accent-violet-pro: #6d5dff;  /* 668:29 fills fill_7M6ZZP — Pro 보라(다크 스와치 미등재) */
+  --color-accent-violet-pro-soft: #a099ff; /* fill_2JXKGZ — Pro soft 텍스트 */
+
+  /* ============================================================
+   * BORDER / STROKE
+   * ============================================================ */
+  /* solid stroke — Dark-Stroke 스케일 (668:29) */
   --color-stroke-100: #242424;         /* Stroke-100 = Dark-Gray-200 (4508) */
   --color-stroke-200: #2e2e2e;         /* Dark-Stroke-200 (5110) */
   --color-stroke-300: #363636;         /* Dark-Stroke-300 (5154) */
@@ -49,23 +82,35 @@
   --color-stroke-500: #5e5e5e;         /* Dark-Stroke-500 (5242) */
   --color-stroke-typing: #1f6feb;      /* Dark-Stroke-Typing (5286) — 인풋 포커스 */
 
-  /* 딤(dimmed) 오버레이 — 모달 백드롭 */
+  /* overlay-white 보더/면 (측정 — 반투명 화이트, 다크 스와치 미등재) */
+  --color-border-subtle: rgba(255, 255, 255, 0.08); /* 측정: 칩 보더 대다수·카드 보더·추가칩(0.08) */
+  --color-border-default: rgba(255, 255, 255, 0.1);  /* 측정: 검색바 보더(0.10) */
+  --color-border-chip: rgba(255, 255, 255, 0.12);    /* 측정: 온보딩 칩·Secondary 버튼 보더(0.12) */
+  --color-border-strong: rgba(255, 255, 255, 0.24);  /* 측정: 요금제 pill outline 보더(0.24) */
+  --color-border-divider: rgba(255, 255, 255, 0.2);  /* 측정: 작성자 구분선(0.2) */
+
+  /* overlay-white 면(surface) (측정) */
+  --color-surface-ghost: rgba(255, 255, 255, 0.04);  /* 측정: 추천칩·드롭다운·세그먼트탭·가로카드 bg(0.04) */
+  --color-surface-hover: rgba(255, 255, 255, 0.06);  /* 측정: 드롭다운 항목 hover·그리드 태그칩(0.06) */
+
+  /* overlay-black (측정) */
+  --color-overlay-black-60: rgba(0, 0, 0, 0.6);      /* 측정: 썸네일 duration 배지·모달 백드롭(0.6) */
+
+  /* 딤(dimmed) 오버레이 — 668:29 */
   --color-dimmed-100: rgba(0, 0, 0, 0.1);  /* Dark-Dimmed-100 (5330) */
-  --color-dimmed-200: rgba(0, 0, 0, 0.6);  /* Dark-Dimmed-200 (5374) */
+  --color-dimmed-200: rgba(0, 0, 0, 0.6);  /* Dark-Dimmed-200 (5374) — 모달 백드롭 */
 
   /* 시스템 — 상태 색 */
   --color-system-red: #d35541;         /* Dark-System-Red (5418) */
 
   /* ============================================================
-   * TYPOGRAPHY (668:29 02_사용폰트 + globalVars.styles)
-   * family = Pretendard. letter-spacing 기본 -2.5%.
-   * 시맨틱 스케일: Title(T1–T5) · Body(B1–B4) · Caption(C1–C3).
-   * 각 토큰 = size/line-height/weight 묶음 (개별 변수로도 노출).
+   * TYPOGRAPHY (668:29 02_사용폰트 + globalVars.styles + 실화면 측정)
+   * family = Pretendard. 컴포넌트 letter-spacing은 -2% 다수(실측), 토큰 기본 -2.5%.
    * ============================================================ */
-
   --font-family-base: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, sans-serif;
-  --letter-spacing-tight: -0.025em;    /* -2.5% (대부분 스타일 공통) */
+  --letter-spacing-tight: -0.025em;    /* -2.5% (기본/타이틀) */
+  --letter-spacing-snug: -0.02em;      /* -2% (측정: 버튼/칩/입력 다수) */
 
   /* font-weight (Pretendard 04_한글폰트) */
   --font-weight-light: 300;
@@ -83,54 +128,94 @@
 
   /* Body — style_33A3G7/G9E9MV/8NZM7P/6TACK4 (160% 본문) */
   --text-body-1-size: 16px;    --text-body-1-line: 24px;   /* style_33A3G7 */
-  --text-body-2-size: 15px;    --text-body-2-line: 22px;   /* style_G9E9MV */
+  --text-body-2-size: 15px;    --text-body-2-line: 22px;   /* style_G9E9MV (입력/검색 placeholder 15) */
   --text-body-3-size: 14px;    --text-body-3-line: 20px;   /* style_8NZM7P (160%) */
-  --text-body-4-size: 13px;    --text-body-4-line: 18px;   /* style_6TACK4 */
+  --text-body-4-size: 13px;    --text-body-4-line: 18px;   /* style_6TACK4 (DS Tag/Chip 13) */
 
-  /* Caption — style_SEX4MW/SEX4MW/8X9CZC */
-  --text-caption-1-size: 13px; --text-caption-1-line: 130%; /* style_SEX4MW */
-  --text-caption-2-size: 12px; --text-caption-2-line: 130%; /* style_SEX4MW */
+  /* Caption — style_SEX4MW/8X9CZC */
+  --text-caption-1-size: 13px; --text-caption-1-line: 130%; /* style_SEX4MW (드롭다운 항목 Cap1_Rg) */
+  --text-caption-2-size: 12px; --text-caption-2-line: 130%; /* style_SEX4MW (Premium 배지 12) */
   --text-caption-3-size: 11px; --text-caption-3-line: 130%; /* style_8X9CZC */
 
+  /* 컴포넌트 타입 묶음 (실화면 측정 — 토큰 type ramp 위에 컴포넌트 전용 셋) */
+  /* 버튼 Bt1_Sb: 15 / 600 / lh100% / ls-2% (회원가입 CTA 측정) */
+  --text-button-lg-size: 15px; --text-button-lg-line: 100%; --text-button-lg-weight: 600;
+  /* 버튼 T2_Sb: 14 / 600 / lh130% / ls-2% (완료 38px 버튼 측정) */
+  --text-button-sm-size: 14px; --text-button-sm-line: 130%; --text-button-sm-weight: 600;
+  /* 칩: 15 / 600 / lh130% / ls-2% (온보딩 칩 측정) */
+  --text-chip-size: 15px;      --text-chip-line: 130%;      --text-chip-weight: 600;
+
   /* ============================================================
-   * SPACING — 4px 베이스 스케일 (668:29 레이아웃 gap/padding 빈도)
-   * 관측: 2,4,6,8,10,12,16,20,24,32,40 (10이 다수 — 레거시 10-그리드 혼재)
+   * SPACING — 4px 베이스 (실화면 측정: 2,4,6,8,10,12,14,16,18,20,24,28,40)
+   *   측정에서 14(컨테이너 gap)·18(칩 padX)·28(모달 inset) 추가.
    * ============================================================ */
   --space-0: 0;
   --space-1: 2px;
   --space-2: 4px;
-  --space-3: 6px;
-  --space-4: 8px;
-  --space-5: 10px;
-  --space-6: 12px;
-  --space-8: 16px;
-  --space-10: 20px;
+  --space-3: 6px;    /* 38px 버튼 gap·라벨↔필드 */
+  --space-4: 8px;    /* 모달 pad·칩행 gap */
+  --space-5: 10px;   /* 버튼 gap·칩 padY */
+  --space-6: 12px;   /* 탭 padX */
+  --space-7: 14px;   /* 측정: 컨테이너 칩 wrap gap·카드 padX */
+  --space-8: 16px;   /* 카드 inset */
+  --space-9: 18px;   /* 측정: 칩 padX·인풋 padY */
+  --space-10: 20px;  /* 카드 top inset */
   --space-12: 24px;
+  --space-14: 28px;  /* 측정: 모달 좌 inset */
   --space-16: 32px;
-  --space-20: 40px;
+  --space-20: 40px;  /* 히어로 카드 inset */
 
   /* ============================================================
-   * RADIUS — borderRadius 관측 빈도 (전 화면)
+   * RADIUS — borderRadius 측정 빈도
    * ============================================================ */
-  --radius-xs: 4px;     /* 작은 칩/배지 */
-  --radius-sm: 6px;     /* 인풋/세컨더리 */
-  --radius-md: 8px;     /* 버튼/카드 기본(최다 빈도 262) */
-  --radius-lg: 12px;    /* 큰 카드 */
-  --radius-xl: 16px;    /* 모달/패널 */
-  --radius-2xl: 20px;   /* 대형 컨테이너 */
-  --radius-pill: 100px; /* 칩/토글 pill */
+  --radius-xs: 4px;     /* 썸네일·드롭다운 항목·duration 배지 */
+  --radius-sm: 6px;     /* 버튼·인풋·세컨더리·칩·DS Tag */
+  --radius-md: 8px;     /* (레거시 빈도 262) */
+  --radius-lg: 12px;    /* 카드·모달 */
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-pill: 100px; /* 세그먼트 탭·요금제 pill·검색바(80↔100)·카테고리 링 */
+  --radius-search: 80px; /* 측정: 검색바 pill(2087:40407 radius 80) */
   --radius-full: 9999px;
 
   /* ============================================================
-   * SHADOW / EFFECT (668:29 globalVars.styles effect_*)
+   * SIZE — 컴포넌트 고정 치수 (실화면 측정 — 신뢰값만)
+   * ============================================================ */
+  --size-button-lg: 42px;   /* 측정: 소셜/이전·다음/모달 CTA height (다수 프레임) */
+  --size-button-sm: 38px;   /* 측정: 완료 버튼(버튼_38px_Short) height */
+  --size-button-compact-w: 108px; /* 측정: 이전/다음 페어 width */
+  --size-input: 42px;       /* 측정: 이메일 인풋 height */
+  --size-search: 48px;      /* 측정: 검색바 height */
+  --size-select: 38px;      /* 측정: 폴더 셀렉트 트리거 height */
+  --size-chip: 42px;        /* 측정: 온보딩 칩 height */
+  --size-chip-sm: 32px;     /* 측정: 추천칩·그리드 태그칩 height */
+  --size-tab: 36px;         /* 측정: 세그먼트 탭 컨테이너 height */
+  --size-tab-item: 28px;    /* 측정: 탭 item height */
+  --size-dropdown-item: 28px; /* 측정: 자동완성 항목 height */
+  --size-folder-item: 32px;   /* 측정: 폴더 리스트 항목 height */
+  --size-avatar-xs: 18px;   /* 측정: 인사이트 카드 작성자 아바타 */
+  --size-avatar-sm: 24px;
+  --size-avatar-md: 32px;
+  --size-avatar-lg: 48px;
+  --size-avatar-xl: 82px;   /* 측정: 취향관 카테고리 아바타 */
+  --size-avatar-ring: 2px;  /* 측정: 카테고리 선택 링 두께 */
+
+  /* ============================================================
+   * SHADOW / EFFECT (668:29 globalVars.styles + 측정 모달 shadow)
    * ============================================================ */
   --shadow-overlay: 0px 8px 24px 0px rgba(0, 0, 0, 0.24);          /* effect_V3XAOF — 모달/드롭다운 */
   --shadow-drop: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);             /* effect_EF97LY */
-  --shadow-inset-light: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.1); /* effect_PQ5KQ6 — 라이트 inset 보더 */
+  --shadow-inset-light: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.1); /* effect_PQ5KQ6 */
   --shadow-inset-dark: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);  /* effect_2NHDPQ */
+  /* 측정: 모달 effect '모달'(2087:12474·33537) — 3레이어(마지막=1px hairline) */
+  --shadow-modal: 0px 20px 48px -8px rgba(17, 17, 17, 0.24),
+    0px 4px 12px -1px rgba(0, 0, 0, 0.12),
+    0px 0px 0px 1px rgba(84, 72, 49, 0.1);
+  /* 측정: 태그 자동완성 드롭다운 Dropdown-100(2384:141352) */
+  --shadow-dropdown: 0px 0px 8px 0px rgba(0, 0, 0, 0.07);
 
   /* ============================================================
-   * Z-INDEX (시스템 보조 — 모달/토스트 레이어링; Figma 비추출, 구조용)
+   * Z-INDEX (시스템 보조 — Figma 비추출, 레이어링 구조용)
    * ============================================================ */
   --z-dropdown: 100;
   --z-modal-backdrop: 200;

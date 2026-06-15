@@ -15,50 +15,66 @@ import {
 import styles from './ui-preview.module.css';
 
 /**
- * /ui-preview — u0 디자인 시스템 미리보기.
- * 토큰 팔레트(색/타이포/간격/반경/그림자) + 모든 shared/ui 컴포넌트 갤러리.
- * 사용자가 Figma 668:29 / 2562:7927 와 1:1로 대조해 phase ② 픽셀-퍼펙트 마감.
+ * /ui-preview — u0 디자인 시스템 미리보기 (phase ② 정밀 리팩토링).
+ * 토큰 팔레트 + 모든 shared/ui 컴포넌트의 변형·상태를 **측정 라벨**과 함께 렌더.
+ * 사용자가 Figma 실화면 프레임과 1:1 대조 → 게이트 ⓒ 충실도 사인오프.
+ * 색 = 668:29 다크 SoT · 치수/액센트 = 실화면 프레임 픽셀 측정.
  */
 
 const COLOR_GROUPS: { title: string; items: { name: string; var: string }[] }[] = [
   {
-    title: 'Surface / Gray (Dark Mode)',
+    title: 'Surface / Gray (Dark Mode 668:29)',
     items: [
-      { name: 'bg', var: '--color-bg' },
-      { name: 'surface', var: '--color-surface' },
-      { name: 'surface-100', var: '--color-surface-100' },
-      { name: 'surface-200', var: '--color-surface-200' },
-      { name: 'surface-300', var: '--color-surface-300' },
-      { name: 'gray-400', var: '--color-gray-400' },
-      { name: 'gray-500', var: '--color-gray-500' },
-      { name: 'gray-600', var: '--color-gray-600' },
-      { name: 'gray-700', var: '--color-gray-700' },
-      { name: 'white', var: '--color-white' },
+      { name: 'bg #000', var: '--color-bg' },
+      { name: 'surface-base #0A0A0A', var: '--color-surface-base' },
+      { name: 'surface #171717', var: '--color-surface' },
+      { name: 'surface-100 #1F1F1F', var: '--color-surface-100' },
+      { name: 'surface-200 #242424', var: '--color-surface-200' },
+      { name: 'surface-300 #313131', var: '--color-surface-300' },
+      { name: 'surface-tag #2E2E2E', var: '--color-surface-tag' },
+      { name: 'tab-selected #363636', var: '--color-surface-tab-selected' },
+      { name: 'gray-400 #898989', var: '--color-gray-400' },
+      { name: 'gray-450 #999999', var: '--color-gray-450' },
+      { name: 'gray-500 #B4B4B4', var: '--color-gray-500' },
+      { name: 'gray-600 #DBDBDB', var: '--color-gray-600' },
+      { name: 'gray-700 #ECECEC', var: '--color-gray-700' },
+      { name: 'white #FAFAFA', var: '--color-white' },
+      { name: 'pure-white #FFF', var: '--color-pure-white' },
     ],
   },
   {
-    title: 'Accent (Brand Green)',
+    title: 'Brand / Accent (측정: point-green 네온)',
     items: [
-      { name: 'accent', var: '--color-accent' },
-      { name: 'accent-stroke', var: '--color-accent-stroke' },
-      { name: 'accent-100', var: '--color-accent-100' },
-      { name: 'accent-stroke-100', var: '--color-accent-stroke-100' },
+      { name: 'brand-primary #66FF4B', var: '--color-brand-primary' },
+      { name: 'premium-green #199E41', var: '--color-premium-green' },
+      { name: 'accent-violet #727AD0', var: '--color-accent-violet' },
+      { name: 'accent-mint #72D0A6', var: '--color-accent-mint' },
+      { name: 'violet-pro #6D5DFF', var: '--color-accent-violet-pro' },
+      { name: 'accent(레거시) #00623A', var: '--color-accent' },
     ],
   },
   {
-    title: 'Stroke',
+    title: 'Border / Overlay (측정: 반투명 화이트/블랙)',
     items: [
-      { name: 'stroke-100', var: '--color-stroke-100' },
-      { name: 'stroke-200', var: '--color-stroke-200' },
-      { name: 'stroke-300', var: '--color-stroke-300' },
-      { name: 'stroke-400', var: '--color-stroke-400' },
-      { name: 'stroke-500', var: '--color-stroke-500' },
-      { name: 'stroke-typing', var: '--color-stroke-typing' },
+      { name: 'border-subtle w08', var: '--color-border-subtle' },
+      { name: 'border-default w10', var: '--color-border-default' },
+      { name: 'border-chip w12', var: '--color-border-chip' },
+      { name: 'border-strong w24', var: '--color-border-strong' },
+      { name: 'surface-ghost w04', var: '--color-surface-ghost' },
+      { name: 'surface-hover w06', var: '--color-surface-hover' },
+      { name: 'overlay-black-60', var: '--color-overlay-black-60' },
     ],
   },
   {
-    title: 'System',
-    items: [{ name: 'system-red', var: '--color-system-red' }],
+    title: 'Stroke (solid) / System',
+    items: [
+      { name: 'stroke-200 #2E2E2E', var: '--color-stroke-200' },
+      { name: 'stroke-300 #363636', var: '--color-stroke-300' },
+      { name: 'stroke-400 #4E4E4E', var: '--color-stroke-400' },
+      { name: 'stroke-500 #5E5E5E', var: '--color-stroke-500' },
+      { name: 'stroke-typing #1F6FEB', var: '--color-stroke-typing' },
+      { name: 'system-red #D35541', var: '--color-system-red' },
+    ],
   },
 ];
 
@@ -77,27 +93,29 @@ const TEXT_TOKENS = [
   { label: 'caption-3 / 11', sizeVar: '--text-caption-3-size', lineVar: '--text-caption-3-line', weight: 400 },
 ];
 
-const SPACE_TOKENS = ['0', '1', '2', '3', '4', '5', '6', '8', '10', '12', '16', '20'];
+const SPACE_TOKENS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '12', '14', '16', '20'];
 const RADIUS_TOKENS = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', 'pill'];
 const SHADOW_TOKENS = [
   { name: 'overlay', var: '--shadow-overlay' },
   { name: 'drop', var: '--shadow-drop' },
-  { name: 'inset-light', var: '--shadow-inset-light' },
-  { name: 'inset-dark', var: '--shadow-inset-dark' },
+  { name: 'modal (측정)', var: '--shadow-modal' },
+  { name: 'dropdown (측정)', var: '--shadow-dropdown' },
 ];
 
 export function UiPreviewPage() {
-  const [tab, setTab] = useState('curation');
-  const [filter, setFilter] = useState('all');
+  const [tab, setTab] = useState('info');
+  const [catTab, setCatTab] = useState('mine');
   const [toggleOn, setToggleOn] = useState(true);
   const [model, setModel] = useState('haiku');
+  const [folder, setFolder] = useState('all');
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className={styles.page}>
       <h1 className={styles.pageTitle}>Grabit — Design System (u0)</h1>
       <p className={styles.pageSub}>
-        Figma 668:29 토큰 + 2562:7927 컴포넌트 · phase ① 추출/스켈레톤 (픽셀-퍼펙트 마감 = phase ②)
+        phase ② 정밀 리팩토링 · 색 = Figma 668:29 다크 SoT · 치수/액센트 = 실화면 프레임 픽셀 측정
+        (Figma 1:1 대조 → 게이트 ⓒ)
       </p>
 
       {/* COLORS */}
@@ -143,7 +161,7 @@ export function UiPreviewPage() {
 
       {/* SPACING */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Spacing</h2>
+        <h2 className={styles.sectionTitle}>Spacing (4px 베이스 + 측정 7/9/14)</h2>
         <div className={styles.tokenStrip}>
           {SPACE_TOKENS.map((s) => (
             <div key={s} className={styles.tokenCell}>
@@ -184,127 +202,170 @@ export function UiPreviewPage() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Components · shared/ui</h2>
 
-        <h3 className={styles.subTitle}>Button (Primary / Secondary / Tertiary × state)</h3>
+        <h3 className={styles.subTitle}>
+          Button — 측정: Primary 네온 #66FF4B + 다크 글자 · h42(md)/h38(sm) · radius 6
+        </h3>
         <div className={styles.row}>
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="tertiary">Tertiary</Button>
-          <Button variant="primary" disabled>
-            Disabled
-          </Button>
-          <Button variant="primary" size="small">
-            Small
-          </Button>
+          <Button variant="primary">계속</Button>
+          <Button variant="secondary">이전</Button>
+          <Button variant="tertiary">Tertiary (gap·합리값)</Button>
+          <Button variant="primary" size="small">완료 (h38)</Button>
+          <Button variant="primary" disabled>비활성 (gap·opacity)</Button>
+        </div>
+        <div className={styles.row}>
+          <Button variant="secondary" compact>이전 (108w)</Button>
+          <Button variant="primary" compact>다음 (108w)</Button>
+          <Button variant="primary" pill>시작하기 (pill·요금제)</Button>
+          <Button variant="secondary" pill>시작하기 (outline pill)</Button>
+        </div>
+        <div className={styles.row} style={{ maxWidth: 414, flexDirection: 'column', alignItems: 'stretch' }}>
+          <Button variant="primary" fullWidth>계속 (full-width CTA)</Button>
         </div>
 
-        <h3 className={styles.subTitle}>Chip (Selected true/false)</h3>
+        <h3 className={styles.subTitle}>
+          Chip — 측정: 투명+rgba(white,.12) 보더+흰 글자 · h42 · radius 6 (★pill 아님)
+        </h3>
         <div className={styles.row}>
-          <Chip selected>개발</Chip>
+          <Chip>기획·PM</Chip>
+          <Chip>개발</Chip>
           <Chip>디자인</Chip>
-          <Chip>기획</Chip>
+          <Chip selected>선택 (gap·채움 미측정)</Chip>
           <Chip disabled>비활성</Chip>
         </div>
+        <div className={styles.row}>
+          <Chip variant="recommend">AI 활용법 (추천칩 h32)</Chip>
+          <Chip variant="recommend">시간 관리</Chip>
+          <Chip variant="recommend">커리어 전환</Chip>
+        </div>
 
-        <h3 className={styles.subTitle}>Tabs (underline / pill)</h3>
+        <h3 className={styles.subTitle}>
+          Tabs — 측정: segment 세그먼트 pill (선택 #363636) · underline 카테고리(active #66FF4B)
+        </h3>
         <div className={styles.row}>
           <Tabs
-            variant="underline"
+            variant="segment"
             value={tab}
             onValueChange={setTab}
             items={[
-              { id: 'curation', label: '취향관' },
-              { id: 'feed', label: '피드' },
+              { id: 'info', label: '시청 정보' },
+              { id: 'source', label: '원본 소스' },
             ]}
           />
         </div>
         <div className={styles.row}>
           <Tabs
-            variant="pill"
-            value={filter}
-            onValueChange={setFilter}
+            variant="underline"
+            value={catTab}
+            onValueChange={setCatTab}
             items={[
-              { id: 'all', label: '전체' },
-              { id: 'dev', label: '개발' },
+              { id: 'mine', label: '내 분야' },
+              { id: 'programming', label: '프로그래밍' },
               { id: 'design', label: '디자인' },
             ]}
           />
         </div>
 
-        <h3 className={styles.subTitle}>Toggle</h3>
+        <h3 className={styles.subTitle}>Toggle ⚠ 측정 GAP (프레임 부재 — 합리 스켈레톤)</h3>
         <div className={styles.row}>
           <Toggle checked={toggleOn} onCheckedChange={setToggleOn} aria-label="알림" />
           <Toggle checked={false} aria-label="off" />
           <Toggle checked disabled aria-label="disabled" />
         </div>
 
-        <h3 className={styles.subTitle}>Input</h3>
-        <div className={styles.row} style={{ maxWidth: 360, flexDirection: 'column', alignItems: 'stretch' }}>
-          <Input placeholder="URL 붙여넣기" />
-          <Input defaultValue="입력된 값" />
+        <h3 className={styles.subTitle}>
+          Input — 측정: default h42/bg #242424/placeholder #999999 · search h48/radius 80/bg #1F1F1F
+        </h3>
+        <div className={styles.row} style={{ maxWidth: 414, flexDirection: 'column', alignItems: 'stretch' }}>
+          <Input placeholder="이메일을 입력해 주세요" />
+          <Input defaultValue="grabit@example.com" />
           <Input placeholder="에러" invalid />
           <Input placeholder="비활성" disabled />
         </div>
+        <div className={styles.row} style={{ maxWidth: 520, flexDirection: 'column', alignItems: 'stretch' }}>
+          <Input variant="search" placeholder="검색어를 입력해 주세요" />
+        </div>
 
-        <h3 className={styles.subTitle}>Dropdown (모델 선택 — Pro 배지)</h3>
+        <h3 className={styles.subTitle}>
+          Dropdown — 측정: trigger h38/bg w04 · menu shadow Dropdown-100 · selected 흰 배경
+        </h3>
         <div className={styles.row}>
           <Dropdown
-            trigger={model === 'haiku' ? 'Claude Haiku 3' : 'Claude Sonnet 4.5'}
+            trigger={model === 'haiku' ? 'GPT-5.2 Instant' : 'Claude Sonnet 4.5'}
             value={model}
             onSelect={setModel}
             defaultOpen
             items={[
-              { id: 'haiku', label: 'Claude Haiku 3', trailing: <Badge tone="neutral">Free</Badge> },
-              { id: 'sonnet', label: 'Claude Sonnet 4.5', trailing: <Badge tone="pro" solid>Pro</Badge> },
+              { id: 'haiku', label: 'GPT-5.2 Instant' },
+              { id: 'sonnet', label: 'Claude Sonnet 4.5', trailing: <Badge tone="pro" inline>Pro</Badge> },
+            ]}
+          />
+          <Dropdown
+            trigger="전체 폴더"
+            value={folder}
+            onSelect={setFolder}
+            defaultOpen
+            items={[
+              { id: 'all', label: '전체' },
+              { id: 'youtube', label: 'Youtube' },
+              { id: 'archive', label: '아카이브' },
             ]}
           />
         </div>
 
-        <h3 className={styles.subTitle}>Card</h3>
-        <div className={styles.row}>
-          <Card style={{ width: 240 }}>기본 카드</Card>
-          <Card interactive style={{ width: 240 }}>
-            인터랙티브 카드 (hover)
-          </Card>
+        <h3 className={styles.subTitle}>
+          Card — 측정: overlay-white(.04) surface · radius 12 · pad 20(기본)/18·14(compact)
+        </h3>
+        <div className={styles.row} style={{ alignItems: 'stretch' }}>
+          <Card style={{ width: 298 }}>인사이트 카드 (pad 20)</Card>
+          <Card compact style={{ width: 298 }}>홈 가로 카드 (pad 18/14)</Card>
+          <Card interactive style={{ width: 240 }}>interactive (hover·gap)</Card>
         </div>
 
-        <h3 className={styles.subTitle}>Avatar</h3>
-        <div className={styles.row}>
+        <h3 className={styles.subTitle}>Avatar — 측정: xs 18 · xl 82(선택 링 #66FF4B 50%)</h3>
+        <div className={styles.row} style={{ alignItems: 'flex-end' }}>
+          <Avatar size="xs" initials="A" />
           <Avatar size="sm" initials="SH" />
           <Avatar size="md" initials="GB" />
-          <Avatar size="lg" initials="A" />
+          <Avatar size="lg" initials="L" />
+          <Avatar size="xl" initials="내" />
+          <Avatar size="xl" initials="내" selected />
         </div>
 
-        <h3 className={styles.subTitle}>Badge (Solid / Soft)</h3>
+        <h3 className={styles.subTitle}>
+          Badge — 측정: Tag solid #2E2E2E/#B4B4B4 · inline Premium #199E41 · Pro #66FF4B
+        </h3>
         <div className={styles.row}>
-          <Badge tone="neutral">Free</Badge>
-          <Badge tone="accent" solid>
-            저장됨
-          </Badge>
-          <Badge tone="pro" solid>
-            Pro
-          </Badge>
+          <Badge tone="neutral">Label</Badge>
+          <Badge tone="accent" solid>저장됨</Badge>
+          <Badge tone="violet" solid>Pro</Badge>
           <Badge tone="danger">긴급</Badge>
         </div>
+        <div className={styles.row}>
+          <Badge tone="premium" inline icon={<span aria-hidden>⚡</span>}>Premium</Badge>
+          <Badge tone="pro" inline>Pro</Badge>
+        </div>
 
-        <h3 className={styles.subTitle}>Toast (⚠ 공백 추정)</h3>
+        <h3 className={styles.subTitle}>Toast ⚠ 측정 GAP (프레임 부재 — 모달 surface 합리값)</h3>
         <div className={styles.row} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
           <Toast variant="success">클립이 저장되었습니다</Toast>
           <Toast variant="error">저장에 실패했습니다</Toast>
         </div>
 
-        <h3 className={styles.subTitle}>Modal</h3>
+        <h3 className={styles.subTitle}>
+          Modal — 측정: bg #1F1F1F · radius 12 · backdrop rgba(0,0,0,.6) · shadow '모달' · inset 28
+        </h3>
         <div className={styles.row}>
           <Button variant="secondary" onClick={() => setModalOpen(true)}>
-            모달 열기
+            모달 열기 (sm 582)
           </Button>
         </div>
         <Modal
           open={modalOpen}
           onClose={() => setModalOpen(false)}
-          title="새 클립 추가"
+          title="콘텐츠 추가"
           footer={
             <>
-              <Button variant="tertiary" onClick={() => setModalOpen(false)}>
+              <Button variant="secondary" onClick={() => setModalOpen(false)}>
                 취소
               </Button>
               <Button variant="primary" onClick={() => setModalOpen(false)}>
@@ -317,8 +378,8 @@ export function UiPreviewPage() {
         </Modal>
 
         <p className={`${styles.note} ${styles.warn}`}>
-          ⚠ Toggle/Toast 및 Pro 보라/일부 치수는 Figma 공백/미토큰화 — extraction-inventory.md 참조,
-          phase ②에서 사용자 확인.
+          ⚠ 측정 GAP: Toggle·Toast(프레임 부재) · Chip selected 채움 · disabled/hover 상태 · Tertiary 버튼 ·
+          input focus 스트로크 — 측정값 없어 합리 스켈레톤(추측 색 ❌). 상세 extraction-inventory.md §3.
         </p>
       </section>
     </div>

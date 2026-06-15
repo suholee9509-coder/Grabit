@@ -1,10 +1,14 @@
-/* Avatar — 원형, 이미지/이니셜. tokens.css만 사용. */
+/* Avatar — 실화면 측정 정밀 리팩토링.
+ * 측정 사이즈: xs=18(인사이트 카드 작성자) · xl=82(취향관 카테고리, 선택 시 2px 네온 링).
+ *   sm/md/lg(24/32/48)은 일반 스케일(실화면 측정 부재 — 보존).
+ * selected(측정 2173:120844): 외곽 2px 링 rgba(102,255,75,0.5) + 라벨색 #66FF4B(컴포넌트 외부).
+ */
 .avatar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-full); /* 측정: 원형 */
   background-color: var(--color-surface-300);
   color: var(--color-text-secondary);
   overflow: hidden;
@@ -22,18 +26,35 @@
   text-transform: uppercase;
 }
 
+.xs {
+  width: var(--size-avatar-xs); /* 측정: 18 */
+  height: var(--size-avatar-xs);
+  font-size: 9px;
+}
 .sm {
-  width: 24px;
-  height: 24px;
+  width: var(--size-avatar-sm); /* 24 */
+  height: var(--size-avatar-sm);
   font-size: var(--text-caption-3-size);
 }
 .md {
-  width: 32px;
-  height: 32px;
+  width: var(--size-avatar-md); /* 32 */
+  height: var(--size-avatar-md);
   font-size: var(--text-body-4-size);
 }
 .lg {
-  width: 48px;
-  height: 48px;
+  width: var(--size-avatar-lg); /* 48 */
+  height: var(--size-avatar-lg);
   font-size: var(--text-body-1-size);
+}
+.xl {
+  width: var(--size-avatar-xl); /* 측정: 82 */
+  height: var(--size-avatar-xl);
+  font-size: var(--text-title-4-size);
+  border: 1px solid var(--color-bg); /* 측정: 기본 1px 검정 보더 */
+}
+
+/* selected — 측정: 2px 네온 50% 외곽 링 */
+.selected {
+  box-shadow: 0 0 0 var(--size-avatar-ring) var(--color-brand-primary-50);
+  border-color: transparent;
 }

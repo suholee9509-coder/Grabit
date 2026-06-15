@@ -1,4 +1,5 @@
-/* Toast — ⚠ 공백 추정 스켈레톤. tokens.css만 사용. */
+/* Toast — ⚠ 측정 GAP: 지정 4개 프레임 어디에도 toast/snackbar 인스턴스 부재(측정 리포트
+ *   tabs-toggle-modal gaps). 색/치수/모션 미측정 → 모달 surface/shadow 기반 합리 스켈레톤. */
 .toast {
   display: inline-flex;
   align-items: center;
@@ -6,14 +7,14 @@
   min-width: 280px;
   max-width: 420px;
   padding: var(--space-6) var(--space-8);
-  border: 1px solid var(--color-stroke-300);
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
-  background-color: var(--color-surface-200);
+  background-color: var(--color-surface-modal); /* 측정 GAP — 모달 surface(#1F1F1F) 합리값 */
   color: var(--color-text-primary);
   font-family: var(--font-family-base);
   font-size: var(--text-body-2-size);
   line-height: var(--text-body-2-line);
-  box-shadow: var(--shadow-overlay);
+  box-shadow: var(--shadow-modal);
 }
 
 .icon {
@@ -29,15 +30,15 @@
 
 .action {
   flex-shrink: 0;
-  color: var(--color-accent-stroke-100);
+  color: var(--color-brand-primary);
   font-weight: var(--font-weight-semibold);
 }
 
 .success {
-  border-color: var(--color-accent-stroke);
+  border-color: var(--color-brand-primary);
 }
 .success .icon {
-  color: var(--color-accent-stroke-100);
+  color: var(--color-brand-primary);
 }
 
 .error {

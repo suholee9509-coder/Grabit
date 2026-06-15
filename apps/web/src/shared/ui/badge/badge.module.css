@@ -1,57 +1,101 @@
-/* Badge — Solid/Soft × tone. tokens.css만 사용.
- * ⚠ Pro 보라(#6D5DFF 계열 fill_7M6ZZP)는 668:29 fills엔 있으나 다크-모드 시맨틱 스와치엔
- *   미등재 → tokens.css 미노출. 여기선 직접 hex 사용 표시(phase ② 토큰화 확인). */
+/* Badge — 실화면 측정 정밀 리팩토링.
+ * 두 형태가 측정됨:
+ *  (A) Tag(solid) = DS 라이브러리 'Tag' 채움 배지(측정 1613:11618): #2E2E2E bg + #B4B4B4 글자 ·
+ *      pad 4/10 · radius 6 · 13/400/150%/-2.5%. → 기본 badge 폼팩터.
+ *  (B) inline 라벨 = Premium(#199E41)·Pro(#66FF4B) — 배경/패딩/radius 0의 인라인 텍스트(+아이콘) 라벨
+ *      (측정 2087:11028·1799:23025). pill 아님 → `inline` 모드로 표현.
+ * ⚠ solid×tone(success/warning/info)·soft 변형은 DS 라이브러리 부재(gap) → 측정된 neutral/accent/
+ *   premium/pro/danger만. danger soft는 system-red 기반 합리 파생.
+ */
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  height: 22px;
-  padding: 0 var(--space-4);
-  border-radius: var(--radius-xs);
+  gap: var(--space-1); /* 측정: Tag gap; inline은 아이콘 동반 시 별도 */
+  padding: var(--space-2) var(--space-5); /* 측정: 4 / 10 (Tag) */
+  border-radius: var(--radius-sm); /* 측정: 6 (Tag) */
   font-family: var(--font-family-base);
-  font-size: var(--text-caption-2-size);
-  font-weight: var(--font-weight-semibold);
-  line-height: 1;
-  letter-spacing: var(--letter-spacing-tight);
+  font-size: var(--text-body-4-size); /* 측정: 13 (Tag/Chip) */
+  line-height: 150%; /* 측정: Tag 150% */
+  font-weight: var(--font-weight-regular); /* 측정: Tag Regular */
+  letter-spacing: var(--letter-spacing-tight); /* 측정: -2.5% */
   white-space: nowrap;
 }
 
-/* neutral */
-.neutral.soft {
-  background-color: var(--color-surface-300);
-  color: var(--color-text-secondary);
+/* inline 라벨 모드 — 측정: 배경/패딩/radius 0, 아이콘+텍스트 (Premium/Pro) */
+.inline {
+  padding: 0;
+  border-radius: 0;
+  background-color: transparent;
+  font-size: var(--text-caption-1-size); /* 측정: Premium 12 / Pro 13 — 13 기준 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-tight);
+  font-weight: var(--font-weight-regular);
+}
+
+/* neutral (Tag 기본) — 측정: #2E2E2E / #B4B4B4 */
+.neutral {
+  background-color: var(--color-surface-tag);
+  color: var(--color-gray-500);
 }
 .neutral.solid {
   background-color: var(--color-gray-600);
   color: var(--color-bg);
 }
 
-/* accent (green) */
-.accent.soft {
-  background-color: var(--color-accent-100);
-  color: var(--color-accent-stroke-100);
+/* accent (green) — brand 네온(측정 정정) */
+.accent {
+  background-color: rgba(102, 255, 75, 0.16); /* gap: soft 측정 없음 → brand 16% 합리값 */
+  color: var(--color-brand-primary);
 }
 .accent.solid {
-  background-color: var(--color-accent);
-  color: var(--color-text-on-accent);
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-primary-alt); /* 측정: 네온 위 #121212 */
+}
+.accent.inline {
+  background-color: transparent;
+  color: var(--color-brand-primary);
 }
 
-/* pro (purple) — ⚠ 미토큰화 hex (fill_7M6ZZP #6D5DFF) */
-.pro.soft {
-  background-color: rgba(109, 93, 255, 0.16);
-  color: #a099ff; /* fill_2JXKGZ */
+/* premium — 측정: Premium 인라인 라벨 #199E41 (보통 inline로 사용) */
+.premium {
+  background-color: rgba(25, 158, 65, 0.16);
+  color: var(--color-premium-green);
+}
+.premium.inline {
+  background-color: transparent;
+  color: var(--color-premium-green);
+}
+
+/* pro — 측정: Pro 인라인 라벨 #66FF4B (모델 드롭다운) */
+.pro {
+  background-color: rgba(102, 255, 75, 0.16);
+  color: var(--color-brand-primary);
 }
 .pro.solid {
-  background-color: #6d5dff; /* fill_7M6ZZP */
-  color: var(--color-text-on-accent);
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-primary-alt);
+}
+.pro.inline {
+  background-color: transparent;
+  color: var(--color-brand-primary);
 }
 
-/* danger */
-.danger.soft {
+/* violet pro (대안 — fill_7M6ZZP #6D5DFF, 668:29 fills) */
+.violet {
+  background-color: rgba(109, 93, 255, 0.16);
+  color: var(--color-accent-violet-pro-soft);
+}
+.violet.solid {
+  background-color: var(--color-accent-violet-pro);
+  color: var(--color-pure-white);
+}
+
+/* danger — 668:29 system-red (soft는 합리 파생) */
+.danger {
   background-color: rgba(211, 85, 65, 0.16);
   color: var(--color-system-red);
 }
 .danger.solid {
   background-color: var(--color-system-red);
-  color: var(--color-text-on-accent);
+  color: var(--color-pure-white);
 }

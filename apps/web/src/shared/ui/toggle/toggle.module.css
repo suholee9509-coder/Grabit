@@ -1,4 +1,5 @@
-/* Toggle (switch) — tokens.css만 사용. ⚠ 치수는 phase ② 확인(공백). */
+/* Toggle (switch) — ⚠ 측정 GAP: 지정 프레임에 토글 인스턴스 부재(extraction §3 / 측정 리포트
+ *   tabs-toggle-modal gaps). 치수·on/off 색 미측정 → 토큰 기반 합리 스켈레톤(추측 색 ❌, brand 사용). */
 .toggle {
   position: relative;
   display: inline-flex;
@@ -13,7 +14,7 @@
   transition: background-color 0.15s ease;
 }
 .toggle:focus-visible {
-  outline: 2px solid var(--color-accent-stroke-100);
+  outline: 2px solid var(--color-brand-primary);
   outline-offset: 2px;
 }
 
@@ -26,7 +27,7 @@
 }
 
 .checked {
-  background-color: var(--color-accent);
+  background-color: var(--color-brand-primary); /* 측정 GAP — brand 네온 합리값 */
 }
 .checked .knob {
   transform: translateX(20px);

@@ -1,9 +1,42 @@
-# u0-design-system — Extraction Inventory (phase ①)
+# u0-design-system — Extraction Inventory
 
-> 디자이너 에이전트가 Figma "디자인 시스템" 페이지 `668:29` + 컴포넌트 SECTION `2562:7927`에서
-> **기계적 추출**한 토큰·컴포넌트 목록 + **디자인 공백/불확실**. 픽셀-퍼펙트 *시각* 마감은 phase ②(사용자 워크트리).
->
-> file key `5GGyKsjXEOpjKMLtUodeSs` · 추출 도구 `mcp__figma__get_figma_data` (globalVars.styles = 정확값 SoT).
+> **phase ①** = 디자이너 에이전트의 기계적 추출(`668:29` 토큰 + 컴포넌트 SECTION `2562:7927`).
+> **phase ② (현재)** = frontend 에이전트의 **실화면 프레임 픽셀 측정 기반 정밀 리팩토링**.
+> file key `5GGyKsjXEOpjKMLtUodeSs` · `mcp__figma__get_figma_data`.
+
+---
+
+## 0. phase ② 정밀 리팩토링 요약 (실화면 측정 적용)
+
+> 측정 출처 = 실화면 프레임(온보딩 2087:8221/8476/9468/11010·홈 2087:69031/71867·라이브러리
+> 2117:22041·상세 2087:12538·검색 2087:40320·드롭다운 2087:36708/2117:22576). 색=668:29 다크 SoT 유지.
+> **핵심 정정**: 1차 추출은 비정준 SECTION `2562:7927`(html.to.design)의 muted-green(#00623A)·pill 칩을
+> 채웠으나, 실화면 측정 결과 **brand=네온 #66FF4B**·**칩=42h 보더형(pill 아님)**으로 정정.
+
+### 적용한 측정 → 토큰/컴포넌트 (델타)
+- **brand-primary `#66FF4B`** 신규 — 모든 Primary CTA bg·active 액센트·Pro 라벨. 글자색 `#242424`/`#121212`(on-primary/alt).
+- **overlay-white 스케일** 신규: border-subtle(.08)·default(.10)·chip(.12)·strong(.24)·divider(.2) / surface-ghost(.04)·hover(.06) / overlay-black-60.
+- **accent**: violet `#727AD0`(라이브러리 카드)·mint `#72D0A6`(홈 카드)·premium-green `#199E41`(Premium 배지)·violet-pro `#6D5DFF`.
+- **surface 추가**: base `#0A0A0A`(히어로)·tag `#2E2E2E`·tab-selected `#363636`·modal `#1F1F1F`. text: tertiary 정정 `#898989`→`#999999`·dim `#5D5D5D`·gray-450 `#999999`·pure-white `#FFFFFF`·on-primary(-alt)·inverse.
+- **size 토큰** 신규(측정 고정 치수): button-lg 42·sm 38·compact-w 108 / input 42·search 48·select 38 / chip 42·chip-sm 32 / tab 36·tab-item 28 / dropdown-item 28·folder-item 32 / avatar xs 18·xl 82·ring 2.
+- **spacing 추가**: space-7=14(컨테이너 gap)·space-9=18(칩 padX)·space-14=28(모달 inset).
+- **radius-search 80**(검색바) 추가. **shadow-modal**(3레이어 '모달')·**shadow-dropdown**(Dropdown-100) 측정값 추가.
+- **type 묶음**: button-lg(15/600/100%)·button-sm(14/600/130%)·chip(15/600/130%) + letter-spacing-snug(-2%).
+
+### 컴포넌트별 핵심 적용 치수(측정)
+| 컴포넌트 | 적용 측정값 |
+|---|---|
+| button | Primary bg #66FF4B/글자 #242424·radius 6·h42(md)/h38(sm·gap6)·compact 108w·pill(radius100·pad 8/16)·Secondary 투명+rgba(white,.12) 보더 |
+| chip | 투명+rgba(white,.12) 보더+흰 글자·h42·pad 10/18·radius 6(★pill 아님)·15/600/130% · recommend h32/radius pill/ghost |
+| badge | Tag solid #2E2E2E/#B4B4B4·pad 4/10·radius 6·13/400/150% · inline Premium #199E41·Pro #66FF4B(배경 0) |
+| tabs | segment 컨테이너 ghost(.04)/radius100/h36·item h28/pad 8/12/선택 #363636 · underline active #66FF4B 밑줄 |
+| input | default h42/bg #242424/border .08/placeholder #999999/14·160% · search h48/radius80/bg #1F1F1F/border .10 |
+| dropdown | trigger h38/pad 12/10/12/14/bg ghost/radius6 · menu pad4/radius6/shadow Dropdown-100 · item h28/radius4/hover .06 · selected 흰 배경 #FAFAFA |
+| modal | bg #1F1F1F·radius12·backdrop rgba(0,0,0,.6)·shadow '모달'(3레이어)·inset 28·sm 582/lg 998 |
+| card | overlay-white(.04)·radius12·pad 20(기본)/18·14(compact)·flush(라이브러리 투명) |
+| avatar | xs 18·xl 82(선택 링 2px rgba(102,255,75,.5))·sm/md/lg 24/32/48 |
+| toggle | ⚠ 측정 GAP — 프레임 부재(brand 합리값) |
+| toast | ⚠ 측정 GAP — 프레임 부재(모달 surface/shadow 합리값) |
 
 ---
 
@@ -139,6 +172,22 @@
 4. **Button Resizing=Hug/Fill**: fullWidth로 매핑했으나 Hug 시 최소폭/아이콘-only 변형은 미확인.
 
 > 위 ▢/⚠ 외 화면-레벨 공백(빈/로딩/에러·설정·알림 등)은 `docs/design/README.md` 디자인 공백 레지스터 소관(u0 범위 밖).
+
+### 3-d. phase ② 측정 GAP (실화면 프레임에서 측정 불가 — 추측 ❌, 합리 스켈레톤 유지)
+1. **Toggle/Switch**: 지정 프레임 어디에도 토글 인스턴스 부재 → track/knob 치수·on/off 색 미측정. brand 네온 합리값.
+2. **Toast/Snackbar**: 지정 4개 프레임(상세·홈·요금제·링크모달) 어디에도 toast 부재 → 색/치수/모션 미측정. 모달 surface/shadow 합리값.
+3. **disabled/hover/pressed 상태**: 버튼·칩·카드·인풋·탭 모두 정적 프레임에 인터랙션 상태 부재 → opacity/명도/overlay 합리값(추측 색 ❌).
+4. **Chip selected(채움)**: 온보딩 2프레임 정적 export가 전부 '기본(미선택)' → 선택 채움 색/보더 미측정. 브랜드 보더로 표시(채움값 미정).
+5. **Tertiary(text-only) 버튼**: 5개 CTA 프레임에 실인스턴스 부재 → ghost 합리값.
+6. **Input focus 스트로크**: 인풋·검색바에 focus 변형 부재 → 668:29 Dark-Stroke-Typing(#1F6FEB) 합리값.
+7. **on-primary 글자색 미세差**: 회원가입 CTA `#242424` vs 모달/완료 CTA `#121212` — 동일 토큰 통합 vs 의도 분리는 디자이너 확인(on-primary / on-primary-alt 둘 다 토큰화).
+8. **pure-white(#FFFFFF) vs white(#FAFAFA)**: 칩/카드 본문이 #FFFFFF 실측인데 668:29 최상위 흰색은 #FAFAFA → 별도 토큰인지 통일인지 확인(둘 다 토큰화).
+9. **padX stretch 아티팩트**: 버튼_48px 인스턴스 padX 측정값(175px)은 full/fixed-width stretch 계산 아티팩트라 무시 — height/width fixed만 신뢰. 완료 버튼 padY(75px)도 비정준 → height 38만 신뢰.
+
+### 검증(phase ② — 본 워크트리에서 실행)
+- ✅ `pnpm tsc`(tsc -b) exit 0 · `pnpm lint`(eslint) exit 0 · `pnpm lint:fsd`(steiger) "No problems found".
+- ✅ 모든 CSS `var(--*)` 참조가 tokens.css에 정의됨(orphan 0 — 정적 대조).
+- ⏳ 시각 충실도(게이트 ⓒ): `/ui-preview` 렌더 → Figma 실화면 1:1 대조는 사용자.
 
 ---
 
