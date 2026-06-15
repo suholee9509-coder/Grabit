@@ -1,0 +1,27 @@
+/* Card — surface 래퍼. tokens.css만 사용. */
+.card {
+  background-color: var(--color-surface-100);
+  border: 1px solid var(--color-stroke-200);
+  border-radius: var(--radius-lg); /* 12px */
+  padding: var(--space-8);
+  color: var(--color-text-primary);
+}
+
+.flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+.interactive {
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.interactive:hover {
+  border-color: var(--color-stroke-400);
+  background-color: var(--color-surface-200);
+  box-shadow: var(--shadow-drop);
+}
+.interactive:focus-visible {
+  outline: 2px solid var(--color-accent-stroke-100);
+  outline-offset: 2px;
+}

@@ -1,0 +1,39 @@
+/* Avatar — 원형, 이미지/이니셜. tokens.css만 사용. */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-300);
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-semibold);
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.initials {
+  text-transform: uppercase;
+}
+
+.sm {
+  width: 24px;
+  height: 24px;
+  font-size: var(--text-caption-3-size);
+}
+.md {
+  width: 32px;
+  height: 32px;
+  font-size: var(--text-body-4-size);
+}
+.lg {
+  width: 48px;
+  height: 48px;
+  font-size: var(--text-body-1-size);
+}

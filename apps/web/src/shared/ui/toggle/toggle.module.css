@@ -1,0 +1,38 @@
+/* Toggle (switch) — tokens.css만 사용. ⚠ 치수는 phase ② 확인(공백). */
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 24px;
+  padding: 2px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-300);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.toggle:focus-visible {
+  outline: 2px solid var(--color-accent-stroke-100);
+  outline-offset: 2px;
+}
+
+.knob {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+  transition: transform 0.15s ease;
+}
+
+.checked {
+  background-color: var(--color-accent);
+}
+.checked .knob {
+  transform: translateX(20px);
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

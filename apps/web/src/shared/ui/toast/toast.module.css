@@ -1,0 +1,48 @@
+/* Toast — ⚠ 공백 추정 스켈레톤. tokens.css만 사용. */
+.toast {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 280px;
+  max-width: 420px;
+  padding: var(--space-6) var(--space-8);
+  border: 1px solid var(--color-stroke-300);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface-200);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-2-size);
+  line-height: var(--text-body-2-line);
+  box-shadow: var(--shadow-overlay);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.message {
+  flex: 1;
+  min-width: 0;
+}
+
+.action {
+  flex-shrink: 0;
+  color: var(--color-accent-stroke-100);
+  font-weight: var(--font-weight-semibold);
+}
+
+.success {
+  border-color: var(--color-accent-stroke);
+}
+.success .icon {
+  color: var(--color-accent-stroke-100);
+}
+
+.error {
+  border-color: var(--color-system-red);
+}
+.error .icon {
+  color: var(--color-system-red);
+}

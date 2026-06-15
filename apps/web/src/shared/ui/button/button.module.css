@@ -1,0 +1,95 @@
+/* Button — tokens.css 변수만 사용. Figma 2562:7927 Type/State/Size/Resizing. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md); /* 8px 관측 */
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-accent-stroke-100);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+/* Size */
+.medium {
+  height: 48px;
+  padding: 0 var(--space-10);
+  font-size: var(--text-body-1-size);
+  line-height: var(--text-body-1-line);
+}
+
+.small {
+  height: 36px;
+  padding: 0 var(--space-8);
+  font-size: var(--text-body-3-size);
+  line-height: var(--text-body-3-line);
+}
+
+/* Resizing=Fill */
+.fullWidth {
+  width: 100%;
+}
+
+/* Type=Primary — Dark-Main 그린 */
+.primary {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent-stroke);
+  color: var(--color-text-on-accent);
+}
+.primary:hover:not(:disabled) {
+  background-color: var(--color-accent-100);
+  border-color: var(--color-accent-stroke-100);
+}
+.primary:disabled {
+  background-color: var(--color-accent-disabled);
+  border-color: var(--color-accent-stroke-disabled);
+  color: var(--color-text-disabled);
+}
+
+/* Type=Secondary — surface + stroke */
+.secondary {
+  background-color: var(--color-surface-200);
+  border-color: var(--color-stroke-300);
+  color: var(--color-text-primary);
+}
+.secondary:hover:not(:disabled) {
+  background-color: var(--color-surface-300);
+  border-color: var(--color-stroke-400);
+}
+.secondary:disabled {
+  background-color: var(--color-surface-100);
+  border-color: var(--color-stroke-200);
+  color: var(--color-text-disabled);
+}
+
+/* Type=Tertiary — ghost */
+.tertiary {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-text-secondary);
+}
+.tertiary:hover:not(:disabled) {
+  background-color: var(--color-surface-100);
+  color: var(--color-text-primary);
+}
+.tertiary:disabled {
+  color: var(--color-text-disabled);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+}

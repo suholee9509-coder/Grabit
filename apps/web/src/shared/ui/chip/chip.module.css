@@ -1,0 +1,50 @@
+/* Chip — pill, Selected=True/False (Figma 2562:7927). tokens.css만 사용. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 var(--space-8);
+  border: 1px solid var(--color-stroke-300);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-100);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.chip:hover:not(:disabled) {
+  border-color: var(--color-stroke-400);
+  color: var(--color-text-primary);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--color-accent-stroke-100);
+  outline-offset: 2px;
+}
+
+.chip:disabled {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Selected=True — 액센트 그린 채움/보더 */
+.selected {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent-stroke);
+  color: var(--color-text-on-accent);
+}
+.selected:hover:not(:disabled) {
+  border-color: var(--color-accent-stroke-100);
+  color: var(--color-text-on-accent);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+}

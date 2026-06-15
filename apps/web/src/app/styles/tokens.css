@@ -1,15 +1,139 @@
 /*
- * 디자인 토큰 — 비움 (의도적).
- * u0-design-system 유닛이 Figma "디자인 시스템"(노드 668:29)에서 추출해 채운다.
- * 채울 그룹(ADR-0001 스타일 결정):
- *   --color-*   (color)
- *   --text-*    (typography: size/weight/line-height/family)
- *   --space-*   (spacing scale)
- *   --radius-*  (border radius)
- *   --shadow-*  (elevation)
- * 테마 = 다크. CSS 변수 + CSS Modules. UI킷 ❌ → shared/ui를 Figma 컴포넌트로.
+ * Grabit 디자인 토큰 — Figma "디자인 시스템" 페이지 668:29에서 추출 [phase ①].
+ * SoT: file 5GGyKsjXEOpjKMLtUodeSs · page 668:29 (Color System - Dark Mode, 02_사용폰트, 03_폰트컬러)
+ * 추출 방식: get_figma_data → globalVars.styles(정확값) + 다크모드 스와치 노드(시맨틱명).
+ * 테마 = 다크. 눈대중 ❌ — 모든 원시값에 Figma 출처 주석.
  *
- * :root {
- *   --color-...: ...;
- * }
+ * ⚠ 컴포넌트 SECTION 2562:7927은 html.to.design 임포트 산출물로 Tailwind-grey/#66FF4B 등
+ *   비정준 팔레트를 쓴다 → 토큰 SoT 아님. 정준 색은 668:29 "Color System - Dark Mode".
+ *   (extraction-inventory.md "디자인 공백/불확실" 참조)
  */
+
+:root {
+  /* ============================================================
+   * COLOR — Dark Mode (668:29 "Color System - Dark Mode")
+   * ============================================================ */
+
+  /* 표면(surface) / 그레이 스케일 — Dark-Black ~ Dark-Gray-700 */
+  --color-bg: #000000;                 /* Dark-Black (alt, 5672) — 앱 베이스 */
+  --color-surface: #171717;            /* Dark-Black (4420) — 기본 surface */
+  --color-surface-100: #1f1f1f;        /* Dark-Gray-100 (4464) */
+  --color-surface-200: #242424;        /* Dark-Gray-200 / Stroke-100 (4508) */
+  --color-surface-300: #313131;        /* Dark-Gray-300 (4552) */
+  --color-gray-400: #898989;           /* Dark-Gray-400 (4596) */
+  --color-gray-500: #b4b4b4;           /* Dark-Gray-500 (4640) */
+  --color-gray-600: #dbdbdb;           /* Dark-Gray-600 (4684) */
+  --color-gray-700: #ececec;           /* Dark-Gray-700 (4728) */
+  --color-white: #fafafa;              /* Dark-White (4772) */
+
+  /* 텍스트 — 다크 기준 (밝은 글자), 03_폰트컬러 위계 다크 매핑 */
+  --color-text-primary: #fafafa;       /* Main Text — Dark-White */
+  --color-text-secondary: #b4b4b4;     /* Sub Text — Dark-Gray-500 */
+  --color-text-tertiary: #898989;      /* Sub Text 2 — Dark-Gray-400 */
+  --color-text-disabled: #5e5e5e;      /* Disabled — Dark-Stroke-500 (위계상 최저) */
+  --color-text-on-accent: #ffffff;     /* 강조 위 텍스트 (fill_TSBHXX) */
+
+  /* 메인/액센트 (브랜드 그린) — Dark-Main 계열 */
+  --color-accent: #00623a;             /* Dark-Main (4814) */
+  --color-accent-stroke: #168353;      /* Dark-Stroke-Main (4856) */
+  --color-accent-100: #2f7453;         /* Dark-Main-100 (4898) */
+  --color-accent-stroke-100: #3ecf8e;  /* Dark-Stroke-Main-100 (4940) — 가장 밝은 그린 */
+  --color-accent-disabled: rgba(0, 98, 58, 0.4);     /* Dark-Main-Disabled (5024) */
+  --color-accent-stroke-disabled: rgba(22, 131, 83, 0.4); /* Dark-Stroke-Main-Disabled (5066) */
+
+  /* 보더/스트로크 — Dark-Stroke 계열 */
+  --color-stroke-100: #242424;         /* Stroke-100 = Dark-Gray-200 (4508) */
+  --color-stroke-200: #2e2e2e;         /* Dark-Stroke-200 (5110) */
+  --color-stroke-300: #363636;         /* Dark-Stroke-300 (5154) */
+  --color-stroke-400: #4e4e4e;         /* Dark-Stroke-400 (5198) */
+  --color-stroke-500: #5e5e5e;         /* Dark-Stroke-500 (5242) */
+  --color-stroke-typing: #1f6feb;      /* Dark-Stroke-Typing (5286) — 인풋 포커스 */
+
+  /* 딤(dimmed) 오버레이 — 모달 백드롭 */
+  --color-dimmed-100: rgba(0, 0, 0, 0.1);  /* Dark-Dimmed-100 (5330) */
+  --color-dimmed-200: rgba(0, 0, 0, 0.6);  /* Dark-Dimmed-200 (5374) */
+
+  /* 시스템 — 상태 색 */
+  --color-system-red: #d35541;         /* Dark-System-Red (5418) */
+
+  /* ============================================================
+   * TYPOGRAPHY (668:29 02_사용폰트 + globalVars.styles)
+   * family = Pretendard. letter-spacing 기본 -2.5%.
+   * 시맨틱 스케일: Title(T1–T5) · Body(B1–B4) · Caption(C1–C3).
+   * 각 토큰 = size/line-height/weight 묶음 (개별 변수로도 노출).
+   * ============================================================ */
+
+  --font-family-base: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, sans-serif;
+  --letter-spacing-tight: -0.025em;    /* -2.5% (대부분 스타일 공통) */
+
+  /* font-weight (Pretendard 04_한글폰트) */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Title — style_0Y70FH/RM8FBP/V14KF6/D7UL58/RRQP7Q */
+  --text-title-1-size: 32px;   --text-title-1-line: 42px;  /* style_0Y70FH */
+  --text-title-2-size: 28px;   --text-title-2-line: 130%;  /* style_RM8FBP */
+  --text-title-3-size: 24px;   --text-title-3-line: 130%;  /* style_V14KF6 */
+  --text-title-4-size: 20px;   --text-title-4-line: 130%;  /* style_D7UL58 */
+  --text-title-5-size: 18px;   --text-title-5-line: 130%;  /* style_RRQP7Q */
+
+  /* Body — style_33A3G7/G9E9MV/8NZM7P/6TACK4 (160% 본문) */
+  --text-body-1-size: 16px;    --text-body-1-line: 24px;   /* style_33A3G7 */
+  --text-body-2-size: 15px;    --text-body-2-line: 22px;   /* style_G9E9MV */
+  --text-body-3-size: 14px;    --text-body-3-line: 20px;   /* style_8NZM7P (160%) */
+  --text-body-4-size: 13px;    --text-body-4-line: 18px;   /* style_6TACK4 */
+
+  /* Caption — style_SEX4MW/SEX4MW/8X9CZC */
+  --text-caption-1-size: 13px; --text-caption-1-line: 130%; /* style_SEX4MW */
+  --text-caption-2-size: 12px; --text-caption-2-line: 130%; /* style_SEX4MW */
+  --text-caption-3-size: 11px; --text-caption-3-line: 130%; /* style_8X9CZC */
+
+  /* ============================================================
+   * SPACING — 4px 베이스 스케일 (668:29 레이아웃 gap/padding 빈도)
+   * 관측: 2,4,6,8,10,12,16,20,24,32,40 (10이 다수 — 레거시 10-그리드 혼재)
+   * ============================================================ */
+  --space-0: 0;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 6px;
+  --space-4: 8px;
+  --space-5: 10px;
+  --space-6: 12px;
+  --space-8: 16px;
+  --space-10: 20px;
+  --space-12: 24px;
+  --space-16: 32px;
+  --space-20: 40px;
+
+  /* ============================================================
+   * RADIUS — borderRadius 관측 빈도 (전 화면)
+   * ============================================================ */
+  --radius-xs: 4px;     /* 작은 칩/배지 */
+  --radius-sm: 6px;     /* 인풋/세컨더리 */
+  --radius-md: 8px;     /* 버튼/카드 기본(최다 빈도 262) */
+  --radius-lg: 12px;    /* 큰 카드 */
+  --radius-xl: 16px;    /* 모달/패널 */
+  --radius-2xl: 20px;   /* 대형 컨테이너 */
+  --radius-pill: 100px; /* 칩/토글 pill */
+  --radius-full: 9999px;
+
+  /* ============================================================
+   * SHADOW / EFFECT (668:29 globalVars.styles effect_*)
+   * ============================================================ */
+  --shadow-overlay: 0px 8px 24px 0px rgba(0, 0, 0, 0.24);          /* effect_V3XAOF — 모달/드롭다운 */
+  --shadow-drop: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);             /* effect_EF97LY */
+  --shadow-inset-light: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.1); /* effect_PQ5KQ6 — 라이트 inset 보더 */
+  --shadow-inset-dark: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);  /* effect_2NHDPQ */
+
+  /* ============================================================
+   * Z-INDEX (시스템 보조 — 모달/토스트 레이어링; Figma 비추출, 구조용)
+   * ============================================================ */
+  --z-dropdown: 100;
+  --z-modal-backdrop: 200;
+  --z-modal: 210;
+  --z-toast: 300;
+}

@@ -1,0 +1,57 @@
+/* Badge — Solid/Soft × tone. tokens.css만 사용.
+ * ⚠ Pro 보라(#6D5DFF 계열 fill_7M6ZZP)는 668:29 fills엔 있으나 다크-모드 시맨틱 스와치엔
+ *   미등재 → tokens.css 미노출. 여기선 직접 hex 사용 표시(phase ② 토큰화 확인). */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 22px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-family-base);
+  font-size: var(--text-caption-2-size);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  letter-spacing: var(--letter-spacing-tight);
+  white-space: nowrap;
+}
+
+/* neutral */
+.neutral.soft {
+  background-color: var(--color-surface-300);
+  color: var(--color-text-secondary);
+}
+.neutral.solid {
+  background-color: var(--color-gray-600);
+  color: var(--color-bg);
+}
+
+/* accent (green) */
+.accent.soft {
+  background-color: var(--color-accent-100);
+  color: var(--color-accent-stroke-100);
+}
+.accent.solid {
+  background-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+
+/* pro (purple) — ⚠ 미토큰화 hex (fill_7M6ZZP #6D5DFF) */
+.pro.soft {
+  background-color: rgba(109, 93, 255, 0.16);
+  color: #a099ff; /* fill_2JXKGZ */
+}
+.pro.solid {
+  background-color: #6d5dff; /* fill_7M6ZZP */
+  color: var(--color-text-on-accent);
+}
+
+/* danger */
+.danger.soft {
+  background-color: rgba(211, 85, 65, 0.16);
+  color: var(--color-system-red);
+}
+.danger.solid {
+  background-color: var(--color-system-red);
+  color: var(--color-text-on-accent);
+}

@@ -1,0 +1,66 @@
+/* Tabs — Figma Tab/FilterTab/Item. tokens.css만 사용. */
+.tabs {
+  display: inline-flex;
+  align-items: center;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.tab:focus-visible {
+  outline: 2px solid var(--color-accent-stroke-100);
+  outline-offset: 2px;
+}
+
+/* variant=underline */
+.underline {
+  gap: var(--space-12);
+  border-bottom: 1px solid var(--color-stroke-200);
+}
+.underline .tab {
+  padding: var(--space-6) 0;
+  font-size: var(--text-title-5-size);
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+}
+.underline .tab:hover {
+  color: var(--color-text-secondary);
+}
+.underline .active {
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* variant=pill (필터 탭) */
+.pill {
+  gap: var(--space-3);
+}
+.pill .tab {
+  height: 36px;
+  padding: 0 var(--space-8);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-stroke-300);
+  background-color: var(--color-surface-100);
+  font-size: var(--text-body-3-size);
+}
+.pill .tab:hover {
+  color: var(--color-text-secondary);
+  border-color: var(--color-stroke-400);
+}
+.pill .active {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-bg);
+  font-weight: var(--font-weight-semibold);
+}
