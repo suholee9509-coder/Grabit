@@ -11,10 +11,10 @@
 | | 역할 | 실행 |
 |---|---|---|
 | **pm** | 팀리드·오케스트레이터·범위 결정 | 메인 세션 |
-| **frontend** | 디자인 + FE | headless `/goal` |
-| **backend** | 알고리즘·AI·BE | headless `/goal` |
-| **qa** | 기능완료 e2e | Agent 툴 |
-| **security** | 스프린트말 감사 | Agent 툴 |
+| **frontend** | Figma 디자인 픽셀-퍼펙트 퍼블리싱 + FE | **인터랙티브 워크트리 (사용자 직접 운전)** |
+| **backend** | 알고리즘·AI·BE | headless `/goal` (백그라운드·opus-4-8·effort max) |
+| **qa** | 기능완료 e2e | Agent 툴 (백그라운드·opus-4-8·effort max) |
+| **security** | 스프린트말 감사 | Agent 툴 (백그라운드·opus-4-8·effort max) |
 
 ## 핵심 원칙
 - **Feature 작업단위**: 한 소유자가 한 세션에 end-to-end. 작업 중 분할/파편 티켓 ❌ → 티켓 증식 차단.

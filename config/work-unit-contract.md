@@ -114,14 +114,17 @@ Loop behavior:
 
 ---
 
-## D. dev 스폰 (headless `/goal`, α)
+## D. dev 배정 (역할별 실행모드 — `config/orchestration-rules.md` §8)
+- **backend = 헤드리스 `/goal` (백그라운드, 모델 `claude-opus-4-8`·`--effort max`)**:
 ```bash
 cd <worktree> && claude -p --permission-mode acceptEdits \
+  --model claude-opus-4-8 --effort max \
   "/goal --tokens <예산>
    $(cat docs/units/<slug>/spec.md)
    매 턴 docs/units/<slug>/status.md 갱신. or stop after <N> turns.
    기준 미충족 시 done 금지 — status.md에 ESCALATION 기록 후 정지." &
 ```
-- **첫 ~5턴 캘리브레이션**: `status.md` 관찰 → spec 오류·나쁜 테스트·무관 파일 수정 조기 차단. 고위험 단위(인증·결제·마이그레이션)는 사용자가 관찰, 완전 unattended ❌.
+- **frontend(UI) = 인터랙티브 워크트리 (사용자 직접 운전)**: PM이 headless 스폰하지 않는다. worktree·spec(대상 Figma 프레임)을 준비해 사용자에게 핸드오프 → 사용자가 frontend.md 페르소나로 Figma MCP 퍼블리싱.
+- **백그라운드 캘리브레이션**(backend): `status.md` 첫 ~5턴 관찰 → spec 오류·나쁜 테스트·무관 파일 수정 조기 차단. 고위험 단위(인증·결제·마이그레이션)는 사용자가 관찰, 완전 unattended ❌.
 - **에스컬레이션 = continuation**: dev가 정지·보고 → PM이 답 주입해 *같은 worktree* 재스폰(코드·plan·status 디스크 보존).
 - **폴백 γ**: 헤드리스 `/goal` 불안정 시 Agent 툴 서브에이전트 + 프롬프트 goal-loop + Stop-hook.

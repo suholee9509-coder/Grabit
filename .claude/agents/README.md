@@ -5,10 +5,10 @@ Grabit 팀은 **PM 중심 오케스트레이션**입니다. PM이 메인루프(�
 | 에이전트 | 역할 | 실행 방식 | gstack | 흡수한 역할 |
 |---|---|---|---|---|
 | **pm** | 팀리드·오케스트레이터·서비스범위 결정 | 메인루프 (사용자 세션) | office-hours, plan-ceo/eng-review, autoplan, spec, retro | solution-planner + pm + (오케스트레이터) |
-| **frontend** | 고정 Figma 디자인 픽셀-퍼펙트 퍼블리싱 + FE | headless `/goal` 서브프로세스 (worktree) | **Figma MCP**, design-review(충실도), review, ship, qa | ui-ux-designer + brand-designer + dev(FE) |
-| **backend** | 알고리즘·AI·백엔드 | headless `/goal` 서브프로세스 (worktree) | investigate, review, codex, ship, health | dev(BE) |
-| **qa** | 기능완료마다 슬라이스 e2e | Agent 툴 서브에이전트 | qa, qa-only, codex, design-review | qa (범위 = PR→기능단위) |
-| **security** | 스프린트말 전수 보안감사 | Agent 툴 서브에이전트 | cso | security |
+| **frontend** | 고정 Figma 디자인 픽셀-퍼펙트 퍼블리싱 + FE | **인터랙티브 워크트리 (사용자 직접 운전)** | **Figma MCP**, design-review(충실도), review, ship, qa | ui-ux-designer + brand-designer + dev(FE) |
+| **backend** | 알고리즘·AI·백엔드 | headless `/goal` 백그라운드 (worktree) · **opus-4-8·effort max** | investigate, review, codex, ship, health | dev(BE) |
+| **qa** | 기능완료마다 슬라이스 e2e | Agent 툴 백그라운드 · **opus-4-8·effort max** | qa, qa-only, codex, design-review | qa (범위 = PR→기능단위) |
+| **security** | 스프린트말 전수 보안감사 | Agent 툴 백그라운드 · **opus-4-8·effort max** | cso | security |
 
 ## 오케스트레이션 (선형 체인 ❌ → PM 중심 star)
 

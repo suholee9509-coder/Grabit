@@ -50,11 +50,15 @@ WORKTREE · (디자인) requires-user-review · (보안) PROPOSED_TICKETS
 - **CI**(Sprint 0+): dev `/ship` PR에서 같은 Validation을 GitHub Actions가 외부 반복(비-LLM·un-gameable).
 - 최상위 완료 기준 = **L1 User Story**(사용자가 X를 프로덕션 수준에서 실제로 할 수 있나) — 가장 못 속이는 기준.
 
-## §8 실행 모드 — 헤드리스 dev vs 인터랙티브 워크트리
-단위마다 PM이 실행 모드를 고른다. 두 가지:
-- **(기본) 헤드리스 `/goal` dev** — 성공조건이 강하고 자율 루프가 가능한 단위. PM이 worktree에 `claude -p "/goal …"`로 백그라운드 스폰·통합(§1). **디자인이 Figma에 픽스됐으므로 화면 구현도 충실도가 객관적(프레임 대비 측정) → 대부분 헤드리스**. frontend는 Figma MCP로 프레임을 연동해 픽셀-퍼펙트 퍼블리싱 → `/design-review` 충실도 셀프검증 → 게이트 ⓒ 사인오프.
-- **(선택) 인터랙티브 워크트리** — *디자인 공백·역설계 판단이 잦은* 단위(프레임에 없는 상태/플로우, 모순 프레임, 복잡한 상호작용). 사용자가 직접 운전하는 별도 인터랙티브 Claude Code 세션을 worktree로 띄운다. 디렉토리·브랜치 분리로 메인 PM 세션과 병행, 충돌 없음.
-  - 셋업: 플랫폼 워크트리(EnterWorktree) 또는 `git worktree add ../grabit-<slug> <branch>` 후 그 폴더에서 `claude` 실행.
-  - 도구: Figma MCP(프레임 연동·추출) + `/design-review`(충실도). *디자인 생성 스킬(shotgun/consultation)은 쓰지 않는다 — 디자인은 고정 SoT.*
-  - **PM은 여전히 통합 소유**: 산출 = 브랜치 + 산출물. 게이트 ⓒ(충실도)/ⓓ(머지)로 머지 래더(§5)에 합류. 디자인 토큰은 Figma 추출 → `src/app/styles` + Command Center §5.
-- **선택 기준**: 프레임이 명확해 충실도가 객관적 → 헤드리스. 디자인 공백·프레임 모순으로 사용자 판단이 필요 → 인터랙티브 워크트리.
+## §8 실행 모드 — 역할 기준 (UI=인터랙티브, 그 외=백그라운드)
+실행 모드는 *역할로 고정*된다 (단위별 선택 ❌):
+
+- **UI / frontend = 인터랙티브 워크트리 (사용자가 직접 운전)** — *항상*. UI 연동·퍼블리싱은 취향·미세조정 협의가 잦아 백그라운드로 돌리지 않는다. **사용자**가 worktree를 열어 직접 운전하는 인터랙티브 Claude Code 세션에서 frontend 페르소나로 작업.
+  - 셋업: 플랫폼 워크트리(EnterWorktree) 또는 `git worktree add ../grabit-<slug> <branch>` 후 그 폴더에서 `claude` 실행 → frontend.md 페르소나.
+  - 도구: **Figma MCP**(프레임 연동·추출) + `/design-review`(충실도). 생성 스킬(shotgun/consultation/html) 미사용 — 디자인 고정 SoT. 결정·디자인 공백은 *사용자에게 직접 질문*.
+  - PM은 headless 스폰 ❌ → worktree·spec을 준비하고 사용자에게 "이 단위 운전하세요"로 핸드오프. 통합은 여전히 PM 소유(게이트 ⓒ 충실도/ⓓ 머지).
+
+- **backend = 헤드리스 `/goal` (백그라운드)** · **qa / security = Agent 툴 (백그라운드)** — PM이 스폰·통합(§1).
+  - **★ 백그라운드 에이전트 모델 = `claude-opus-4-8` + `--effort max`** (Ultra Code 제외 최상위). 헤드리스 `claude -p` 스폰엔 `--model claude-opus-4-8 --effort max`, Agent 툴 스폰엔 model=opus(4.8)·effort max를 지정.
+
+- **PM은 통합 소유 유지**: 모든 산출 = 브랜치 + 산출물. 게이트 ⓒ(충실도)/ⓓ(머지)로 머지 래더(§5)에 합류. 디자인 토큰은 Figma 추출 → `src/app/styles` + Command Center §5.
