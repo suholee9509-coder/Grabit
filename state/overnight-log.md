@@ -27,15 +27,17 @@
 ## IN-FLIGHT (라이브 — 컴팩트 생존용 · 모든 체크포인트마다 갱신)
 > ★ Auto Compact 후엔 이 섹션 + `git worktree list` + `git log sprint/0-integration` + `/workflows` + 각 worktree status.md로 실제 상태 재구성(런북 §10). 기억 추측 ❌.
 
-**실행 중 워크플로**: (없음 — u2·u6·BE 전부 완료·통합됨) → **다음 = u4 FE Workflow 스폰**.
-- ~~u2 FE `wb11srjai`~~ ✅ 완료·integration+main 머지 · ~~u6 확장 `w19nv8wq5`~~ ✅ 완료·통합 · ~~BE u7/u8 `woyt10t8h`~~ ✅ 완료·integration(main은 다음 풀유닛과).
+**실행 중 워크플로** (watchdog 대상):
+- **u4-content-detail FE** — Task `wedn36twz` · run `wf_88d76d11-58c` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u4-content-detail-fe-wf_88d76d11-58c.js` · worktree feat/u4-content-detail · blast=apps/web/src · 측정(2087:12538/13354/13772)→계획→구현→검증. 기존 u0b RPC(content_heatmap·content_clips_public) 소비·annotations 옵션1(UI+목킹).
+- **u11-settings BE** — Task `wgzqi9bn9` · run `wf_438a72c5-e6c` · script `~/.claude/projects/-Users-suho-Desktop-Grabit/40f752a1-8491-40c1-9093-23638dbcb022/workflows/scripts/u11-settings-be-wf_438a72c5-e6c.js` · worktree feat/u11-settings-be · blast=supabase/(0013 profile-update·soft-delete·알림). **FE와 충돌0**(blast 분리).
 
-**완료 단위**: u2(home-feed)·u6(chrome-extension) · BE: u7·u8 마이그(0011·0012).
-**integration 상태**: u2+u6+BE 머지 후 (아래 커밋해시) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0.
-**main 상태**: `b17f9fe`(u2까지 — Sprint0+Wave1+Wave2 u2·BE). **u6은 integration 머지 후 main 전진 예정**(이번 턴).
-**남은 단위**: Wave3 u7-FE·u8-FE(BE 마이그 상속) · Wave4 u11(+u11 BE soft-delete 0013) · u4(Wave2 콘텐츠상세) · Wave5 프로덕션화.
+**완료 단위**: u2(home-feed)·u6(chrome-extension) [main `835e288`] · BE: u7·u8 마이그(0011·0012)[integration].
+**integration 상태**: `61dc7fa` + (이 턴 state docs 커밋) — apps/web tsc/lint/fsd/build 0·vitest 62/62 · apps/extension tsc 0·wxt build✔·vitest 41/41 · pgTAP 131/0. origin 백업됨.
+**main 상태**: `835e288`(u2+u6+u7/u8 BE).
+**남은 단위**: u4(진행중) · Wave3 u7-FE·u8-FE(BE 마이그 0011/0012 상속) · u11-FE(BE 0013 머지 후) · Wave5 프로덕션화.
 
-**Watchdog**: 매 턴 끝 ScheduleWakeup(900초). 현재 실행 워크플로 없음 → u4 스폰 후 재예약.
+**Watchdog**: 매 턴 끝 ScheduleWakeup(900초). 현재 실행=u4 FE·u11 BE → 완료 시 통합+main 머지(풀유닛)·멈춤 시 resume.
+**FE 순차 원칙**: FE 단위는 app.tsx 라우트 공유 → 한 번에 하나씩(u4 다음 u7→u8→u11-FE). BE는 병렬.
 
 **Watchdog**: 매 턴 끝 ScheduleWakeup(900초). 15분 무응답 시 위 워크플로 mtime/상태 점검 → 멈춤이면 resume(런북 §12).
 
