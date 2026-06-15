@@ -74,10 +74,10 @@ GSTACK_MISSING이면 STOP. 사용자에 설치 안내:
 
 **웹 브라우징은 `/browse`만** (`mcp__claude-in-chrome__*` 금지).
 
-### 외부 MCP (디자인·기획 SoT — ⚠ 현재 둘 다 미연결)
-- **Figma MCP** (frontend/qa/PM): 디자인 SoT. 프레임을 직접 연동(노드·스타일·변수·측정값). frontend 작업의 전제 — 미연결 시 사용자에 연결 요청. 링크: `docs/design/README.md`.
-- **manyfast MCP** (PM): 기획 SoT 원문을 직접 가져옴. 보강 자료: `docs/source/`(기능명세서·유저플로우) + 포트폴리오(Notion).
-- **착수 전제**: Sprint 0(디자인 인벤토리·스펙 역설계)은 두 MCP 연결 후 시작.
+### 외부 MCP (디자인·기획 SoT — ✅ 둘 다 연결됨, user 스코프)
+- **Figma MCP** (frontend/qa/PM): 디자인 SoT. Framelink `figma-developer-mcp`(PAT). 프레임을 직접 연동(노드·스타일·측정값·이미지) — `mcp__figma__*`. 링크: `docs/design/README.md`.
+- **manyfast MCP** (PM): 기획 SoT 원문 — HTTP `https://api.manyfast.io/mcp` — `mcp__manyfast__*`. 보강: `docs/source/`(기능명세서·유저플로우) + 포트폴리오(Notion).
+- ⚠ **세션 시작 시 로드**: MCP는 *새 세션*에서 도구가 잡힌다. PM/워커가 Figma/manyfast 도구를 쓰려면 새 세션에서 시작(`claude mcp list`로 ✔ 확인).
 
 ### Skill 라우팅 (의도 → gstack)
 - 스펙/스코프: `/office-hours` `/plan-ceo-review` `/plan-eng-review` `/autoplan` `/spec`

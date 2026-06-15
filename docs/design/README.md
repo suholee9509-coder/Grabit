@@ -7,8 +7,8 @@ Grabit UI는 **Figma에 픽스(90%+ 확정)**돼 있다. 이 디렉토리는 그
 ## Figma 파일 (file key: `5GGyKsjXEOpjKMLtUodeSs`)
 - **디자인 페이지**: https://www.figma.com/design/5GGyKsjXEOpjKMLtUodeSs/%EC%82%AC%EC%A1%B0%EC%B0%B8%EC%B9%98_Figma--Copy-?node-id=2087-5987 — page-id `2087:5987`
 - **프로토타입**: https://www.figma.com/proto/5GGyKsjXEOpjKMLtUodeSs/%EC%82%AC%EC%A1%B0%EC%B0%B8%EC%B9%98_Figma--Copy-?node-id=2074-86591&starting-point-node-id=2074%3A86591&page-id=2087%3A5987 — start node `2074:86591`
-- 접근: frontend/qa/PM이 **Figma MCP**로 프레임을 직접 연동(노드·스타일·변수·측정값 추출).
-- ⚠ **Figma MCP 미연결** (2026-06-15 기준): 연결이 frontend 작업의 전제다. 사용자가 Figma MCP를 연결한 뒤 Sprint 0 디자인 인벤토리를 진행한다.
+- 접근: frontend/qa/PM이 **Figma MCP**로 프레임을 직접 연동(노드·스타일·측정값·이미지 추출).
+- ✅ **Figma MCP 연결됨** (Framelink `figma-developer-mcp`, PAT, user 스코프 — 2026-06-15). **새 세션**에서 `mcp__figma__*` 도구 사용 가능(file key + node-id 기반). 모든 로컬 세션·워크트리·headless 스폰에 전파.
 
 ## 프레임 인벤토리 (Sprint 0에서 PM이 작성)
 화면/플로우 → 작업단위 매핑의 기준. 각 행이 한 화면(+상태)이며 작업단위로 분해된다.
