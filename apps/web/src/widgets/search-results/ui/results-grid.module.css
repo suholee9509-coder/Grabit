@@ -1,0 +1,8 @@
+/* ResultsGrid — 측정 2087:38953: 4열 · 행간42 · 열간28 · width1092(컬럼폭 채움). */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 측정: 4열 */
+  column-gap: var(--space-14); /* 측정: 28 */
+  row-gap: 42px; /* 측정: 42 (스케일 미보유 → 인라인 상수) */
+  width: 100%; /* 메인 컬럼 1092 채움 */
+}

@@ -1,0 +1,98 @@
+/* SearchResults — 측정 2087:38847(결과) / 2087:40125(빈).
+ * 히어로 y120 · 검색바(쿼리칩) y192 · row y324(strip x136 + main x414 width1092).
+ * 메인컬럼 column gap32(결과)/14(빈) · 헤더영역 column gap20(헤더+출처필터). 토큰 변수만(좌표 gap·고정폭 제외). */
+.results {
+  display: flex;
+  flex-direction: column;
+  padding: 120px 0 80px; /* 측정: 히어로 top y120 */
+}
+
+/* 히어로 + 검색바 — 중앙정렬 */
+.heroBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* 히어로 713×48 · 32/600/150%/-2.5% CENTER 순백 */
+.hero {
+  margin: 0;
+  width: 713px; /* 측정: 713 */
+  text-align: center;
+  color: var(--color-white-pure); /* 측정: #FFFFFF */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-1-size); /* 32 */
+  line-height: 150%; /* 측정: 150% */
+  font-weight: var(--font-weight-semibold); /* 측정: 600 */
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+}
+.searchBarWrap {
+  margin-top: var(--space-12); /* 측정: 24 (히어로 168 → 검색바 192) */
+}
+
+/* row — 카테고리 스트립(x136) + 메인컬럼(x414). 검색바(y240) 아래 → y324 */
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 84px; /* 측정: 검색바 하단 240 → row 324 */
+  padding-left: 136px; /* 측정: strip x136 */
+}
+
+/* 스트립 → 메인컬럼 간격: strip(x136, width≈196+세로divider) → main x414.
+ * strip 자체가 세로divider까지 포함 → 메인까지 gap을 margin으로 보정(414 - (136+196+20) ≈ 62) */
+.strip {
+  flex: none;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16); /* 측정: 32 (헤더영역 ↔ 그리드) */
+  width: 1092px; /* 측정: 1092 */
+  margin-left: 62px; /* 측정: strip 우끝 → main 좌끝(414) 보정 */
+}
+/* 빈 상태 — 헤더 ↔ 빈문구 gap14(측정 2087:40176 컨테이너 gap14) */
+.mainEmpty {
+  gap: var(--space-7); /* 측정: 14 */
+}
+
+/* 헤더영역 — column gap20 (결과헤더 + 출처필터) */
+.headerArea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10); /* 측정: 20 */
+}
+
+/* 에러 — [디자인공백] 토스트는 페이지가 처리 · 인라인 재시도 */
+.error {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5); /* 10 */
+  align-items: flex-start;
+}
+.errorText {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-5-size); /* 18 */
+  line-height: var(--text-title-5-line);
+  letter-spacing: var(--letter-spacing-snug);
+}
+.retry {
+  display: inline-flex;
+  align-items: center;
+  height: var(--size-button-md); /* 34 */
+  padding: 0 var(--space-8); /* 16 */
+  border: 1px solid var(--color-border-chip);
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--color-white);
+  font-family: var(--font-family-base);
+  font-size: var(--text-button-sm-size);
+  line-height: var(--text-button-sm-line);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-snug);
+  cursor: pointer;
+}
+.retry:hover {
+  border-color: var(--color-border-strong);
+}

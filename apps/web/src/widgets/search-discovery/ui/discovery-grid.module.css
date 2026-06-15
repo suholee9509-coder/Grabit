@@ -1,0 +1,29 @@
+/* DiscoveryGrid — 측정 2557:7642.
+ * 컨테이너 column gap24 width1092 · 그리드 4열 행간42 열간28 width1083 · 카드 252폭.
+ * 토큰 변수만(42px 행간·1092/1083 고정폭은 컴포넌트 상수). */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12); /* 측정: 24 (제목↔그리드) */
+  width: 1092px; /* 측정: 1092 */
+}
+
+/* 섹션 제목 24/700/130%/-2.5% #FAFAFA */
+.title {
+  margin: 0;
+  color: var(--color-white); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-3-size); /* 24 */
+  line-height: var(--text-title-3-line); /* 130% */
+  font-weight: var(--font-weight-bold); /* 측정: 700 */
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+}
+
+/* 4열 그리드 — 행간42 열간28 width1083. 252×4 + 28×3 = 1092(제목폭) ≈ 그리드 1083 + 카드 hug */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 측정: 4열 */
+  column-gap: var(--space-14); /* 측정: 28 */
+  row-gap: 42px; /* 측정: 42 (스케일 미보유 → 인라인 상수) */
+  width: 1083px; /* 측정: 1083 */
+}

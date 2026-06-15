@@ -1,0 +1,66 @@
+/* SearchDiscovery — 측정 2087:40320.
+ * 히어로 y120 · 검색바 y192 · 추천칩 y264 · 카테고리 패널 y408(x136).
+ * 히어로블록 = 중앙정렬 column · 패널 = row gap62. 토큰 변수만(좌표 유도 gap 제외). */
+.discovery {
+  display: flex;
+  flex-direction: column;
+  /* 본문 컨테이너 좌상단(메인 0,0) 기준 패딩 — 히어로 y120 · 패널 x136 */
+  padding: 120px 0 80px; /* 측정: 히어로 top y120 · 하단 여백 */
+}
+
+/* 히어로 블록 — 중앙정렬 column (히어로 → 검색바 24 → 칩 24) */
+.heroBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 히어로 타이틀 — 713×48 · 32/600/150%/-2.5% CENTER · 순백 #FFFFFF */
+.hero {
+  margin: 0;
+  width: 713px; /* 측정: 713 */
+  text-align: center;
+  color: var(--color-white-pure); /* 측정: #FFFFFF (순백) */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-1-size); /* 32 */
+  line-height: 150%; /* 측정: 150% (title-1 lh131% 불일치 → 인라인) */
+  font-weight: var(--font-weight-semibold); /* 측정: 600 */
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+}
+
+/* 검색바 — 히어로 아래 24 (y168→y192) */
+.searchBarWrap {
+  margin-top: var(--space-12); /* 측정: 24 (히어로 하단 168 → 검색바 192) */
+}
+
+/* 추천칩 — 검색바 아래 24 (y240→y264) */
+.chipsWrap {
+  margin-top: var(--space-12); /* 측정: 24 (검색바 하단 240 → 칩 264) */
+}
+
+/* 카테고리 패널 — row gap62, x136, 칩(y264+32=296) 아래 → y408 */
+.panel {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 62px; /* 측정: row gap 62 (좌 리스트 ↔ 우 그리드, divider 포함 시각) */
+  margin-top: 112px; /* 측정: 칩 하단 296 → 패널 408 */
+  padding-left: 136px; /* 측정: 패널 x136 */
+}
+
+.left {
+  flex: none;
+}
+
+/* 좌-우 세로 구분선 — 0×561 rgba(255,255,255,.10) */
+.vDivider {
+  flex: none;
+  align-self: stretch;
+  width: 1px; /* 측정: 0(라인) → 1px 렌더 */
+  min-height: 561px; /* 측정: 561 */
+  background-color: var(--color-border-default); /* 측정: 0.10 */
+}
+
+.right {
+  flex: none;
+}

@@ -49,3 +49,24 @@ export interface VideoMetaDto {
   durationSec: number | null;
   thumbnailUrl: string | null;
 }
+
+/**
+ * search_my_content 1행(0012) — camel 매핑(래퍼 내부에서 snake→camel).
+ * RPC가 SECURITY INVOKER + user_id pin → 본인 행만(user_id/실명 필드 부재 = no-leak).
+ * entities/content가 이 DTO를 SearchContentItem으로 소비/매핑(하향 임포트 entities→shared).
+ */
+export interface SearchRow {
+  id: string;
+  title: string;
+  provider: string;
+  clipCount: number;
+  tags: string[];
+  lastClippedAt: string | null;
+  thumbnailUrl?: string | null;
+}
+
+/** search_my_content_sources 1행(0012) — provider별 카운트(출처 필터 배지). */
+export interface SourceCountRow {
+  provider: string;
+  count: number;
+}

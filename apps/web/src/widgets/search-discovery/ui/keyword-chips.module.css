@@ -1,0 +1,8 @@
+/* KeywordChips — 측정 2087:40685: row · align center · gap 8 · hug. */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4); /* 측정: 8 */
+  flex-wrap: wrap;
+}

@@ -12,6 +12,11 @@ export {
 export { ingestClip } from './ingest-clip';
 export { fetchFolders } from './folders';
 export { searchTags } from './tags';
+export {
+  searchMyContent,
+  searchMyContentSources,
+  type SearchContentArgs,
+} from './search';
 export { mapIngestError, type MappedError, type IngestErrorKind } from './errors';
 export type {
   IngestClipParams,
@@ -19,6 +24,8 @@ export type {
   FolderRow,
   TagRow,
   VideoMetaDto,
+  SearchRow,
+  SourceCountRow,
 } from './types';
 export {
   DEMO_FOLDERS,
@@ -26,3 +33,10 @@ export {
   demoSearchTags,
   demoVideoMeta,
 } from './demo-data';
+export {
+  DEMO_DISCOVERY,
+  demoDiscovery,
+  demoSearchMyContent,
+  demoSearchSources,
+  type DemoSearchArgs,
+} from './demo-search';

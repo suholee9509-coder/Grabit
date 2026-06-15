@@ -1,0 +1,83 @@
+/* CategoryList — 측정 2557:7608 / 2087:38864.
+ * 외곽 column gap20 · 헤더 column gap10 width176 · divider 68 hairline · 항목 h32 pad6/0 width196.
+ * 토큰 변수만(고정폭 176/196/68 제외). */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10); /* 측정: 20 */
+}
+
+/* 헤더 — column gap10 width176 */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5); /* 측정: 10 */
+  width: 176px; /* 측정: 176 */
+}
+/* 제목 24/700/130%/-2.5% #FAFAFA */
+.title {
+  margin: 0;
+  color: var(--color-white); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-3-size); /* 24 */
+  line-height: var(--text-title-3-line); /* 130% */
+  font-weight: var(--font-weight-bold); /* 측정: 700 */
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+}
+/* 부제 14/400/140%/-2% #B4B4B4 */
+.subtitle {
+  margin: 0;
+  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-3-size); /* 14 */
+  line-height: 140%; /* 측정: 140% (lh140 토큰 부재 → 인라인) */
+  font-weight: var(--font-weight-regular); /* 400 */
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+}
+
+/* 헤더-리스트 구분선 — 가로 68 hairline rgba(255,255,255,.10) */
+.divider {
+  width: 68px; /* 측정: 68 */
+  height: 0;
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--color-border-default); /* 측정: 0.10 */
+}
+
+/* 카테고리 항목 묶음 — column width196 (gap0, 항목 h32가 간격) */
+.items {
+  display: flex;
+  flex-direction: column;
+  width: 196px; /* 측정: 196 */
+}
+
+/* 항목 — h32 · pad6/0 · 15/130%/-2.5% · 배경/언더라인 없음(색+weight만) */
+.item {
+  display: flex;
+  align-items: center;
+  height: var(--size-tab-list-item); /* 측정: 32 */
+  padding: var(--space-3) 0; /* 측정: 6 / 0 */
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--color-text-tertiary); /* 측정 비선택: #999999 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-tab-list-size); /* 15 */
+  line-height: var(--text-tab-list-line); /* 130% */
+  font-weight: var(--font-weight-regular); /* 측정 비선택: 400 */
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+}
+.item:hover {
+  color: var(--color-gray-500); /* [GAP] hover 정적 부재 → 한 단계 밝게(노트) */
+}
+/* 선택 — 500/#FAFAFA */
+.item.selected {
+  color: var(--color-white); /* 측정: #FAFAFA */
+  font-weight: var(--font-weight-medium); /* 측정: 500 */
+}
+.item:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
