@@ -1,100 +1,90 @@
-# Grabit
+# Grabit — 크롬 익스텐션 영상 클리핑·큐레이션 커리어 콘텐츠 플랫폼
 
-크롬 익스텐션 기반 영상 클리핑·큐레이션으로 성장 불안(FOMO)을 해소하는 커리어 콘텐츠 플랫폼. 1인 창업자 + 8개 AI 에이전트로 개발됩니다.
+**1인 창업자 + PM 중심 5-에이전트 팀**으로 개발한다. 이 레포는 *오케스트레이션 시스템*(메타 레이어) + Grabit 제품 코드(Sprint 0부터)를 함께 담는다.
 
----
-
-## 빠른 네비게이션 (에이전트가 처음 읽을 곳)
-
-**이 워크트리에서 작업 중인 에이전트라면**: 워크트리 루트의 `CLAUDE.md`를 먼저 읽으세요. 거기에 당신의 에이전트 페르소나와 현재 티켓이 있습니다.
-
-**메인 레포에서 작업 시 핵심 디렉토리**:
-- [.claude/agents/](.claude/agents/) — 8개 에이전트 페르소나 (Single Source of Truth)
-- [.claude/skills/](.claude/skills/) — 프로젝트 고유 워크플로우 (sprint-kickoff, handoff 등)
-- [.claude/commands/](.claude/commands/) — Cursor 슬래시 명령 (`/start-sprint`, `/handoff`, `/status`)
-- [config/](config/) — 정적 표준 (read-only, PR로만 변경)
-- [shared-context/](shared-context/) — 런타임 누적 컨텍스트 (read+write)
-- [scripts/](scripts/) — 워크트리/핸드오프 shell 헬퍼
-- [gstack/](gstack/) — gstack 통합 가이드
-
-각 디렉토리에 `README.md`가 있으니 폴더 내용을 빠르게 파악하려면 그것부터 읽으세요.
+> 제품 한 줄: 크롬 익스텐션 기반 영상 클리핑·큐레이션으로 성장 불안(FOMO)을 해소하는 커리어 콘텐츠 플랫폼.
+> 제품 스펙·기획 SoT는 별도 전달 예정 → `docs/source/`에 비치 후 Command Center §2에서 검증.
 
 ---
 
-## 에이전트 시스템 핵심 원칙
+## 당신은 PM (메인 세션 부트스트랩)
 
-1. **각 에이전트 = 별도 Cursor 세션** (별도 git worktree)
-2. **모든 LLM 호출 = Cursor의 Claude Code** (사용자 구독 계정, Anthropic API 미사용)
-3. **티켓 = GitHub Issues**, **보드 = GitHub Projects**, **핸드오프 = Issue 라벨 변경 + 코멘트**
-4. **사용자가 매 단계 수동 트리거** (자동 파이프라인 없음, 의도적)
-5. **공유 메모리 = `shared-context/*.md` 파일** (모든 에이전트가 read/write 가능)
+당신은 이 레포의 **PM / 오케스트레이터**입니다.
+1. 세션 시작 시 **`state/command-center.md`를 읽으세요** (전체 상태 = 당신의 영속 메모리).
+2. 당신의 루프·게이트·티켓 독점·성공조건 작성 규격은 **[.claude/agents/pm.md](.claude/agents/pm.md)**.
+3. dev(frontend/backend)는 **headless `claude -p "/goal …"`**로, QA/Security는 **Agent 툴**로 *당신이* 스폰·통합·결정합니다.
+4. 한국어로 소통. 게이트에서 결정할 것을 1–3개로 좁혀 제시.
 
----
-
-## GitHub 도구 (모든 에이전트 공통)
-
-```bash
-# 티켓 보기
-gh issue view <number>
-
-# 새 티켓 생성 (보통 PM Agent가 호출)
-gh issue create --label "agent:dev" --label "type:feature"
-
-# 티켓 코멘트
-gh issue comment <number> -b "메시지"
-
-# 핸드오프 (라벨 변경 + 코멘트)
-./scripts/handoff.sh <issue-number> <next-agent>
-
-# 새 에이전트 워크트리 시작
-./scripts/new-agent.sh <agent-type> [<ticket-number>]
-
-# 보드 현황
-./scripts/status.sh
-
-# Projects 보드 (브라우저)
-gh project view 2 --owner @me --web
-```
+> 에이전트 로스터·다이어그램: [.claude/agents/README.md](.claude/agents/README.md)
 
 ---
 
-## gstack
+## 작업단위 계약 (안티-증식 — #1 규칙)
 
-Use the /browse skill from gstack for all web browsing. Never use mcp__claude-in-chrome__* tools.
+정본: **[config/work-unit-contract.md](config/work-unit-contract.md)**. 핵심:
+- **작업단위 = 수직 Feature 슬라이스**, 한 소유자가 end-to-end (한 worktree 세션 크기).
+- **In-flight 흡수**: 범위 내 발견은 같은 단위가 흡수. *새 티켓 분기 금지.*
+- **PM 티켓 독점**: 오직 PM이, 계획 시점에만 이슈 생성. (보안 Critical/High만 예외)
+- **사이징 게이트 + WIP 상한 + 트립와이어**: 작업 중 분할 ❌. 미스사이징은 계획 단계로.
+- **성공조건**(`/goal` 조건)은 5섹션·9원칙 — 관찰가능·Boundaries·매 턴 reload (§B).
 
-Available skills:
-/office-hours, /plan-ceo-review, /plan-eng-review, /plan-design-review, /design-consultation, /design-shotgun, /design-html, /review, /ship, /land-and-deploy, /canary, /benchmark, /browse, /connect-chrome, /qa, /qa-only, /design-review, /setup-browser-cookies, /setup-deploy, /setup-gbrain, /retro, /investigate, /document-release, /codex, /cso, /autoplan, /plan-devex-review, /devex-review, /careful, /freeze, /guard, /unfreeze, /gstack-upgrade, /learn
+---
 
-### gstack (REQUIRED — global install)
+## Goal-Driven Execution (전 worker 상속)
+> **Define success criteria. Loop until verified.**
+- dev는 `/goal`로 성공조건 충족까지 자율 루프. spec.md 매 턴 reload, status.md 매 턴 갱신.
+- 강한 기준 = 독립적 루프. 약한 기준("make it work") = 끊임없는 clarification.
 
-**Before doing ANY work, verify gstack is installed:**
+## 아키텍처 / 스택 (Sprint 0 ADR로 확정)
+- **스택 정본 = Sprint 0 ADR** (`state/decisions.md`). 코드 작성 전 PM이 `/plan-eng-review`로 확정. *가정 ❌.*
+- 권장 베이스라인(확정 전): FSD 레이어드 구성 — `app → pages → widgets → features → entities → shared`. **하향 임포트만**, 동일레이어 크로스슬라이스 ❌. 배럴 경유. (크롬 익스텐션 구성 — MV3 background/content/popup — 은 Sprint 0에서 FSD에 매핑.)
+- 상세 베이스라인: [config/quality_standards.md](config/quality_standards.md).
 
+## Frozen 영역 / 금지
+- 브라우저/클라이언트측 LLM·외부 API 키 호출 ❌ → 서버/엣지 함수만 (키 노출 방지).
+- `.env` 커밋 ❌. main 직접 푸시·force-push ❌.
+- (스캐폴딩 후) 확정된 FSD 슬라이스·핵심 계약은 FROZEN 표기.
+
+---
+
+## gstack (REQUIRED — global install)
+
+**작업 전 gstack 설치 확인:**
 ```bash
 test -d ~/.claude/skills/gstack/bin && echo "GSTACK_OK" || echo "GSTACK_MISSING"
 ```
-
-If GSTACK_MISSING: STOP. Do not proceed. Tell the user:
-
-> gstack is required for all AI-assisted work in this repo.
-> Install it:
+GSTACK_MISSING이면 STOP. 사용자에 설치 안내:
 > ```bash
 > git clone --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack
 > cd ~/.claude/skills/gstack && ./setup --team
 > ```
-> Then restart your AI coding tool.
 
-Do not skip skills, ignore gstack errors, or work around missing gstack.
+**웹 브라우징은 `/browse`만** (`mcp__claude-in-chrome__*` 금지).
 
-Using gstack skills: After install, skills like /qa, /ship, /review, /investigate,
-and /browse are available. Use /browse for all web browsing.
-Use ~/.claude/skills/gstack/... for gstack file paths (the global path).
+### Skill 라우팅 (의도 → gstack)
+- 스펙/스코프: `/office-hours` `/plan-ceo-review` `/plan-eng-review` `/autoplan` `/spec`
+- 디자인: `/design-consultation` `/design-shotgun` `/design-html` `/design-review`
+- 개발: `/investigate` `/review` `/codex` `/ship` `/health`
+- QA/보안: `/qa` `/qa-only` `/cso`
+- 회고: `/retro` `/learn`
 
-이 프로젝트의 gstack 사용 매핑은 [gstack/skills-in-use.md](gstack/skills-in-use.md) 참고.
+### `/goal` (Claude Code 내장, dev 자율 루프)
+- **v2.1.80+ 필요** (`claude --version` 확인). 완료 조건 → 매 턴 평가자 판정 → 충족까지 루프.
+- headless: `claude -p --permission-mode acceptEdits "/goal --tokens <예산> <5섹션 조건>"`.
+- Agent-툴 서브에이전트 안에서는 `/goal` 직접 호출 불가 → dev를 headless 프로세스로 스폰.
 
 ---
 
-## Grabit 제품 코드는 어디에?
+## GitHub (티켓=Issues · 보드=Projects · 상태=라벨)
+```bash
+gh issue view <n>           # 보기
+./scripts/status.sh         # 보드/worktree 현황
+gh project view 2 --owner suholee9509-coder --web   # Grabit 보드 (#2)
+```
+- 이슈 생성은 PM만 (sprint-kickoff). 라벨 변경 → `.github/workflows/sync-label-to-project-status.yml`가 보드 Status 자동 갱신.
 
-현재 레포에는 *에이전트 시스템*만 있습니다. Grabit 제품 코드(크롬 익스텐션, 영상 클리핑·큐레이션 백엔드, 웹 플랫폼 등)는 Solution Planner와 PM Agent를 통해 요구사항이 정의된 후 별도 결정된 구조로 추가됩니다.
-
-이 시점에는 `apps/`, `packages/` 같은 디렉토리가 *없는 것이 정상*입니다.
+## 디렉토리
+- [.claude/agents/](.claude/agents/) — 5 페르소나 · [.claude/skills/](.claude/skills/) — 워크플로우
+- [config/](config/) — 정적 표준 · [state/](state/) — 런타임 SoT(command-center·decisions·security)
+- [docs/](docs/) — 제품 SoT(`source/`) + `units/<slug>/{spec,plan,status}.md`
+- [scripts/](scripts/) · [.github/](.github/)

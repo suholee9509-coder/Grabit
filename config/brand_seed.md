@@ -1,61 +1,44 @@
-# Brand Seed
+# Brand Seed — Grabit
 
-Brand Designer Foundation Mode 실행 *전*에 사용자가 작성하는 *방향성 시드*. 이 문서는 Brand Designer가 5섹션 brand-system.md를 만들 때 출발점이 됩니다.
+Frontend의 브랜드 파운데이션(`/design-consultation`) *전*에 참조하는 방향성 시드. 5섹션 brand-system(Command Center §5)의 출발점.
 
-> 이 파일은 **사용자가 작성**합니다 (또는 Solution Planner가 spec과 함께 추출). Brand Designer가 Foundation 시 read-only로 참조.
-
----
-
-## Grabit 시드 (초기 가정)
-
-> 이전 프로젝트(attention-ai)의 시드를 리셋하고 Grabit 출발점으로 재작성. 사용자가 명시한 항목은 채우고, 나머지는 Brand Designer Foundation에서 도출.
-
-### 제품 한 줄
-**크롬 익스텐션 기반 영상 클리핑·큐레이션으로 성장 불안(FOMO)을 해소하는 커리어 콘텐츠 플랫폼**.
-
-### 타겟 사용자 (가설)
-- 막연한 불안감으로 커리어 콘텐츠를 소비하지만 정작 성장을 *체감하지 못하는* 사람
-- 'EO' 같은 성장 콘텐츠 영상을 좋아하지만 *길이* 때문에 끝까지 보기 어려운 사람
-- 성장에 대한 FOMO가 콘텐츠 소비의 동기인 커리어 콘텐츠 소비자
-
-### 감정적 약속 (가설)
-- 막연한 성장 불안(FOMO)을 *간접지표*로 가시화 → "나 성장하고 있다"는 체감
-- 긴 영상의 *핵심만* 빠르게 (클리핑) — 완주 부담 제거
-- 흩어진 영상을 *내 큐레이션*으로 쌓는 만족
-
-### 닮고 싶은 브랜드
-- (TBD — Brand Designer Foundation에서 도출)
-
-### 닮고 싶지 않은 브랜드
-- (TBD — Brand Designer Foundation에서 도출)
-
-### 톤 (1단어 후보)
-- (TBD — Brand Designer Foundation에서 도출)
-
-### 시각적 단서 (가설, Brand Designer가 검증)
-- (TBD — Brand Designer Foundation에서 도출)
-
-### 금기 영역
-- 마케팅 헛소리 ("revolutionize", "supercharge", "AI-powered")
-- 이모지 폭격 🚀✨💡
-- 무의미 그라디언트 (purple-pink hero gradient)
-- "Coming soon" 페이지로 hype 짓기
-
-### 기존 자산
-- 도메인: (TBD — Foundation 시 결정)
-- 로고: 없음 (Brand Designer Foundation에서 디렉션 도출)
-- 이메일: (TBD)
+> 사용자가 작성/조정. Frontend가 Foundation 시 read-only 참조. 시드와 다른 결론이 나면 사용자에 보고 후 §5 반영.
+> **현재 = 빈 템플릿.** 기획 문서 수령 + Brand Foundation에서 토큰/보이스/시각단서 도출 예정 (아래 대부분 TBD).
 
 ---
 
-## 사용 안내 (Brand Designer가 읽을 부분)
+## 제품 한 줄
+**크롬 익스텐션 기반 영상 클리핑·큐레이션 커리어 콘텐츠 플랫폼** — 막연한 성장 불안(FOMO)으로 커리어 콘텐츠를 소비하지만 성장을 체감하지 못하는 사람이, 긴 영상의 핵심을 *클리핑·큐레이션*해 **체감되는 성장**으로 바꾼다.
 
-이 시드는 **출발점**이지 결정 X. Foundation 모드의 5-7 질문을 통해 검증하고 보강하세요. 시드와 다른 결론이 나면 사용자에 명확히 보고:
+## 타겟 사용자 (가설)
+- 'EO' 같은 성장/커리어 영상을 좋아하나 길이 때문에 완주가 어려운 사람
+- 콘텐츠를 *소비*는 하지만 *성장 체감*이 없어 막연한 불안을 느끼는 지식 노동자·학습자
+- _(기획 문서 수령 후 정교화)_
 
-> "시드의 X 가정이 검증 결과 다르게 나왔습니다. brand-system.md에는 <새 결론>으로 반영했습니다. 시드 문서도 업데이트할까요?"
+## 감정적 약속 (가설)
+- 흩어진 영상 소비가 *내 것이 되는 클립*으로 축적되는 만족
+- 막연한 불안 → *체감되는 성장*으로 전환
+- _(TBD — Foundation)_
+
+## 핵심 컨셉
+- _(기획 문서 기반 — TBD: 클리핑 · 큐레이션 · 성장 체감 메커니즘 등)_
+
+## 닮고 싶은 브랜드
+- _(TBD — Foundation에서 후보 도출)_
+
+## 톤 (1단어 후보)
+- _(TBD — 예: 명료 · 신중 · 정직 등 Foundation에서 확정)_
+
+## 시각 단서 (가설, Frontend가 검증)
+- _(TBD — 색/타이포/메타포는 Brand Foundation에서)_
+
+## 금기 영역
+- 마케팅 헛소리("revolutionize", "supercharge", "AI-powered")
+- 이모지 폭격 🚀✨💡 · 무의미 그라디언트(purple-pink hero)
+- 불안 조장(FOMO 자극) 카피 — 제품이 *해소*하려는 감정을 마케팅이 악용 ❌
+- "Coming soon" hype
+- _(추가 금기 — Foundation)_
 
 ---
-
 ## 변경 이력
-
-- 2026-05-31 — Grabit 출발점 초기화 (이전 attention-ai 시드 리셋, 사용자 제품 설명 반영)
+- 2026-06-15 — 초기 빈 Grabit 템플릿 (오케스트레이션 시스템 이식 시 생성. 기획 문서 + Brand Foundation에서 채울 예정).

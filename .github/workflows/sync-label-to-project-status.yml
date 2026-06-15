@@ -1,17 +1,18 @@
 name: Sync Label to Project Status
 
-# 라벨 변경 시 GitHub Project (#1) 보드의 Status 컬럼 자동 업데이트.
+# 라벨 변경 시 GitHub Project 보드의 Status 컬럼 자동 업데이트.
 # 매핑:
-#   agent:solution-planner / pm-agent      → Spec
-#   agent:ui-ux-designer / brand-designer  → Design
-#   agent:dev                              → In Dev
-#   agent:reviewer / security              → In Review
-#   agent:qa                               → In QA
-#   issue closed / PR merged              → Done
-#   라벨 없음 (또는 다른 라벨만)             → Backlog
+#   agent:pm                   → Planning
+#   agent:frontend / backend   → In Build
+#   agent:qa                   → In QA
+#   agent:security             → In Security
+#   issue closed / PR merged   → Done
+#   라벨 없음                   → Backlog
 #
 # 사전 요구사항:
-#   - 레포 secret 'PROJECT_PAT' 등록 (project + repo scope의 Personal Access Token)
+#   - 레포 secret 'PROJECT_PAT' (project + repo scope PAT)
+#   - 아래 PROJECT_NUMBER를 실제 보드 번호로 설정 (setup: gh project list --owner suholee9509-coder)
+#   - 보드 Status 컬럼: Backlog, Planning, In Build, In QA, In Security, Done
 
 on:
   issues:
@@ -19,14 +20,13 @@ on:
   pull_request:
     types: [opened, labeled, unlabeled, closed, reopened, ready_for_review, converted_to_draft]
 
-# 같은 이슈/PR의 동시 트리거 직렬화 (race condition + API rate limit 방어)
 concurrency:
   group: sync-status-${{ github.event.issue.number || github.event.pull_request.number }}
   cancel-in-progress: false
 
 env:
   PROJECT_OWNER: suholee9509-coder
-  PROJECT_NUMBER: 2
+  PROJECT_NUMBER: 2   # Grabit 보드 (gh project list --owner suholee9509-coder)
 
 jobs:
   sync:
@@ -43,61 +43,42 @@ jobs:
         run: |
           set -euo pipefail
 
-          # ─────────────────────────────────────────────────────
-          # 헬퍼: 일시적 API 장애 (5xx) 대응 retry — 3회, 5/10/20초 backoff
-          # ─────────────────────────────────────────────────────
           retry() {
             local n=0; local max=3; local delay=5
             until "$@"; do
               n=$((n+1))
-              if [ "$n" -ge "$max" ]; then
-                echo "✗ $max회 시도 모두 실패: $*" >&2
-                return 1
-              fi
+              if [ "$n" -ge "$max" ]; then echo "✗ $max회 실패: $*" >&2; return 1; fi
               echo "⚠ retry $n/$max in ${delay}s ($1)" >&2
-              sleep "$delay"
-              delay=$((delay * 2))
+              sleep "$delay"; delay=$((delay * 2))
             done
           }
 
-          # ─────────────────────────────────────────────────────
-          # Step 1: 현재 라벨 + 상태 fetch → 타겟 Status 결정
-          # ─────────────────────────────────────────────────────
           echo "::group::Step 1: Determine target Status"
           if [ "$IS_PR" = "true" ]; then
             ITEM_INFO=$(retry gh pr view "$ITEM_NUMBER" --repo "$REPO" --json labels,state,merged)
           else
             ITEM_INFO=$(retry gh issue view "$ITEM_NUMBER" --repo "$REPO" --json labels,state)
           fi
-
           LABELS=$(echo "$ITEM_INFO" | jq -r '.labels[].name')
           STATE=$(echo "$ITEM_INFO" | jq -r '.state')
           MERGED=$(echo "$ITEM_INFO" | jq -r '.merged // false')
+          echo "Labels: $(echo "$LABELS" | tr '\n' ', ' | sed 's/, $//')  State: $STATE  Merged: $MERGED"
 
-          echo "Labels: $(echo "$LABELS" | tr '\n' ', ' | sed 's/, $//')"
-          echo "State: $STATE / Merged: $MERGED"
-
-          # 우선순위 1: closed/merged → Done
           if [ "$STATE" = "CLOSED" ] || [ "$MERGED" = "true" ]; then
             TARGET_STATUS="Done"
           else
-            # agent 라벨 추출 (가장 첫 매치)
             AGENT=$(echo "$LABELS" | grep -E '^agent:' | head -1 | sed 's|^agent:||' || true)
             case "$AGENT" in
-              solution-planner|pm-agent)        TARGET_STATUS="Spec" ;;
-              ui-ux-designer|brand-designer)    TARGET_STATUS="Design" ;;
-              dev)                              TARGET_STATUS="In Dev" ;;
-              reviewer|security)                TARGET_STATUS="In Review" ;;
-              qa)                               TARGET_STATUS="In QA" ;;
-              *)                                TARGET_STATUS="Backlog" ;;
+              pm)                 TARGET_STATUS="Planning" ;;
+              frontend|backend)   TARGET_STATUS="In Build" ;;
+              qa)                 TARGET_STATUS="In QA" ;;
+              security)           TARGET_STATUS="In Security" ;;
+              *)                  TARGET_STATUS="Backlog" ;;
             esac
           fi
           echo "Target Status: $TARGET_STATUS"
           echo "::endgroup::"
 
-          # ─────────────────────────────────────────────────────
-          # Step 2: Project ID + Status field ID + option ID
-          # ─────────────────────────────────────────────────────
           echo "::group::Step 2: Project / Field / Option lookup"
           PROJECT_INFO=$(retry gh api graphql -f query='
             query($owner: String!, $number: Int!) {
@@ -105,38 +86,26 @@ jobs:
                 projectV2(number: $number) {
                   id
                   field(name: "Status") {
-                    ... on ProjectV2SingleSelectField {
-                      id
-                      options { id name }
-                    }
+                    ... on ProjectV2SingleSelectField { id options { id name } }
                   }
                 }
               }
             }' -f owner="$PROJECT_OWNER" -F number="$PROJECT_NUMBER")
-
           PROJECT_ID=$(echo "$PROJECT_INFO" | jq -r '.data.user.projectV2.id')
           FIELD_ID=$(echo "$PROJECT_INFO" | jq -r '.data.user.projectV2.field.id')
           OPTION_ID=$(echo "$PROJECT_INFO" | jq -r --arg n "$TARGET_STATUS" '.data.user.projectV2.field.options[] | select(.name==$n) | .id')
-
           if [ -z "$PROJECT_ID" ] || [ -z "$FIELD_ID" ] || [ -z "$OPTION_ID" ]; then
-            echo "✗ lookup 실패: PROJECT_ID=$PROJECT_ID FIELD_ID=$FIELD_ID OPTION_ID=$OPTION_ID"
+            echo "✗ lookup 실패: PROJECT_ID=$PROJECT_ID FIELD_ID=$FIELD_ID OPTION_ID=$OPTION_ID (PROJECT_NUMBER/컬럼명 확인)"
             exit 1
           fi
-          echo "Project: $PROJECT_ID  Field: $FIELD_ID  Option: $OPTION_ID"
           echo "::endgroup::"
 
-          # ─────────────────────────────────────────────────────
-          # Step 3: 보드의 item ID 조회 (없으면 추가)
-          # ─────────────────────────────────────────────────────
           echo "::group::Step 3: Find or add item to board"
           if [ "$IS_PR" = "true" ]; then
             CONTENT_RESP=$(retry gh api graphql -f query='
               query($owner: String!, $repo: String!, $num: Int!) {
                 repository(owner: $owner, name: $repo) {
-                  pullRequest(number: $num) {
-                    id
-                    projectItems(first: 20) { nodes { id project { id } } }
-                  }
+                  pullRequest(number: $num) { id projectItems(first: 20) { nodes { id project { id } } } }
                 }
               }' -f owner="$REPO_OWNER" -f repo="$REPO_NAME" -F num="$ITEM_NUMBER")
             CONTENT_ID=$(echo "$CONTENT_RESP" | jq -r '.data.repository.pullRequest.id')
@@ -145,53 +114,30 @@ jobs:
             CONTENT_RESP=$(retry gh api graphql -f query='
               query($owner: String!, $repo: String!, $num: Int!) {
                 repository(owner: $owner, name: $repo) {
-                  issue(number: $num) {
-                    id
-                    projectItems(first: 20) { nodes { id project { id } } }
-                  }
+                  issue(number: $num) { id projectItems(first: 20) { nodes { id project { id } } } }
                 }
               }' -f owner="$REPO_OWNER" -f repo="$REPO_NAME" -F num="$ITEM_NUMBER")
             CONTENT_ID=$(echo "$CONTENT_RESP" | jq -r '.data.repository.issue.id')
             ITEM_ID=$(echo "$CONTENT_RESP" | jq -r --arg pid "$PROJECT_ID" '.data.repository.issue.projectItems.nodes[] | select(.project.id==$pid) | .id' | head -1)
           fi
-
           if [ -z "$ITEM_ID" ] || [ "$ITEM_ID" = "null" ]; then
-            echo "▸ 보드에 없음 — add 중"
             ADD_RESP=$(retry gh api graphql -f query='
               mutation($projectId: ID!, $contentId: ID!) {
-                addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
-                  item { id }
-                }
+                addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) { item { id } }
               }' -f projectId="$PROJECT_ID" -f contentId="$CONTENT_ID")
             ITEM_ID=$(echo "$ADD_RESP" | jq -r '.data.addProjectV2ItemById.item.id')
           fi
-
-          if [ -z "$ITEM_ID" ] || [ "$ITEM_ID" = "null" ]; then
-            echo "✗ Item ID 얻기 실패"
-            exit 1
-          fi
-          echo "Item: $ITEM_ID"
+          if [ -z "$ITEM_ID" ] || [ "$ITEM_ID" = "null" ]; then echo "✗ Item ID 실패"; exit 1; fi
           echo "::endgroup::"
 
-          # ─────────────────────────────────────────────────────
-          # Step 4: Status 필드 업데이트
-          # ─────────────────────────────────────────────────────
           echo "::group::Step 4: Update Status"
           retry gh api graphql -f query='
             mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
               updateProjectV2ItemFieldValue(input: {
-                projectId: $projectId,
-                itemId: $itemId,
-                fieldId: $fieldId,
+                projectId: $projectId, itemId: $itemId, fieldId: $fieldId,
                 value: { singleSelectOptionId: $optionId }
-              }) {
-                projectV2Item { id }
-              }
+              }) { projectV2Item { id } }
             }' \
-            -f projectId="$PROJECT_ID" \
-            -f itemId="$ITEM_ID" \
-            -f fieldId="$FIELD_ID" \
-            -f optionId="$OPTION_ID" >/dev/null
-
-          echo "✅ Issue/PR #$ITEM_NUMBER → Status: $TARGET_STATUS"
+            -f projectId="$PROJECT_ID" -f itemId="$ITEM_ID" -f fieldId="$FIELD_ID" -f optionId="$OPTION_ID" >/dev/null
+          echo "✅ #$ITEM_NUMBER → Status: $TARGET_STATUS"
           echo "::endgroup::"

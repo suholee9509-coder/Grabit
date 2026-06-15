@@ -1,0 +1,42 @@
+name: CI (validation gate)
+
+# false-done 차단의 외부·결정론적 층(config/work-unit-contract.md §C). dev `/goal` 성공조건의
+# Validation 명령(typecheck·lint·test)을 PR에서 *비-LLM*으로 재실행한다.
+# 스택 미정(Sprint 0)이므로 package.json이 생기기 전엔 안전한 no-op. Sprint 0 스캐폴딩 후 자동 활성화.
+# Sprint 0 할 일: package.json에 typecheck/lint/test 스크립트 정의 → 이 게이트가 즉시 작동.
+
+on:
+  pull_request:
+    branches: [main, "sprint/**"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Guard — Sprint 0 전이면 skip
+        id: guard
+        run: |
+          if [ -f package.json ]; then
+            echo "app=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "app=false" >> "$GITHUB_OUTPUT"
+            echo "ℹ package.json 없음 — Sprint 0 전. CI validation no-op (green)."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.guard.outputs.app == 'true'
+        with:
+          node-version: 'lts/*'
+
+      - name: Install
+        if: steps.guard.outputs.app == 'true'
+        run: npm ci || npm install
+
+      - name: Validation gate (typecheck · lint · test)
+        if: steps.guard.outputs.app == 'true'
+        run: |
+          npm run typecheck --if-present
+          npm run lint --if-present
+          npm test --if-present

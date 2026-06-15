@@ -1,99 +1,36 @@
 # Grabit
 
-크롬 익스텐션 기반 영상 클리핑·큐레이션으로 성장 불안(FOMO)을 해소하는 커리어 콘텐츠 플랫폼.
+크롬 익스텐션 기반 영상 클리핑·큐레이션으로 성장 불안(FOMO)을 해소하는 커리어 콘텐츠 플랫폼 + 이를 빌드하는 **PM 중심 5-에이전트 오케스트레이션 시스템**.
 
-이 레포는 두 가지를 포함합니다:
-1. **에이전트 시스템** (현재 셋업 단계) — 8개 AI 에이전트가 협업해 Grabit를 개발하는 워크플로우
-2. **Grabit 제품** (별도 진행) — 실제 SaaS 코드 (요구사항 정의 후 추가될 예정)
+## 무엇인가
+- **제품**: 막연한 성장 불안으로 커리어 콘텐츠를 소비하지만 성장을 체감하지 못하는 사람을 위해, 긴 영상에서 핵심을 클리핑·큐레이션해 *체감되는 성장*으로 바꾸는 크롬 익스텐션 플랫폼. (제품 SoT: 기획 문서 전달 후 `docs/source/`에 비치)
+- **개발 방식**: PM 에이전트(메인 세션)가 전체를 알고, Feature 작업단위를 분해해 frontend/backend를 `/goal`로 자율 개발시키고, QA(기능완료마다)·Security(스프린트말)를 돌려 통합·머지한다.
 
----
+## 팀 (5)
+| | 역할 | 실행 |
+|---|---|---|
+| **pm** | 팀리드·오케스트레이터·범위 결정 | 메인 세션 |
+| **frontend** | 디자인 + FE | headless `/goal` |
+| **backend** | 알고리즘·AI·BE | headless `/goal` |
+| **qa** | 기능완료 e2e | Agent 툴 |
+| **security** | 스프린트말 감사 | Agent 툴 |
 
-## 빠른 시작
+## 핵심 원칙
+- **Feature 작업단위**: 한 소유자가 한 세션에 end-to-end. 작업 중 분할/파편 티켓 ❌ → 티켓 증식 차단.
+- **`/goal` 자율 루프**: 강한 성공조건(5섹션·관찰가능) → 충족까지 루프. 진실의 원천 파일 매 턴 reload.
+- **PM 티켓 독점** + 사용자 게이트(ⓐ스코프 ⓑ스프린트계획 ⓒ디자인 ⓓ머지).
 
-### 1. 사전 요구사항
-- macOS (현재 검증 환경)
-- [git](https://git-scm.com/)
-- [GitHub CLI (`gh`)](https://cli.github.com/) — `brew install gh && gh auth login`
-- [Cursor](https://cursor.sh/) — Claude Opus 4.7 액세스 가능한 유료 구독
-- gstack (자동 설치됨, `.claude/hooks/check-gstack.sh`가 검증)
+## 시작
+1. gstack 설치 확인 + Claude Code **v2.1.80+** (`/goal`).
+2. GitHub 1회 셋업: [.github/SETUP.md](.github/SETUP.md) (라벨 + 보드 #2 + 라벨→Status 동기화).
+3. PM 세션(이 레포 루트에서 Claude Code) → [CLAUDE.md](CLAUDE.md)가 부트스트랩.
+4. 기획 문서 전달 → `docs/source/` 비치 → PM이 Sprint 0(아키텍처 ADR + 스캐폴딩)부터 시작.
 
-### 2. 환경 셋업
-```bash
-git clone <this-repo>
-cd Grabit
-cp .env.example .env
-# .env 파일 열어 GITHUB_TOKEN 입력
-```
+## 스택
+- **Sprint 0 ADR로 확정** ([state/decisions.md](state/decisions.md)). 권장 베이스라인은 [config/quality_standards.md](config/quality_standards.md).
+- 모든 외부 추론/키 호출은 *서버측*만 — 클라이언트 번들에 키 노출 ❌.
 
-### 3. 첫 에이전트 시작
-```bash
-./scripts/new-agent.sh solution-planner
-# → worktrees/solution-planner-xxx/ 생성 + Cursor 자동 오픈
-# → Cursor 채팅에서 새 목표를 입력해 작업 시작
-```
+## 구조
+`.claude/agents` 페르소나 · `.claude/skills` 워크플로우 · `config/` 표준 · `state/` 런타임 SoT · `.github/` 보드 자동화 · `scripts/` 헬퍼 · `docs/` 제품 SoT/단위.
 
----
-
-## 에이전트 시스템 개요
-
-8개 에이전트가 각자 별도 Cursor 세션 + git worktree에서 작업합니다.
-
-```
-Solution Planner → PM Agent → [Dev / UI-UX Designer / Brand Designer]
-                                  ↓
-                              Reviewer → QA → Done
-                                  ↓
-                       (스프린트 종료) Security
-```
-
-자세한 내용:
-- [.claude/agents/README.md](.claude/agents/README.md) — 8개 에이전트 정의
-- [.claude/skills/README.md](.claude/skills/README.md) — 프로젝트 워크플로우
-- [config/README.md](config/README.md) — 정적 표준 (품질 기준, 핸드오프 규칙)
-- [shared-context/README.md](shared-context/README.md) — 동적 런타임 컨텍스트
-- [docs/end-to-end-test.md](docs/end-to-end-test.md) — 시스템 검증 가이드 (적대적 테스트 + 풀 흐름 시연)
-- [.github/SETUP.md](.github/SETUP.md) — GitHub 라벨/Projects 셋업
-
----
-
-## 디렉토리 구조
-
-```
-Grabit/
-├── .claude/                     # 에이전트 시스템 코어
-│   ├── agents/                  # 8개 에이전트 페르소나
-│   ├── skills/                  # 프로젝트 워크플로우
-│   └── commands/                # Cursor 슬래시 명령
-├── gstack/                      # gstack 통합 가이드
-├── config/                      # 정적 표준 (사람 작성)
-├── shared-context/              # 동적 런타임 컨텍스트 (에이전트 작성)
-├── scripts/                     # shell 헬퍼 (worktree, handoff, status)
-└── worktrees/                   # 런타임 worktrees (.gitignore)
-```
-
-향후 Grabit 제품 코드는 별도 결정된 구조로 추가됩니다.
-
----
-
-## 자주 쓰는 명령
-
-```bash
-# 새 에이전트 워크트리 시작
-./scripts/new-agent.sh <agent-type> [<ticket-number>]
-
-# 핸드오프 (다음 에이전트로)
-./scripts/handoff.sh <issue-number> <next-agent>
-
-# 현재 보드 상태 확인
-./scripts/status.sh
-
-# GitHub Projects 보드 (브라우저)
-gh project view 2 --owner @me --web
-```
-
----
-
-## gstack
-
-이 프로젝트는 [gstack](https://github.com/garrytan/gstack) 스킬을 활용합니다 (`/qa`, `/review`, `/ship` 등).
-설치 가이드: [gstack/README.md](gstack/README.md)
+> 설계 배경: 이전 다중 에이전트 시스템(선형 핸드오프 체인 + 티켓 증식)의 재구성. **PM 중앙집권 + 더 큰 작업단위 + `/goal` 자율성.**

@@ -1,32 +1,26 @@
-# Runtime worktrees (created by scripts/new-agent.sh)
-worktrees/
-
-# Env files
-.env
-.env.local
-.env.*.local
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Logs
-*.log
-npm-debug.log*
-
-# Dependencies (will be relevant once product code is added)
+# deps / build
 node_modules/
-.pnpm-store/
-.turbo/
-
-# Build artifacts
 dist/
 build/
-.next/
-out/
+.vite/
+*.tsbuildinfo
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# claude worktrees (플랫폼 관리)
+.claude/worktrees/
+
+# OS / editor
+.DS_Store
+*.log
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# test / coverage
+coverage/
+playwright-report/
+test-results/
