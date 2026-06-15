@@ -1,0 +1,132 @@
+/* 원본 컨텐츠 정보 카드 — 측정 2087:13354 §6 (1156×321). */
+.card {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid var(--color-border-default); /* rgba(255,255,255,0.1) */
+  border-radius: var(--radius-lg); /* 12 */
+  padding: var(--space-12) var(--space-14); /* 24 / 28 */
+}
+
+.cardTitle {
+  margin: 0 0 var(--space-12); /* 헤더 라벨 + y74 본문 간격 ≈ */
+  font-size: 20px;
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  font-weight: var(--font-weight-bold); /* 700 */
+  color: var(--color-white-pure); /* #FFFFFF */
+}
+
+/* 본문 row: space-between, align center */
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+}
+
+/* 좌측 정보 패널: 676×223, .04 bg, radius12, pad 23/28 */
+.infoPanel {
+  flex: 1 1 auto;
+  min-width: 0;
+  box-sizing: border-box;
+  background-color: var(--color-surface-ghost); /* rgba(255,255,255,0.04) */
+  border-radius: var(--radius-lg); /* 12 */
+  padding: 23px var(--space-14); /* 23 / 28 */
+}
+.infoStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9); /* 18 */
+}
+
+/* 행 column gap6 (제목) / row 형태(상세·링크) */
+.infoRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3); /* 6 */
+}
+
+/* 라벨(키): 15/Regular/-2.5% #B4B4B4 (컴포넌트 전용 lh130%) */
+.label {
+  font-size: 15px;
+  line-height: 130%;
+  letter-spacing: -0.025em; /* -2.5% */
+  font-weight: var(--font-weight-regular); /* 400 */
+  color: var(--color-gray-500); /* #B4B4B4 */
+}
+
+/* 값: 15/Medium #FAFAFA (lh130%) */
+.value {
+  font-size: 15px;
+  line-height: 130%;
+  letter-spacing: -0.025em;
+  font-weight: var(--font-weight-medium); /* 500 */
+  color: var(--color-white); /* #FAFAFA */
+}
+.valueStrong {
+  font-size: 15px;
+  line-height: 130%;
+  letter-spacing: -0.025em;
+  font-weight: var(--font-weight-medium); /* 500 (style_CFCK80) */
+  color: var(--color-white); /* #FAFAFA */
+}
+
+/* 상세 정보 값: 채널 그룹 + 구분점 + 조회수 (14/Medium/130%) */
+.detailValue {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3); /* 7 ≈ 6 */
+}
+.channel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3); /* 6 */
+}
+.dot {
+  width: 2px;
+  height: 2px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-gray-450); /* #999999 */
+}
+
+/* 원본 링크 값: 플랫폼 + 세로구분선 + URL(underline) */
+.linkValue {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5); /* 10 */
+  flex-wrap: wrap;
+}
+.platform {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3); /* 6 */
+}
+.vsep {
+  width: 1px;
+  height: 16px;
+  background-color: var(--color-border-divider); /* rgba(255,255,255,0.2) */
+}
+.url {
+  font-size: 15px;
+  line-height: 130%;
+  letter-spacing: -0.025em;
+  font-weight: var(--font-weight-regular); /* 400 */
+  color: var(--color-white); /* #FAFAFA */
+  text-decoration: underline;
+  word-break: break-all;
+}
+.url:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* 우측 썸네일: 396×222.59, radius6, cover */
+.thumb {
+  flex: 0 0 auto;
+  width: 396px;
+  height: 223px;
+  border-radius: var(--radius-sm); /* 6 */
+  background-color: var(--color-surface-200);
+  background-size: cover;
+  background-position: center;
+}

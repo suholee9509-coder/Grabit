@@ -1,0 +1,89 @@
+/* 댓글/답글 카드 — 측정 2087:12538 §8 (우측 사이드바, w410). */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5); /* 10 */
+  width: 100%;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3); /* 6 */
+}
+.author {
+  font-size: 13px;
+  line-height: 130%;
+  font-weight: var(--font-weight-medium); /* 500 */
+  color: var(--color-white); /* #FAFAFA */
+}
+.cohort {
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: -0.0255em; /* -2.55% */
+  color: var(--color-accent-violet); /* #727AD0 */
+}
+.time {
+  margin-left: auto;
+  font-size: 12px;
+  line-height: 130%;
+  color: var(--color-gray-450); /* #999999 (style_PEXKXY) */
+}
+
+.body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 160%;
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  color: var(--color-white-pure); /* #FFFFFF */
+}
+
+/* 구간 칩 */
+.interval {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: var(--space-3); /* 6 */
+  padding: var(--space-4) var(--space-5); /* 8/10 */
+  background-color: var(--color-surface); /* #171717 */
+  border: 1px solid var(--color-border-subtle); /* rgba(255,255,255,0.08) */
+  border-radius: var(--radius-sm); /* 6 */
+}
+.intervalIcon {
+  display: inline-flex;
+  color: var(--color-white);
+}
+.intervalLabel {
+  font-size: 13px;
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-white); /* #FAFAFA */
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5); /* 10 */
+}
+.likes {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2); /* 4 */
+  color: var(--color-gray-500); /* #B4B4B4 */
+}
+.likeCount {
+  font-size: 13px;
+  line-height: 130%;
+  color: var(--color-gray-500); /* #B4B4B4 */
+}
+.sep {
+  width: 1px;
+  height: 12px;
+  background-color: var(--color-border-breadcrumb-sep); /* rgba(255,255,255,0.16) */
+}
+.moreReplies {
+  font-size: 13px;
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  color: var(--color-gray-450); /* #999999 (style_VVXMTU) */
+}

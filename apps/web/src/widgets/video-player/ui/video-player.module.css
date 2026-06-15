@@ -1,0 +1,61 @@
+/* VideoPlayer — 측정 2087:12538 §3 (1156×650 radius10, shadow 0 0 12 0 rgba(0,0,0,0.16)).
+ * 슬라이스 로컬 토큰: --shadow-player. 폭은 부모(본문 칼럼)가 결정, 비율 16:9 유지가 아닌
+ * 측정 정렬(1156×650 ≈ 1.778) → aspect-ratio 1156/650. */
+.player {
+  --shadow-player: 0px 0px 12px 0px rgba(0, 0, 0, 0.16); /* 12538§3 effect_TY9MYR */
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1156 / 650;
+  border-radius: var(--radius-10); /* 10 */
+  overflow: hidden;
+  background-color: #000000;
+  box-shadow: var(--shadow-player);
+}
+
+.apiHost,
+.iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+/* API 부착 전엔 host가 비어있음 → 정적 iframe이 보이고, 부착되면 host가 iframe으로 교체된다. */
+.apiHost:empty {
+  display: none;
+}
+
+/* 삭제/비공개 폴백 */
+.unavailable {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6); /* 12 */
+  background-color: var(--color-surface); /* #171717 */
+}
+.unavailableText {
+  margin: 0;
+  font-size: var(--text-body-2-size); /* 15 */
+  line-height: 130%;
+  color: var(--color-gray-500); /* #B4B4B4 */
+}
+.fallbackLink {
+  display: inline-flex;
+  align-items: center;
+  height: var(--size-button-md); /* 34 */
+  padding: 0 var(--space-7);
+  border: 1px solid var(--color-stroke-300); /* #363636 */
+  border-radius: var(--radius-md); /* 8 */
+  color: var(--color-white-pure);
+  font-size: var(--text-button-action-size); /* 15 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  text-decoration: none;
+}
+.fallbackLink:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}

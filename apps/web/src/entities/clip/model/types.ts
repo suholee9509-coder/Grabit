@@ -42,3 +42,29 @@ export interface Clip {
   isPublic: boolean;
   folderId: string | null;
 }
+
+/**
+ * 공개 클립(=content_clips_public 1행, 0007) — sanitized cross-user read 표현 타입.
+ * ★ ADR-0002 #3: user_id·display_name·email 키 **부재**(뷰가 SELECT 안 함) → 구조적으로 누출 불가.
+ * 코호트(직군+연차)는 익명 임계(N=5) 미달 시 cohort_revealed=false → 라벨 숨김(클라는 이 플래그만 신뢰).
+ */
+export interface PublicClip {
+  /** 정준 콘텐츠 id. */
+  contentId: string;
+  /** 클립 id(식별자 — 식별 불가, 단순 키). */
+  clipId: string;
+  /** 구간 시작 초. */
+  startSec: number;
+  /** 구간 끝 초(끝 배타). */
+  endSec: number;
+  /** 인사이트 메모(없으면 null). */
+  memo: string | null;
+  /** 코호트 직군(임계 미달 시 null). */
+  cohortJob: string | null;
+  /** 코호트 연차(임계 미달 시 null). */
+  cohortYears: number | null;
+  /** 코호트 공개 여부(true일 때만 직군/연차 신뢰). */
+  cohortRevealed: boolean;
+  /** 생성 시각(ISO, "1시간 전" 폴백 표시용). */
+  createdAt: string | null;
+}

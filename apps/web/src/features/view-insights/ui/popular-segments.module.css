@@ -1,0 +1,208 @@
+/* "가장 인기있는 구간" — 측정 2087:12538 §7.2.
+ * 토큰갭(슬라이스 로컬): 랭킹 1위 숫자색 #38C524. */
+.root {
+  --color-rank-first: #38c524; /* 12538§7.2 랭킹1위 숫자 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12); /* 24 */
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  font-weight: var(--font-weight-bold); /* 700 */
+  color: var(--color-white-pure); /* #FFFFFF */
+}
+
+/* 좌 772 + 우 360 카드(측정), 사이 gap 16 → 반응형 비율 */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 772fr) minmax(0, 360fr);
+  gap: var(--space-8); /* 16 */
+}
+
+.leftCard,
+.rightCard {
+  box-sizing: border-box;
+  min-height: 321px;
+  border: 1px solid var(--color-border-default); /* rgba(255,255,255,0.1) */
+  border-radius: var(--radius-lg); /* 12 */
+  padding: var(--space-12); /* 24 */
+}
+
+.leftCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 130%;
+  color: var(--color-gray-450); /* #999999 */
+}
+
+/* 코호트 랭킹 1~4 */
+.ranking {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9); /* 19 ≈ 18 (col gap 19) */
+}
+.rankRow {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) 127px;
+  align-items: center;
+  gap: var(--space-6); /* 12 */
+}
+.rankBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-pill); /* 100 */
+  background-color: var(--color-surface-ghost); /* rgba(255,255,255,0.04) */
+  font-size: 13px;
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  font-weight: var(--font-weight-semibold); /* 600 */
+  color: var(--color-white); /* 기본 #FAFAFA */
+}
+.rankRow:first-child .rankBadge {
+  color: var(--color-rank-first); /* 1위 #38C524 */
+}
+
+.rankBars {
+  display: block;
+  height: 12px;
+  background-color: var(--color-surface-ghost);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.rankBar {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+}
+.toneViolet {
+  background-color: var(--color-accent-violet); /* #727AD0 */
+}
+.toneMint {
+  background-color: var(--color-accent-mint); /* #72D0A6 */
+}
+.toneMagenta {
+  background-color: var(--color-author-magenta); /* #B472D0 */
+}
+
+.rankLabel {
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rankFirst {
+  color: var(--color-white); /* #FAFAFA */
+}
+.rankSecond {
+  color: var(--color-gray-575); /* #DEDEDD */
+}
+.rankThird {
+  color: var(--color-gray-500); /* #B4B4B4 */
+}
+.rankFourth {
+  color: var(--color-gray-450); /* #999999 */
+}
+
+/* 연차 범례: row gap16, dot 4×4 */
+.yearsLegend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8); /* 16 */
+  margin-top: var(--space-12);
+}
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3); /* 6 */
+}
+.legendDot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-full);
+}
+.legendLabel {
+  font-size: 13px;
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-white); /* #FAFAFA */
+}
+
+/* 우: 인기 클립 리스트 */
+.clipList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.clipRow + .clipRow {
+  border-top: 1px solid var(--color-border-subtle); /* rgba(255,255,255,0.08) */
+}
+.clipButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6); /* 12 */
+  width: 100%;
+  padding: var(--space-10) 0; /* 20 / 0 */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  text-align: left;
+}
+.clipButton:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+.clipThumb {
+  flex: 0 0 auto;
+  width: 70px;
+  height: 40px;
+  border-radius: var(--radius-xs); /* 2→ smallest, use 2px direct */
+  border-radius: 2px;
+  background-color: var(--color-surface-200);
+  background-size: cover;
+  background-position: center;
+}
+.clipText {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* 4 */
+}
+.clipInterval {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3); /* 6 */
+  font-size: 14px;
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-snug);
+  color: var(--color-white); /* #FAFAFA */
+}
+.clipGrab {
+  font-size: 13px;
+  line-height: 130%;
+  color: var(--color-gray-450); /* #999999 */
+}
+.clipArrow {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--color-gray-450);
+}
