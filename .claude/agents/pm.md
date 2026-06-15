@@ -139,7 +139,7 @@ cd <worktree> && claude -p --permission-mode acceptEdits \
 - **FINDINGS 트리아지**: 흡수후보(현 단위) vs 신규단위후보(다음 스프린트). *당신만 새 단위를 만든다.*
 
 ### Step 6 — 기능 완료 시 QA (Agent 툴, ★모델 opus 4.8·effort max)
-완료 슬라이스마다 QA 서브에이전트 스폰(worktree = 통합브랜치, model=`claude-opus-4-8`·effort max). QA는 **verify-first**(spec의 Validation 명령을 clean checkout에서 재실행, fail-fast)로 false-done을 먼저 거른 뒤 **L1 스토리를 e2e** 검증. verdict 반환:
+완료 슬라이스마다 QA 서브에이전트 스폰(worktree = 통합브랜치, model=`claude-opus-4-8`·effort max). QA는 **verify-first**(spec의 Validation 명령을 clean checkout에서 재실행, fail-fast)로 false-done을 먼저 거른 뒤 **각 L1-x 스토리를 e2e** 검증(하나라도 미충족이면 FAIL). verdict 반환:
 - PASS → 다음. FAIL(verify-first 포함) → Step 5의 `qa-fail` 경로(같은 소유자 continuation).
 > PM은 검증을 *직접 실행하지 않는다* — verbose 로그가 PM 컨텍스트를 오염시키고 독립성을 해친다. accept/reject *결정*만 소유.
 

@@ -7,7 +7,8 @@
 
 ## 절차
 1. **분해**: 스펙을 수직 Feature 슬라이스(**화면/플로우**)로. 각 단위 = "한 소유자·한 worktree 세션". BE+FE+상태(**빈/로딩/에러를 Figma 프레임에서 열거**)+배선+테스트 사전 열거. (역설계: `figma-reverse-engineering.md` A1)
-2. **성공조건 작성**: 각 단위에 `config/work-unit-contract.md` §B의 5섹션 작성 → `docs/units/<slug>/spec.md`. **spec.md 최상단에 대상 Figma 프레임(들) 명시 + Acceptance에 `[fidelity]`(프레임 1:1) 기준 포함.** 빈 `plan.md`·`status.md` 생성.
+2. **성공조건 작성**: 각 단위에 `docs/units/<slug>/spec.md` 작성. **구조·관리·레퍼런스 정본 = [docs/units/README.md](../../docs/units/README.md)** — 거기 명시된 **Oliver 레퍼런스 커밋을 직접 읽고 동일 스타일로** 작성한다([d88c638](https://github.com/suholee9509-coder/Oliver/commit/d88c638a83163336a47a09b3cde36c1e45de1dbd) 초기 spec · [bab64e4](https://github.com/suholee9509-coder/Oliver/commit/bab64e4c275cf2220744fdf6eb8dd992d1ab163e) 관리된 status · [현재 units/](https://github.com/suholee9509-coder/Oliver/tree/main/docs/units) 고도화·서브-spec 분할).
+   - **라벨드 L1 스토리(L1-a/b/c) + 각 Acceptance → L1-x 추적 + 대상 Figma 프레임 + `[fidelity]` 기준** 포함. 빈 `status.md`(+선택 `plan.md`) 생성. 무거운 유닛은 폴더 내 서브-spec 분할(새 티켓 ❌).
    - 약한 기준은 `/plan-eng-review`/`/spec`으로 강화 후 확정. 프레임에 없는 상태/화면 = 디자인 공백 → 사용자 결정/스코프 제외(추측 ❌).
 3. **사이징 게이트**: 각 단위가 한 세션에 끝나는가? 아니면 *지금* 재분해. (작업 중 분할 ❌)
 4. **WIP 상한** 설정 → Command Center §7.

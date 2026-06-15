@@ -58,8 +58,9 @@ L3  /goal 5섹션 성공조건 (spec.md)  — L1에서 도출·추적 (각 기�
 ```
 # Unit: <slug>
 
-## User Story (L1 — 검증의 north star)
-As <user>, I can <do X> so that <value>.
+## User Story (L1 — 검증의 north star · 각 인수기준이 여기로 추적된다)
+- **L1-a** As a <user>, I can <do X> so that <value>.
+- **L1-b** As a <user>, ...        # 시나리오가 여럿이면 라벨로 쪼갠다 (단순하면 하나)
 Production acceptance (관찰가능): <prod-like 환경에서 사용자가 X를 실제로 할 수 있다>
 
 ## Figma frames (디자인 SoT — '무엇', 픽셀-퍼펙트)
@@ -74,12 +75,12 @@ Source of truth (매 턴 reload):
   - follow docs/units/<slug>/plan.md      # 구현 순서
   - update docs/units/<slug>/status.md    # 변경·검증결과·충실도 gap·리스크
 
-Acceptance criteria (스토리에서 도출, 관찰 가능한 동작):
-  - [behavior]        <사용자가 X 할 수 있다>            → story 인수기준 #
+Acceptance criteria (스토리에서 도출 · 관찰가능 · 각 항목 → L1-x 추적 · BE/FE 분리 가능):
+  - [behavior]        <사용자가 X 할 수 있다>            → L1-a
   - [negative]        <잘못된 입력/엣지에서 Y>
   - [non-regression]  <기존 Z 안 깨짐>
   - [state]           빈/로딩/에러 각각 정의된 동작 (프레임에 정의된 대로)
-  - [fidelity]        지정 Figma 프레임과 1:1 (토큰·간격·정렬·타이포·상태)
+  - [fidelity]        지정 Figma 프레임과 1:1 (토큰·간격·정렬·타이포·상태)   → L1-b
 
 Validation (증명 명령 — QA가 clean checkout에서 재실행할 바로 그 명령):
   - <test cmd> 종료코드 0  ·  tsc --noEmit 0  ·  lint 0
@@ -92,8 +93,12 @@ Boundaries:
 Loop behavior:
   - 의미있는 변경마다 validation 실행 · status.md 기록
   - <N턴 / M분 / 토큰예산> 초과 시 차단 사유 기록 후 정지
-  - ⚠ 기준 미충족 시 done 선언 금지 → ESCALATION 기록 후 정지 (§C no-fake-done)
+  - ⚠ **goal = 모든 L1-x의 production acceptance가 관찰가능하게 충족될 때까지 루프.** 미충족 기준에 done ❌ → ESCALATION 기록 후 정지 (§C no-fake-done)
 ```
+
+> **유저 시나리오가 목표다.** `/goal` 루프와 QA는 "테스트 통과"가 아니라 **각 L1-x 스토리를 사용자가 실제로 할 수 있나**를 충족할 때까지 돈다. 모든 L1 스토리가 e2e로 재현돼야 유닛 완료.
+
+**상세 구조·고도화 패턴·관리·레퍼런스**: **[docs/units/README.md](../docs/units/README.md)** — 폴더 구조(spec/status/plan/design) · 무거운 유닛 서브-spec 분할 · status.md 관리 양식 · **PM이 분해 시 읽을 Oliver 레퍼런스 커밋**([d88c638](https://github.com/suholee9509-coder/Oliver/commit/d88c638a83163336a47a09b3cde36c1e45de1dbd) 초기 spec · [bab64e4](https://github.com/suholee9509-coder/Oliver/commit/bab64e4c275cf2220744fdf6eb8dd992d1ab163e) 관리된 status · [현재 units/](https://github.com/suholee9509-coder/Oliver/tree/main/docs/units) 고도화).
 
 **PM 작성 보조**: 약한 기준은 작성 *전에* `/plan-eng-review`(엣지·테스트플랜)/`/spec`으로 강화. 그래도 약하면 사이징 게이트에서 반려.
 

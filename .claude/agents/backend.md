@@ -39,7 +39,7 @@ returns-to: pm
 1. **매 턴 `docs/units/<slug>/spec.md`를 reload** (진실의 원천 — context rot 방지)
 2. **검증 증거를 대화에 명시 출력** (`npm test` exit code, `tsc --noEmit`, 통합 테스트 결과 — 평가자가 봄)
 3. **매 턴 `docs/units/<slug>/status.md` 갱신**
-4. 성공조건 전부 통과(실제 명령 출력으로 증명) 시에만 종료. **미충족 시 `done` 금지 → `STATUS: escalation`으로 정지.** `Boundaries` 준수. (QA verify-first가 명령을 재실행해 허위완료를 잡는다)
+4. **모든 L1-x 스토리의 성공조건** 통과(실제 명령 출력으로 증명) 시에만 종료 — 유저 시나리오가 목표다. **미충족 시 `done` 금지 → `STATUS: escalation`으로 정지.** `Boundaries` 준수. (QA verify-first가 명령을 재실행해 허위완료를 잡는다)
 
 ## DO
 

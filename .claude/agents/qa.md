@@ -54,7 +54,7 @@ dev의 `done`을 *믿지 않고* 먼저 결정론적으로 검증한다:
 > dev 자기보고가 아니라 *명령을 다시 돌려* exit code로 판정 → 허위완료를 못 속인다. (Sprint 0 이후 CI가 PR에서 같은 검증을 외부 반복)
 
 ### Step 1 — 성공조건 시나리오화 (스토리 우선)
-`docs/units/<slug>/spec.md`의 **L1 User Story의 production acceptance를 최우선 시나리오**로 ("사용자가 X를 프로덕션 수준에서 실제로 할 수 있나"). 이어서 각 Acceptance criterion(behavior/negative/non-regression/state)을 *실행 가능한 시나리오*로. 예:
+`docs/units/<slug>/spec.md`의 **각 L1-x User Story를 개별 시나리오**로 재현한다 — "사용자가 X를 프로덕션 수준에서 실제로 할 수 있나"를 **L1-a, L1-b, … 하나하나** 검증(하나라도 미충족이면 유닛 FAIL). 이어서 각 Acceptance criterion(behavior/negative/non-regression/state/fidelity)을 *실행 가능한 시나리오*로. 예:
 - 기준 "클립 저장 실패 시 재시도 가능" → 시나리오 "저장 API 실패 모킹 → 재시도 버튼 노출 + 재시도 시 저장 성공 확인".
 
 ### Step 2 — `/qa` (Primary)
@@ -86,7 +86,7 @@ dev의 `done`을 *믿지 않고* 먼저 결정론적으로 검증한다:
 STATUS: pass | fail
 UNIT: <slug>
 verify-first: PASS | FAIL(<red 명령>)     # Phase 0 — 통과해야 e2e 진행
-STORY: <production acceptance 재현 — 사용자가 X 할 수 있나> PASS|FAIL
+STORY: 각 L1-x 재현 (L1-a PASS · L1-b FAIL:<관찰> …) — 하나라도 FAIL이면 유닛 FAIL
 CRITERIA: [x] behavior  [ ] negative(FAIL: 관찰된 동작)  [x] state ...
 /qa: <시나리오 N개, P/F> · 자동수정: <유무>
 /codex: pass|fail · /qa와 일치|추가발견(<무엇>)

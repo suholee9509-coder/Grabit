@@ -28,7 +28,7 @@
 
 ## §4 기능 QA DoD (qa)
 - [ ] **verify-first**: Validation 명령을 clean checkout에서 재실행 통과 (fail-fast — false-done 차단)
-- [ ] **L1 스토리 production acceptance**를 e2e 재현 (사용자가 X를 실제로 할 수 있나)
+- [ ] **각 L1-x 스토리**(L1-a, L1-b, …) production acceptance를 *개별* e2e 재현 — **하나라도 미충족이면 유닛 FAIL** (모든 L1-x 충족 시에만 PASS)
 - [ ] 슬라이스 전체 기준이 *실제 실행*으로 검증 (`/qa` + `/codex`, UI면 `/design-review` **프레임 1:1 충실도**)
 - [ ] verdict가 모든 검증 정직 반영 (한쪽만 통과 = FAIL); PASS만 통합; FAIL은 같은 소유자 continuation
 

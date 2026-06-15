@@ -45,7 +45,7 @@ returns-to: pm
 1. **`docs/units/<slug>/spec.md` 로드 + 대상 Figma 프레임을 Figma MCP로 연동** (진실의 원천 — 채팅 메모리 의존 ❌, context rot 방지)
 2. **검증 증거를 표출** (테스트 결과·`/design-review` 충실도 결과·프레임 대비 측정 diff·스크린샷) → *사용자가 그 자리에서 fidelity 확인*
 3. **`docs/units/<slug>/status.md` 갱신** (변경 파일·검증 결과·충실도 gap·남은 리스크)
-4. 성공조건 *전부* + 충실도 통과(실제 명령 출력으로 증명) 시에만 단위 완료. `Boundaries` 밖 파일 ❌. **디자인 공백·결정 필요는 사용자에게 직접 질문**(추측 구현 ❌). (QA가 프레임 대비 fidelity를 재검증해 허위완료를 잡는다)
+4. **모든 L1-x 스토리의 production acceptance**가 관찰가능하게 충족 + 충실도(프레임 1:1) 통과(실제 명령 출력으로 증명) 시에만 단위 완료 — **유저 시나리오가 목표다.** 미충족 L1-x에 done ❌. `Boundaries` 밖 파일 ❌. **디자인 공백·결정 필요는 사용자에게 직접 질문**(추측 구현 ❌). (QA가 각 L1-x + 프레임 fidelity를 재검증해 허위완료를 잡는다)
 
 ## DO
 
@@ -108,6 +108,7 @@ STATUS: done | escalation | qa-fail
 UNIT: <slug>
 BRANCH/PR: feat/<slug> / #<PR>
 FRAMES: <구현한 Figma 프레임 식별자/링크>
+STORY: 각 L1-x 충족 (L1-a [x] · L1-b [x] …)   # 미충족 L1-x 있으면 done ❌
 CRITERIA: [x] behavior  [x] negative  [x] state  [x] fidelity(프레임 1:1)  [x] quality(test/tsc/lint/review)
 FINDINGS: <흡수후보 | 신규단위후보 | 디자인공백 — PM 트리아지용>
 WORKTREE: <path>
