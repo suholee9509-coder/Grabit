@@ -6,7 +6,7 @@ import styles from './social-sidebar.module.css';
 /**
  * SocialSidebar — 우측 소셜 사이드바(측정 2557:23064 펼침 450 / 2087:14297 접힘 60).
  *   펼침: 작성 버튼 + `인사이트(N)` 단일 탭(underline) + collapse 토글 + 댓글/답글 카드 스택 + 하단 페이드 + composer.
- *   접힘: 작성(세로) + expand 토글만.
+ *   접힘: expand 토글만(작성 세로 텍스트 = Figma 미존재 → 제거).
  * ★게이트ⓐ 제외: `AI 노트` 탭 미렌더(인사이트 단일), Sparkle mini FAB 미렌더.
  * ★DM1 옵션1: 댓글/답글·작성·composer = 픽셀퍼펙트 UI + 목킹/비활성(BE 미호출). 미인증→로그인 유도.
  *   [A4] 하단 composer = 입력 셸(아바타 + textarea + 작성). 전송 데이터패스 차단(목킹/disabled).
@@ -81,9 +81,6 @@ export function SocialSidebar({
         >
           <CollapseIcon collapsed />
         </button>
-        <span className={styles.collapsedWrite} aria-hidden="true">
-          작성
-        </span>
       </aside>
     );
   }
