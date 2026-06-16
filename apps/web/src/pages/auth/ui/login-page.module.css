@@ -38,10 +38,10 @@
   letter-spacing: var(--letter-spacing-snug); /* -2% */
 }
 
-/* 부제 — 측정 Body 1/Regular: 16/400/160%/-2% #B4B4B4. */
+/* 부제 — 측정 Body 1/Regular: 16/400/160%/-2% #CECECE(2087:8443 fill_WHZ14K). */
 .subheading {
   margin: 0;
-  color: var(--color-text-secondary); /* 측정: #B4B4B4 */
+  color: var(--color-gray-550); /* 측정 정정: #CECECE (감사 D5) */
   font-family: var(--font-family-base);
   font-size: var(--text-body-1-size); /* 16 */
   line-height: 160%;
