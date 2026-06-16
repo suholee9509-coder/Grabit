@@ -9,7 +9,8 @@ import styles from './social-sidebar.module.css';
  *   접힘: expand 토글만(작성 세로 텍스트 = Figma 미존재 → 제거).
  * ★게이트ⓐ 제외: `AI 노트` 탭 미렌더(인사이트 단일), Sparkle mini FAB 미렌더.
  * ★DM1 옵션1: 댓글/답글·작성·composer = 픽셀퍼펙트 UI + 목킹/비활성(BE 미호출). 미인증→로그인 유도.
- *   [A4] 하단 composer = 입력 셸(아바타 + textarea + 작성). 전송 데이터패스 차단(목킹/disabled).
+ *   [A4] 하단 composer = 입력 셸(아바타 + textarea, Figma 입력행). 전송 데이터패스 차단(disabled).
+ *   ※ composer 제출 "작성" 버튼은 Figma 미존재(입력행만) → 제거(사용자 결정 2026-06-16).
  */
 export interface SocialSidebarProps {
   /** 펼침/접힘 상태(부모가 본문 리플로우와 함께 제어). */
@@ -114,7 +115,7 @@ export function SocialSidebar({
         <div className={styles.bottomFade} aria-hidden="true" />
       </div>
 
-      {/* [A4] composer — 입력 셸(아바타 + textarea + 작성). DM1: 전송 데이터패스 차단(disabled). */}
+      {/* [A4] composer — 입력 셸(아바타 + textarea, Figma 입력행). DM1: 전송 차단(disabled). 제출 버튼 미존재(Figma). */}
       <form
         className={styles.composer}
         aria-label="댓글 작성"
@@ -131,9 +132,6 @@ export function SocialSidebar({
           aria-label="댓글 입력"
           disabled
         />
-        <Button type="submit" variant="solidGray" size="small" disabled>
-          작성
-        </Button>
       </form>
     </aside>
   );

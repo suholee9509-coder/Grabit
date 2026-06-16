@@ -88,7 +88,7 @@ describe('content-detail contract', () => {
     expect(screen.getByTestId('mock-player')).toBeInTheDocument();
   });
 
-  it('사이드바 토글: 펼침(인사이트 탭) → 접힘(작성+expand만) → 복귀', async () => {
+  it('사이드바 토글: 펼침(인사이트 탭) → 접힘(expand 토글만) → 복귀', async () => {
     const user = userEvent.setup();
     renderDetail();
     await screen.findByTestId('mock-player');
