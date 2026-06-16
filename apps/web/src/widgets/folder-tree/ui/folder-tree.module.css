@@ -12,30 +12,34 @@
   gap: var(--space-8); /* 16 — 헤더↔내부/구분선 (측정 폴더 그룹 gap16) */
 }
 
+/* 폴더 헤더 행 — 측정 row space-between · w342(부모 인셋). 토글/진입 히트영역 분리(B2). */
 .headerRow {
-  display: flex;
-  width: 100%;
-}
-
-/* 폴더 헤더 행 — 측정 row space-between · w342(부모 인셋). */
-.folderHead {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: var(--space-3);
+  gap: var(--space-3); /* 6 — 토글영역 ↔ 진입영역 */
+}
+
+/* 토글 영역(쉐브론 + 폴더 아이콘) — 펼침/접힘만. */
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2); /* 4 — 쉐브론↔아이콘 */
+  flex: none;
   padding: 0;
   background: transparent;
   border: none;
   cursor: pointer;
-  font-family: var(--font-family-base);
 }
 
-.headLeft {
-  display: flex;
+.chevron {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-3); /* 6 */
-  min-width: 0;
+  justify-content: center;
+  flex: none;
 }
 
 .folderIcon {
@@ -43,6 +47,22 @@
   height: 18px;
   display: inline-flex;
   flex: none;
+}
+
+/* 진입 영역(폴더명 + 카운트) — 폴더별 뷰 진입. 남는 폭 차지(측정 space-between 유지). */
+.enterBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3); /* 6 */
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-family-base);
 }
 
 /* 폴더명 — 측정 15/Regular/130%/-2% #ECECEC. */
@@ -69,6 +89,14 @@
 
 .active .folderName {
   color: var(--color-white);
+}
+
+.enterBtn:hover .folderName {
+  color: var(--color-white);
+}
+
+.toggleBtn:hover .chevron {
+  opacity: 0.8;
 }
 
 /* 내부 컨텐츠 항목 리스트 — 측정 column gap8(래퍼) / 14(폴더 그룹). */

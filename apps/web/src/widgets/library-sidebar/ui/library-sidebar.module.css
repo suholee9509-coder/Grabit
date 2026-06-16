@@ -58,6 +58,21 @@
   font-family: var(--font-family-base);
 }
 
+/* 트리거 활성(B3) — 트리 인라인 전체 펼침 상태일 때 강조(border-default). */
+.selectTriggerActive {
+  border-color: var(--color-border-default);
+}
+
+/* 트리거 쉐브론 — 펼침 시 180° 회전(인라인 트리 확장 어포던스). */
+.selectChevron {
+  flex: none;
+  transition: transform 0.16s ease;
+}
+
+.selectChevronOpen {
+  transform: rotate(180deg);
+}
+
 /* 트리거 라벨 — 측정 Medium 14/130%/-2% #FAFAFA. */
 .selectLabel {
   font-size: var(--text-body-3-size); /* 14 */

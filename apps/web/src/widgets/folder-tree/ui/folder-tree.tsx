@@ -1,4 +1,4 @@
-import { Folder, FolderOpen } from 'lucide-react';
+import { ChevronDown, ChevronRight, Folder, FolderOpen } from 'lucide-react';
 import type { FolderWithCount } from '@/entities/folder';
 import {
   formatProviderLabel,
@@ -13,7 +13,8 @@ import styles from './folder-tree.module.css';
  * FolderTree — 좌측 사이드바 폴더 트리(2117:23917, w362 gap14).
  *   확장 폴더 = open 아이콘18 + 명15 #ECECEC + 카운트14 #999999 → 내부 컨텐츠 항목(pad12/10 r8) → 하단 구분선 #242424.
  *   접힘 폴더 = closed 아이콘18 + 명 + 카운트 + 구분선 rgba(255,255,255,.08).
- *   토글 = 폴더 아이콘 open↔closed(별도 chevron 노드 없음 — 측정).
+ *   토글 = 쉐브론/폴더 아이콘 영역(펼침만) · 진입 = 폴더명 영역(폴더별 뷰)으로 히트영역 분리(B2).
+ *     Figma 2117:23917(토글) vs 2117:23135(진입)은 별개 상태 → 한 번 클릭에 결합되지 않음.
  *   내부 항목: 좌측 텍스트(제목14/600 #FAFAFA + 메타[출처18 #DEDEDE · 점2×2 · 날짜12 #767676]) + 썸네일 102×58 r4.
  * 순수 프레젠테이션. 확장 상태·내부 항목 데이터는 page가 주입.
  */
@@ -48,31 +49,45 @@ export function FolderTree({
         const items = itemsByFolder[f.id] ?? [];
         return (
           <div key={f.id} className={styles.folderGroup}>
-            <div className={styles.headerRow}>
+            <div
+              className={[
+                styles.headerRow,
+                activeFolderId === f.id ? styles.active : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
+              {/* 토글 영역(쉐브론 + 폴더 아이콘) — 펼침/접힘만(B2: 진입과 분리). */}
               <button
                 type="button"
-                className={[
-                  styles.folderHead,
-                  activeFolderId === f.id ? styles.active : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                onClick={() => {
-                  onToggle(f.id);
-                  onSelectFolder(f.id);
-                }}
+                className={styles.toggleBtn}
+                onClick={() => onToggle(f.id)}
                 aria-expanded={expanded}
+                aria-label={`${sanitizeUserText(f.name)} 폴더 ${expanded ? '접기' : '펼치기'}`}
               >
-                <span className={styles.headLeft}>
-                  <span className={styles.folderIcon}>
-                    {expanded ? (
-                      <FolderOpen width={18} height={18} color="#ECECEC" strokeWidth={1.6} aria-hidden="true" />
-                    ) : (
-                      <Folder width={18} height={18} color="#ECECEC" strokeWidth={1.6} aria-hidden="true" />
-                    )}
-                  </span>
-                  <span className={styles.folderName}>{sanitizeUserText(f.name)}</span>
+                <span className={styles.chevron} aria-hidden="true">
+                  {expanded ? (
+                    <ChevronDown width={16} height={16} color="#999999" strokeWidth={1.8} />
+                  ) : (
+                    <ChevronRight width={16} height={16} color="#999999" strokeWidth={1.8} />
+                  )}
                 </span>
+                <span className={styles.folderIcon}>
+                  {expanded ? (
+                    <FolderOpen width={18} height={18} color="#ECECEC" strokeWidth={1.6} aria-hidden="true" />
+                  ) : (
+                    <Folder width={18} height={18} color="#ECECEC" strokeWidth={1.6} aria-hidden="true" />
+                  )}
+                </span>
+              </button>
+              {/* 진입 영역(폴더명 + 카운트) — 폴더별 뷰 진입(B2: 토글과 분리). */}
+              <button
+                type="button"
+                className={styles.enterBtn}
+                onClick={() => onSelectFolder(f.id)}
+                aria-current={activeFolderId === f.id ? 'true' : undefined}
+              >
+                <span className={styles.folderName}>{sanitizeUserText(f.name)}</span>
                 <span className={styles.folderCount}>{f.contentCount}</span>
               </button>
             </div>
