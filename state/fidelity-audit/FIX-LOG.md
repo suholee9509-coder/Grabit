@@ -11,7 +11,8 @@
 | u8 search | 88% | ~92% | 히어로 오프셋 padding-top 120→56(D2) | `6d39fea` | ✅ /search |
 | D1 출처 로고 | (모노그램) | 실로고 | Figma 6종 추출·source-logo 배선(검색/라이브러리/홈 공통) | `a7cfda0` | ✅ /library 출처필터 |
 | **fidelity-finish** (u3+u1+u7) | u3 93%·u1 86%·u7 92% | u3 ~97%·잔여 픽셀 정리 | **u3 Step1 헤더**(D7×3 — 타이틀 Bold700·닫기 20px SVG·padding 24/24/24/28·66h·하단보더, Step2 커스텀헤더 미러링·공유 Modal 영향0)·**u3 트림**(길이라벨 14→12·세로 틱4 x28/159/290/402)·**u1 약관링크 #999999**+밑줄·**u7 select라벨 13/Regular(Cap1_Rg)** | `9218d00` | ✅ Step1/Step2/login/library 4샷 Figma 대조 |
-| **u4 접힘 세로 "작성" 제거** | (impl 추가) | Figma 1:1(토글만) | 접힘 사이드바 세로(writing-mode) "작성" span 제거 — Figma 접힘=collapse 토글만(작성 인스턴스 off-frame). 펼침 writeRow·composer·홈 rail 작성(Figma-backed) 유지. 전 페이지 sweep: 세로 텍스트 1곳뿐 | `b8b07eb` | ✅ 접힘 '작성' count 0 |
+| **u4 접힘 세로 "작성" 제거** | (impl 추가) | Figma 1:1(토글만) | 접힘 사이드바 세로(writing-mode) "작성" span 제거 — Figma 접힘=collapse 토글만(작성 인스턴스 off-frame). 전 페이지 sweep: 세로 텍스트 1곳뿐 | `b8b07eb` | ✅ 접힘 '작성' count 0 |
+| **composer "작성" 버튼 제거** | (impl 추가) | Figma 입력행 1:1 | reply composer 제출 "작성" 버튼 제거 — Figma 사이드바_우측(2557:23064) composer=입력행(아바타+입력)만, 버튼 미존재(감사 L55·노드 직접 확인). disabled 셸이라 기능 영향0 + 스테일 테스트명 정정 | `4709569` | ✅ 작성 버튼 2→1·composer 아바타+입력만 |
 
 **평균 ~76% → ~92%.** 사용자 지적(홈 하단 섹션·우 패널 토글·라이브러리)·감사 High 전부 + 측정-확정 잔여 픽셀 해소. **남은 항목은 전부 데이터/자산/게이트ⓐ/인터랙션 프레임 의존 → 의도적 갭 사인오프(아래).**
 
@@ -24,7 +25,8 @@
 - **정적 일러스트**(u1 프로모·확장설치 모달 좌·로고 SVG·관심칩 3D 스프라이트): G7 자산 파이프라인 의존(현 토큰 플레이스홀더).
 - **hover/selected 칩·카드 변형**(P4/P5): Figma 정적 export 부재 → 인터랙션 프레임 확보 후.
 - **u1 소셜 E1 컷**(Naver/이메일/divider 부재): ADR-0001 의도 컷 — 프레임 대비 시각차는 정당(컷 유지).
-- ~~**u4 접힘 사이드바 세로 "작성"**~~ → ✅ **제거 완료**(`b8b07eb`). 사용자 결정 2026-06-16: Figma에 없는 세로 작성 affordance 삭제. (Figma-backed 작성 버튼 — 펼침 writeRow·composer·홈 rail — 은 유지.)
+- ~~**u4 접힘 사이드바 세로 "작성"**~~ → ✅ **제거 완료**(`b8b07eb`). + ~~**composer 제출 "작성" 버튼**~~ → ✅ **제거 완료**(`4709569`, Figma 입력행=버튼 미존재). 사용자 결정 2026-06-16: Figma에 없는 작성 affordance 삭제.
+  - **유지(Figma-backed "작성" 버튼)**: 펼침 사이드바 writeRow(2557:23065)·홈 우패널 rail(2087:71745) — 둘 다 컴포넌트 `802:713 "종류=작성"` 인스턴스로 Figma 직접 확인. 충실도상 제거 ❌.
 - **u7 클립수 gap 4→7**: Figma 7px이나 space 토큰 스케일(2/4/6/8…)에 7px 부재 + "미세" → 토큰 발명 회피로 보류.
 - **u11 프로필 chevron #505050**: sharedRisk(전역 사이드바) + 시맨틱 토큰 부재(#505050=chip-count-selected만) + "미세差 low" → 보류.
 - **u2 토스트 인사이트 와이드 배너**: 노드 분해 측정값 부재(카피·이미지 자산 미측정) → 재측정 선행.
