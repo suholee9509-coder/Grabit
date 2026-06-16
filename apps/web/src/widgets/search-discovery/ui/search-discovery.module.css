@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   /* 본문 컨테이너 좌상단(메인 0,0) 기준 패딩 — 히어로 y120 · 패널 x136 */
-  padding: 120px 0 80px; /* 측정: 히어로 top y120 · 하단 여백 */
+  padding: 56px 0 80px; /* 측정 정정: 히어로 top — 토픽바 h56 하단 기준(감사 D2, 120은 토픽바 중복) */
 }
 
 /* 히어로 블록 — 중앙정렬 column (히어로 → 검색바 24 → 칩 24) */

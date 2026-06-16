@@ -4,7 +4,7 @@
 .results {
   display: flex;
   flex-direction: column;
-  padding: 120px 0 80px; /* 측정: 히어로 top y120 */
+  padding: 56px 0 80px; /* 측정 정정: 히어로 top — 토픽바 h56 하단 기준(감사 D2) */
 }
 
 /* 히어로 + 검색바 — 중앙정렬 */
