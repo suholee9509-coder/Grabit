@@ -11,7 +11,7 @@ import { FolderCardGrid } from '@/widgets/folder-card-grid';
 import { ContentCardGrid } from '@/widgets/content-card-grid';
 import { InsightCardGrid } from '@/widgets/insight-card-grid';
 import { SourceFilter } from '@/widgets/source-filter';
-import { Breadcrumb, Button, Dropdown, Toast, type BreadcrumbItem, type DropdownItem } from '@/shared/ui';
+import { Button, Toast, type BreadcrumbItem } from '@/shared/ui';
 import { sanitizeUserText } from '@/shared/lib';
 import { formatContentCount, type LibraryCard } from '@/entities/content';
 import { CreateFolderModal } from '@/features/create-folder';
@@ -55,6 +55,9 @@ export function LibraryPage() {
     return allCards.filter((c) => c.provider === view.selectedProvider);
   }, [allCards, view.selectedProvider]);
 
+  // "전체 폴더" 트리거 활성 상태(B3) — 모든 폴더가 인라인 펼쳐져 있으면 트리거 active.
+  const treeAllExpanded = folders.length > 0 && folders.every((f) => view.expandedIds.has(f.id));
+
   // 현재 폴더명(폴더별 뷰 헤더·브레드크럼·드롭다운 라벨).
   const activeFolder = folders.find((f) => f.id === view.folderId) ?? null;
   const headerTitle = activeFolder ? sanitizeUserText(activeFolder.name) : '라이브러리';
@@ -72,13 +75,6 @@ export function LibraryPage() {
     }
     return map;
   }, [folders, allCards, view.folderId]);
-
-  // 폴더 드롭다운(전체 폴더 select).
-  const [folderMenuOpen, setFolderMenuOpen] = useState(false);
-  const folderDropdownItems: DropdownItem[] = [
-    { id: '__all__', label: '전체 폴더' },
-    ...folders.map((f) => ({ id: f.id, label: sanitizeUserText(f.name) })),
-  ];
 
   // CRUD modal 상태.
   const [createOpen, setCreateOpen] = useState(false);
@@ -130,7 +126,8 @@ export function LibraryPage() {
             tab={view.sideTab}
             onTabChange={view.setSideTab}
             selectLabel={activeFolder ? sanitizeUserText(activeFolder.name) : '전체 폴더'}
-            onSelectClick={() => setFolderMenuOpen((o) => !o)}
+            selectExpanded={treeAllExpanded}
+            onSelectClick={() => view.toggleTree(folders.map((f) => f.id))}
             onSearchClick={() => navigate('/search')}
           >
             {view.sideTab === 'bookmark' ? (
@@ -178,8 +175,7 @@ export function LibraryPage() {
               </Button>
             </header>
 
-            {/* 폴더별 뷰 브레드크럼(본문 — 톱바 폴백 겸용) */}
-            {activeFolder ? <Breadcrumb items={breadcrumbItems} className={styles.crumb} /> : null}
+            {/* 브레드크럼은 톱바 select-box 단일 표기(Figma 2117:23909) — 본문 이중 표기 제거(M2). */}
 
             {/* 폴더 카드 행(전체 폴더 뷰에서만) — 측정 y209 */}
             {!activeFolder ? (
@@ -298,24 +294,6 @@ export function LibraryPage() {
           </section>
         </div>
       </AppShell>
-
-      {/* 폴더 드롭다운(전체 폴더 select) — 사이드바/본문 공용 */}
-      {folderMenuOpen ? (
-        <div className={styles.folderDropdownOverlay} role="presentation" onClick={() => setFolderMenuOpen(false)}>
-          <div className={styles.folderDropdown} onClick={(e) => e.stopPropagation()}>
-            <Dropdown
-              defaultOpen
-              trigger={<span className={styles.dropdownTrigger}>전체 폴더</span>}
-              items={folderDropdownItems}
-              value={view.folderId ?? '__all__'}
-              onSelect={(id) => {
-                view.openFolder(id === '__all__' ? null : id);
-                setFolderMenuOpen(false);
-              }}
-            />
-          </div>
-        </div>
-      ) : null}
 
       {/* 다중선택 액션바 + 이동 모달 */}
       <MoveActionBar
