@@ -149,14 +149,4 @@
 .collapsed .collapseToggle {
   width: auto;
 }
-.collapsedWrite {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  font-size: 14px;
-  line-height: 130%;
-  font-weight: var(--font-weight-semibold); /* 600 */
-  color: var(--color-white-pure); /* #FFFFFF */
-  background-color: var(--color-btn-solid-gray); /* #333333 */
-  border-radius: var(--radius-btn-write); /* 7 */
-  padding: var(--space-9) var(--space-5); /* 18 / 10 (세로 배치) */
-}
+/* (제거) 접힘 세로 "작성" — Figma 접힘 렌더는 collapse 토글만(작성 인스턴스 off-frame). 사용자 결정 2026-06-16. */
