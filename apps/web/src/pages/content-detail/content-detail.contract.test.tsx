@@ -129,7 +129,7 @@ describe('content-detail contract', () => {
     // "가장 인기있는 구간" 패널의 인기 클립 row(구간 라벨 포함) 클릭
     const segHeading = screen.getByRole('heading', { name: '가장 인기있는 구간' });
     expect(segHeading).toBeInTheDocument();
-    const clipButtons = await screen.findAllByText('그랩한 구간');
+    const clipButtons = await screen.findAllByText(/\d+명이 그랩함/);
     await user.click(clipButtons[0].closest('button')!);
     expect(seekToSpy).toHaveBeenCalled();
   });

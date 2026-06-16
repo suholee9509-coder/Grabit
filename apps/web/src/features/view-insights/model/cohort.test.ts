@@ -50,10 +50,15 @@ describe('deriveCohortRanking', () => {
       clip({ cohortRevealed: false }),
     ];
     const ranking = deriveCohortRanking(clips);
-    expect(ranking[0]).toEqual({ job: '프로덕트 디자이너', count: 2, isOther: false });
-    expect(ranking[1]).toEqual({ job: '백엔드 개발자', count: 1, isOther: false });
+    expect(ranking[0]).toMatchObject({ job: '프로덕트 디자이너', count: 2, isOther: false });
+    expect(ranking[1]).toMatchObject({ job: '백엔드 개발자', count: 1, isOther: false });
     const other = ranking.find((r) => r.isOther);
-    expect(other).toEqual({ job: '이 외 직군', count: 2, isOther: true });
+    expect(other).toMatchObject({ job: '이 외 직군', count: 2, isOther: true });
+    // 막대 스택: 연차 버킷 교차집계 합 = count(직군별 그랩 수)
+    for (const r of ranking) {
+      expect(r.yearsBreakdown).toHaveLength(3);
+      expect(r.yearsBreakdown.reduce((a, b) => a + b, 0)).toBe(r.count);
+    }
   });
 });
 

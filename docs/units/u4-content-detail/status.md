@@ -2,8 +2,9 @@
 
 > dev가 매 턴 갱신(변경·검증결과·리스크). PM은 이 파일 + STATUS 반환으로 통합 결정.
 
-- 상태: **검증·수정 완료(게이트ⓒ 충실도 사인오프 대기)** — 검증 에이전트 재실행(2026-06-16)
-- 검증(재실행 실측): `tsc -b --force`=0 · `eslint .`=0 · `steiger ./apps/web/src`=✔(No problems) · `pnpm build`=OK(tsc -b + vite build, chunk-size 경고만 — 비차단) · `vitest run`=**86 passed / 16 files** · 콘솔 0(테스트 stderr 클린)
+- 상태: **검증·수정 완료(게이트ⓒ 충실도 사인오프 대기)** — 보수 검증 에이전트 재실행(2026-06-16 12:32)
+- 검증(보수 재실행 실측): `tsc -b --force`=0 · `eslint .`=0 · `steiger ./apps/web/src`=✔(No problems found) · `pnpm build`=OK(vite 2203 modules, 738ms — chunk-size 경고만 비차단) · `vitest run`=**178 passed / 24 files**(무회귀·확장) · 콘솔 0(테스트 stderr 클린)
+- ★보수 적용 충실도(자체검증 PNG 대비 확인): ① 댓글/답글 카드에 **코호트 2칩**(직군+연차, head row) 렌더 · ② 코호트 랭킹 막대 = **연차 3색 스택**(violet/mint/magenta, `yearsBreakdown` 합=count) · ③ **2패널 헤더**(좌 코호트 배너+랭킹 / 우 "가장 인기있는 구간" 제목+클립리스트 나란히) · ④ 인기 클립 row "**N명이 그랩함**"(결정론 합성, BE 신규 ❌) · ⑤ 답글 스레드 로컬 펼침 + **composer**(아바타+textarea+작성, disabled 데이터패스 차단) 렌더. **AI 노트 탭/Sparkle FAB 미렌더 유지**(부재 단언 회귀 차단). 계약테스트 인기클립 셀렉터 → `/\\d+명이 그랩함/`로 정렬.
 - DM1 옵션1 확정 적용: 인사이트=`content_clips_public` BE 배선만 · 댓글/답글·작성·좋아요 = 픽셀퍼펙트 UI + **데이터패스 차단**(목킹/비활성, annotations RPC 미호출, 신규 마이그레이션 ❌).
 - 변경/신규 파일 (boundary 준수):
   - **pages/content-detail**: `index.ts` · `ui/{content-detail-page.tsx+.module.css, watch-info-tab.tsx, source-tab.tsx+.module.css}` · `content-detail.contract.test.tsx`

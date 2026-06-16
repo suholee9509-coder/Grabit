@@ -66,9 +66,16 @@
   outline-offset: 2px;
 }
 
+/* 리스트 래퍼: 스크롤 영역 + 하단 페이드 오버레이 컨테이너(composer 위) */
+.listWrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 /* 댓글/답글 카드 리스트: x20 y84, w410, col gap28, 스크롤 */
 .list {
-  flex: 1 1 auto;
+  height: 100%;
   min-height: 0;
   overflow-y: auto;
   display: flex;
@@ -91,6 +98,45 @@
   );
   backdrop-filter: blur(2px);
   pointer-events: none;
+}
+
+/* [A4] composer — 하단 입력 행(아바타 + textarea + 작성). DM1: 전송 비활성(disabled). */
+.composer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4); /* 8 */
+  box-sizing: border-box;
+  padding: var(--space-7) var(--space-10); /* 14 / 20 — list 좌우 inset 정렬 */
+  border-top: 1px solid var(--color-tab-border); /* #2D2D2D — 탭바 하단선과 동일 */
+  background-color: var(--color-shell-bg); /* #121212 */
+}
+.composerInput {
+  flex: 1 1 auto;
+  min-width: 0;
+  box-sizing: border-box;
+  resize: none;
+  min-height: 38px;
+  max-height: 96px;
+  padding: var(--space-4) var(--space-5); /* 8 / 10 */
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 160%;
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  color: var(--color-white); /* #FAFAFA */
+  background-color: var(--color-surface-200); /* #242424 인풋 면색(2087:8469) */
+  border: 1px solid var(--color-border-subtle); /* rgba(255,255,255,0.08) */
+  border-radius: var(--radius-sm); /* 6 */
+}
+.composerInput::placeholder {
+  color: var(--color-gray-450); /* #999999 placeholder */
+}
+.composerInput:disabled {
+  cursor: not-allowed;
+}
+.composerInput:focus-visible {
+  outline: none;
+  border-color: var(--color-border-chip); /* rgba(255,255,255,0.12) */
 }
 
 /* ── 접힘(60px) ── */

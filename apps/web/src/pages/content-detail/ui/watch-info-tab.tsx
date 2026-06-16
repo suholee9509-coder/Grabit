@@ -3,12 +3,20 @@ import type { PublicClip } from '@/entities/clip';
 import type { SimilarContentDto } from '@/shared/api';
 import { SimilarContent } from '@/widgets/similar-content';
 import {
-  CohortBanner,
   InsightCard,
   PopularSegments,
-  topCohortLabel,
+  topCohortChips,
+  type TopCohortChips,
 } from '@/features/view-insights';
 import styles from './content-detail-page.module.css';
+
+/** detail.cohortLabel(문자열) → 칩 분해 fallback("…년차" 접미 분리). */
+function cohortFromLabel(label: string | null): TopCohortChips | null {
+  if (!label) return null;
+  const m = label.match(/^(.*?)\s*([~\d][\d~]*년차(?:\s*이상)?)$/);
+  if (m) return { job: m[1].trim(), years: m[2].trim() };
+  return { job: label.trim(), years: null };
+}
 
 /**
  * 시청 정보 탭 본문(디바이더 아래) — 측정 2087:12538 §7.
@@ -32,13 +40,16 @@ export function WatchInfoTab({
   onSeek,
   onSelectSimilar,
 }: WatchInfoTabProps) {
-  const cohort = topCohortLabel(insights) ?? detail.cohortLabel;
+  const cohort = topCohortChips(insights) ?? cohortFromLabel(detail.cohortLabel);
 
   return (
     <div className={styles.analyticsGroup}>
-      <CohortBanner cohortLabel={cohort} />
-
-      <PopularSegments clips={insights} onSeek={onSeek} thumbnailUrl={detail.thumbnailUrl} />
+      <PopularSegments
+        clips={insights}
+        cohort={cohort}
+        onSeek={onSeek}
+        thumbnailUrl={detail.thumbnailUrl}
+      />
 
       <section className={styles.insightSection} aria-label="인상깊게 본 인사이트">
         <h2 className={styles.sectionTitle}>인상깊게 본 인사이트</h2>

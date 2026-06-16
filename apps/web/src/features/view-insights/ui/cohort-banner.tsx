@@ -1,24 +1,23 @@
-import { Avatar } from '@/shared/ui';
+import type { TopCohortChips } from '../model/cohort';
 import styles from './cohort-banner.module.css';
 
 /**
- * "이 컨텐츠를 [코호트]가 많이 봤어요" 배너 — 측정 2087:12538 §7.1.
- * 코호트 라벨 없으면(임계 미달) 미렌더. 칩 = 아바타 + 직군 라벨.
+ * "이 컨텐츠를 [직군칩][연차칩]가 많이 봤어요" 배너 — 측정 2087:12838.
+ * ★ Figma = 직군칩 + 연차칩 2개 분리(각 h28 r4, .04bg + .08border, 아바타 없음).
+ *   코호트 없으면(임계 미달) 미렌더. 인기있는 구간 좌 카드 헤더로 배치(2패널 §C3).
  */
 export interface CohortBannerProps {
-  /** 최상위 공개 코호트 라벨(예: "프로덕트 디자이너 3~5년차"). null이면 미렌더. */
-  cohortLabel: string | null;
+  /** 최상위 공개 코호트 칩 분해({job, years}). null이면 미렌더. */
+  cohort: TopCohortChips | null;
 }
 
-export function CohortBanner({ cohortLabel }: CohortBannerProps) {
-  if (!cohortLabel) return null;
+export function CohortBanner({ cohort }: CohortBannerProps) {
+  if (!cohort) return null;
   return (
     <div className={styles.banner}>
       <span className={styles.text}>이 컨텐츠를</span>
-      <span className={styles.chip}>
-        <Avatar size="xs" initials={cohortLabel.slice(0, 1)} />
-        <span className={styles.chipLabel}>{cohortLabel}</span>
-      </span>
+      <span className={styles.chip}>{cohort.job}</span>
+      {cohort.years ? <span className={styles.chip}>{cohort.years}</span> : null}
       <span className={styles.text}>가 많이 봤어요</span>
     </div>
   );
