@@ -2,7 +2,21 @@
 
 > dev가 매 턴 갱신(변경·검증결과·리스크). PM은 이 파일 + STATUS 반환으로 통합 결정.
 
-- 상태: **FE+BE 검증 PASS (커밋 대기 — PM 통합)**
+- 상태: **FE 충실도 보수 검증 PASS (커밋 대기 — PM 통합)**
+- 충실도 보수(2026-06-16, u7-lib-fidelity 워크트리 — fidelity-audit PNG 대비):
+  - **B2 폴더트리 히트영역 분리**: `folder-tree.tsx` 헤더행을 두 버튼으로 절단 — ① 토글영역(쉐브론 ChevronDown/ChevronRight 16 #999999 + 폴더 아이콘 FolderOpen/Folder 18 #ECECEC) = `onToggle`만(펼침/접힘) · ② 진입영역(폴더명 + 카운트) = `onSelectFolder`만(폴더별 뷰). 이전엔 한 버튼이 `onToggle`+`onSelectFolder` 동시 호출(2117:23917 토글 vs 2117:23135 진입 결합 결함) → **한 클릭에 결합되지 않도록 분리**. `.active`는 `.headerRow`로 이동(`.active .folderName` 선택자 유지). aria-label(접기/펼치기)·aria-current 부여.
+  - **B3 전체폴더 드롭다운 → 인라인 트리 토글**: `library-page.module.css`의 `.folderDropdownOverlay`/`.folderDropdown`/`.dropdownTrigger` 팝오버 오버레이 제거 + `use-library-view.ts`에 `toggleTree(ids)` 추가(하나라도 닫혀 있으면 전체 펼침, 전부 펼침이면 전체 접힘). `LibrarySidebar` select 트리거가 `onSelectClick→view.toggleTree(folderIds)`로 좌 사이드바 폴더 트리를 인라인 확장/접힘(2117:22576 = 팝오버 없는 인라인 펼침). 트리거에 `selectExpanded` prop(active border·쉐브론 180° 회전·aria-expanded/aria-controls) 추가.
+  - **AI FAB 미렌더 유지(게이트ⓐ)**: 라이브러리 스코프 소스(pages/library·widgets/folder-tree·widgets/library-sidebar)에 Sparkle/AI-FAB/AI 노트 렌더 코드 0건(테스트 단언 외 참조 없음). 보수로 회귀 없음.
+- 검증(FE 게이트 — 2026-06-16, u7-lib-fidelity 워크트리 실제 실행 출력):
+  - Gate1 `tsc -b` → **exit 0**.
+  - Gate2 `eslint .` → **exit 0** (lint:fsd 포함 클린).
+  - Gate3 `pnpm exec steiger ./apps/web/src` → **No problems found! (exit 0)**.
+  - Gate4 `pnpm -C apps/web build` (tsc -b && vite build) → **성공(exit 0)** · 2203 modules transformed.
+  - Gate5 `vitest run` → **Test Files 24 passed · Tests 178 passed** — 무회귀(전수 통과). 폴더카드 aria-label(`...폴더 열기`)·AI노트탭/SparkleFAB 미렌더 단언 유지.
+  - Gate6 콘솔0: 테스트 출력에 console.error/warn/act-warning **0건**.
+- 자체검증(fidelity-audit/u7-library PNG 대비): 2117-22576 폴더드롭다운 = 좌 사이드바 인라인 펼침(팝오버 부재) ✓ · 2117-23917 폴더트리토글 = 쉐브론/폴더아이콘 토글영역과 폴더명 진입영역 분리(별개 클릭) ✓ · AI FAB 미렌더 ✓.
+- (이전 통합 검증 기록 — FE+BE PASS 유지)
+- 상태(이전): **FE+BE 검증 PASS (커밋 대기 — PM 통합)**
 - 검증(FE 게이트 — 2026-06-16, u7-library-fe 워크트리 실제 실행 출력):
   - Gate1 `pnpm -C apps/web exec tsc -b --force` → **exit 0**.
   - Gate2 `pnpm -C apps/web exec eslint .` → **exit 0** (lint:fsd 포함 클린).

@@ -57,11 +57,6 @@
   color: var(--color-gray-550);
 }
 
-/* 폴더별 뷰 본문 브레드크럼(톱바 폴백 겸용). */
-.crumb {
-  margin-top: var(--space-6);
-}
-
 /* 폴더 카드 행 — 측정 y209(헤더 y110 아래 ~99). */
 .folderRow {
   margin-top: var(--space-grid-row);
@@ -205,26 +200,6 @@
   color: var(--color-white);
   font-size: var(--text-body-3-size);
   cursor: pointer;
-}
-
-/* 폴더 드롭다운 오버레이(전체 폴더 select). */
-.folderDropdownOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-}
-
-.folderDropdown {
-  position: absolute;
-  left: 110px;
-  top: 140px;
-  min-width: 298px;
-}
-
-.dropdownTrigger {
-  font-size: var(--text-body-3-size);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-white);
 }
 
 /* Toast — u0c 토큰 기반(측정 부재). */

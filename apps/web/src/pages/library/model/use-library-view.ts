@@ -33,6 +33,19 @@ export function useLibraryView() {
     });
   }, []);
 
+  /**
+   * "전체 폴더" 트리거 토글(B3) — 별도 오버레이 대신 사이드바 폴더 트리를 인라인 확장/접힘.
+   *   Figma 2117:22576 = 트리거 활성 시 좌 사이드바 트리 인라인 펼침(팝오버 없음).
+   *   인자로 받은 폴더 전체를 펼치거나(닫혀있던 경우) 모두 접는다.
+   */
+  const toggleTree = useCallback((ids: string[]) => {
+    setExpandedIds((prev) => {
+      // 하나라도 닫혀 있으면 전체 펼침, 모두 펼쳐져 있으면 전체 접힘.
+      const allOpen = ids.length > 0 && ids.every((id) => prev.has(id));
+      return allOpen ? new Set<string>() : new Set(ids);
+    });
+  }, []);
+
   const toggleSelect = useCallback((contentId: string) => {
     setSelectedIds((prev) => {
       const next = new Set(prev);
@@ -69,6 +82,7 @@ export function useLibraryView() {
       // tree
       expandedIds,
       toggleExpanded,
+      toggleTree,
     }),
     [
       tabs.panelTab,
@@ -85,6 +99,7 @@ export function useLibraryView() {
       clearSelection,
       expandedIds,
       toggleExpanded,
+      toggleTree,
     ],
   );
 }

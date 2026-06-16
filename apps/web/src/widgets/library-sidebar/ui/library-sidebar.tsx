@@ -17,7 +17,9 @@ export interface LibrarySidebarProps {
   onTabChange: (tab: 'content' | 'bookmark') => void;
   /** "전체 폴더" select 라벨(현재 폴더명 또는 '전체 폴더'). */
   selectLabel: string;
-  /** select 트리거 클릭 → 폴더 드롭다운(page가 드롭다운 호스팅). */
+  /** select 트리거 활성(B3) — 사이드바 폴더 트리가 인라인 전체 펼침 상태. */
+  selectExpanded?: boolean;
+  /** select 트리거 클릭 → 사이드바 폴더 트리 인라인 확장/접힘 토글(B3). */
   onSelectClick: () => void;
   /** 사이드바 검색 버튼 클릭(검색 진입점). */
   onSearchClick?: () => void;
@@ -34,6 +36,7 @@ export function LibrarySidebar({
   tab,
   onTabChange,
   selectLabel,
+  selectExpanded = false,
   onSelectClick,
   onSearchClick,
   children,
@@ -53,16 +56,35 @@ export function LibrarySidebar({
       </div>
 
       <div className={styles.selectRow}>
-        <button type="button" className={styles.selectTrigger} onClick={onSelectClick} aria-haspopup="listbox">
+        <button
+          type="button"
+          className={[styles.selectTrigger, selectExpanded ? styles.selectTriggerActive : '']
+            .filter(Boolean)
+            .join(' ')}
+          onClick={onSelectClick}
+          aria-expanded={selectExpanded}
+          aria-controls="library-folder-tree"
+        >
           <span className={styles.selectLabel}>{selectLabel}</span>
-          <ChevronDown width={18} height={18} color="#5E5E5E" strokeWidth={1.8} aria-hidden="true" />
+          <ChevronDown
+            width={18}
+            height={18}
+            color="#5E5E5E"
+            strokeWidth={1.8}
+            aria-hidden="true"
+            className={[styles.selectChevron, selectExpanded ? styles.selectChevronOpen : '']
+              .filter(Boolean)
+              .join(' ')}
+          />
         </button>
         <button type="button" className={styles.searchBtn} onClick={onSearchClick} aria-label="라이브러리 검색">
           <Search width={20} height={20} color="#B4B4B4" strokeWidth={1.8} aria-hidden="true" />
         </button>
       </div>
 
-      <div className={styles.list}>{children}</div>
+      <div className={styles.list} id="library-folder-tree">
+        {children}
+      </div>
     </aside>
   );
 }
