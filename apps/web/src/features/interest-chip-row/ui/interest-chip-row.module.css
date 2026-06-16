@@ -27,7 +27,28 @@
   border-radius: var(--radius-pill);
 }
 
-/* 라벨 — 14/600/130%/-2.5%/center (style_N4CHHJ). 기본 #B4B4B4 · 선택 #66FF4B */
+/* 카테고리 아이콘 원 — 측정 2173:120906: 82×82 원형, 검정 면(#141414)·보더 #000000 1px, radius100.
+ * 내부 = 분야별 3D 일러스트(G7 미확정 → FieldGlyph 라인 글리프 플레이스홀더, 흰색). */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-avatar-xl); /* 측정: 82 */
+  height: var(--size-avatar-xl);
+  border-radius: var(--radius-pill); /* 측정: 100 */
+  background-color: #141414; /* 측정 fill_N72FFI: 칩 면 #141414(검정 근사, 글로벌 미등재 — 인라인) */
+  border: 1px solid var(--color-bg); /* 측정 fill_*: 보더 #000000 */
+  color: var(--color-white); /* 글리프 흰색 */
+  flex: none;
+  box-sizing: border-box;
+}
+/* 선택 — 측정 2173:120910: 외곽 2px 네온 50% 링. */
+.iconActive {
+  box-shadow: 0 0 0 var(--size-avatar-ring) var(--color-brand-primary-50);
+  border-color: transparent;
+}
+
+/* 라벨 — 14/600/130%/-2.5%/center (style_E6ZEOA). 기본 #B4B4B4 · 선택 #66FF4B */
 .label {
   font-size: var(--text-body-3-size); /* 14 */
   line-height: 130%; /* 측정: 130% */
