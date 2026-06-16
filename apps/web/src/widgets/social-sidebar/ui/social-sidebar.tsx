@@ -1,14 +1,15 @@
-import { Button, Tabs, type TabItem } from '@/shared/ui';
+import { Avatar, Button, Tabs, type TabItem } from '@/shared/ui';
 import { DEMO_COMMENTS } from '@/entities/annotation';
 import { CommentCard } from './comment-card';
 import styles from './social-sidebar.module.css';
 
 /**
  * SocialSidebar — 우측 소셜 사이드바(측정 2557:23064 펼침 450 / 2087:14297 접힘 60).
- *   펼침: 작성 버튼 + `인사이트(N)` 단일 탭(underline) + collapse 토글 + 댓글/답글 카드 스택 + 하단 페이드.
+ *   펼침: 작성 버튼 + `인사이트(N)` 단일 탭(underline) + collapse 토글 + 댓글/답글 카드 스택 + 하단 페이드 + composer.
  *   접힘: 작성(세로) + expand 토글만.
  * ★게이트ⓐ 제외: `AI 노트` 탭 미렌더(인사이트 단일), Sparkle mini FAB 미렌더.
- * ★DM1 옵션1: 댓글/답글·작성 = 픽셀퍼펙트 UI + 목킹/비활성(BE 미호출). 미인증→로그인 유도.
+ * ★DM1 옵션1: 댓글/답글·작성·composer = 픽셀퍼펙트 UI + 목킹/비활성(BE 미호출). 미인증→로그인 유도.
+ *   [A4] 하단 composer = 입력 셸(아바타 + textarea + 작성). 전송 데이터패스 차단(목킹/disabled).
  */
 export interface SocialSidebarProps {
   /** 펼침/접힘 상태(부모가 본문 리플로우와 함께 제어). */
@@ -107,13 +108,36 @@ export function SocialSidebar({
         </button>
       </div>
 
-      <div className={styles.list}>
-        {DEMO_COMMENTS.map((c) => (
-          <CommentCard key={c.id} comment={c} />
-        ))}
+      <div className={styles.listWrap}>
+        <div className={styles.list}>
+          {DEMO_COMMENTS.map((c) => (
+            <CommentCard key={c.id} comment={c} />
+          ))}
+        </div>
+        <div className={styles.bottomFade} aria-hidden="true" />
       </div>
 
-      <div className={styles.bottomFade} aria-hidden="true" />
+      {/* [A4] composer — 입력 셸(아바타 + textarea + 작성). DM1: 전송 데이터패스 차단(disabled). */}
+      <form
+        className={styles.composer}
+        aria-label="댓글 작성"
+        onSubmit={(e) => {
+          // DM1: 전송 비활성(목킹 — BE 미호출). 핸들러는 셸 차단만.
+          e.preventDefault();
+        }}
+      >
+        <Avatar size="xs" initials="나" />
+        <textarea
+          className={styles.composerInput}
+          placeholder="이 영상에 대한 생각을 남겨보세요"
+          rows={1}
+          aria-label="댓글 입력"
+          disabled
+        />
+        <Button type="submit" variant="solidGray" size="small" disabled>
+          작성
+        </Button>
+      </form>
     </aside>
   );
 }

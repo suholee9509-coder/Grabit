@@ -76,14 +76,64 @@
   line-height: 130%;
   color: var(--color-gray-500); /* #B4B4B4 */
 }
+/* 답글(코멘트) 아이콘 — 좋아요 우측, 비활성 셸(측정 12538§8) */
+.replyGlyph {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-gray-500); /* #B4B4B4 */
+}
 .sep {
   width: 1px;
   height: 12px;
   background-color: var(--color-border-breadcrumb-sep); /* rgba(255,255,255,0.16) */
 }
 .moreReplies {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2); /* 4 */
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
   font-size: 13px;
   line-height: 130%;
   letter-spacing: var(--letter-spacing-snug); /* -2% */
   color: var(--color-gray-450); /* #999999 (style_VVXMTU) */
+  cursor: pointer;
+}
+.moreReplies:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs); /* 4 */
+}
+.chevron,
+.chevronOpen {
+  flex: 0 0 auto;
+  transition: transform 0.15s ease;
+}
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* [A4] 답글 스레드 — 댓글 카드 좌측 들여쓰기 + 가이드선 */
+.replyThread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10); /* 20 — 댓글↔답글 간격 축소형 */
+  margin-left: var(--space-12); /* 24 들여쓰기(아바타 18 + gap 6 정렬) */
+  padding-left: var(--space-7); /* 14 */
+  border-left: 1px solid var(--color-border-subtle); /* rgba(255,255,255,0.08) */
+}
+.reply {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4); /* 8 — 축소형(카드 10 대비) */
+  width: 100%;
+}
+.replyBody {
+  margin: 0;
+  font-size: 13px; /* 본문 14 대비 축소 */
+  line-height: 160%;
+  letter-spacing: var(--letter-spacing-snug); /* -2% */
+  color: var(--color-gray-550); /* #CECECE — 본문 순백 대비 축소형 서브 */
 }
