@@ -27,9 +27,10 @@ export const STEP_CONFIG: Record<StepIndex, StepConfig> = {
     gridWidth: 609,
     nextLabel: '다음',
   },
-  // ② 연차 2087:8726 — 부제 부재(G4) · gridWidth 642
+  // ② 연차 2087:8726 — 부제 존재(2087:8951 #CECECE, ①과 동일 문구) · gridWidth 642
   2: {
     title: '경력이 어떻게 되시나요?',
+    subtitle: '비슷한 동료들과 연결해 드려요.',
     options: YEARS_OPTIONS,
     gridWidth: 642,
     nextLabel: '다음',
