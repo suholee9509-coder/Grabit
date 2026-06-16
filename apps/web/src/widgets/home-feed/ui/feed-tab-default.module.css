@@ -40,3 +40,28 @@
 .group {
   padding-left: 26px; /* 측정: 섹션그룹 좌 inset 26(spacing 스케일 부재 — 인라인) */
 }
+
+/* 분야별 트렌드 그리드 섹션(취향관 default) — 측정 2087:71184(70384) / 2087:69678(69031).
+ * 제목(Bold24, x14) + 그리드 컨테이너(column gap16) · 행=row gap4 · 카드 356×461. */
+.gridSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.gridTitle {
+  margin: 0;
+  padding-left: var(--space-7); /* 측정: x14 */
+  color: var(--color-white); /* #FAFAFA */
+  font-size: var(--text-title-3-size); /* 측정: 24 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-tight);
+  font-weight: var(--font-weight-bold); /* 측정: 700 */
+}
+/* 그리드 컨테이너 — 측정 layout_RCL7GO: column gap16. 행 = row align center gap4(layout_F1126R).
+ * flex-wrap으로 행 자동 절단(3열 @ 1160 / 자연폭) — 카드 flex 0 0 356px. */
+.gridWrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 16px 4px; /* 측정: 행 사이 16(column gap) · 카드 사이 4(row gap) */
+}

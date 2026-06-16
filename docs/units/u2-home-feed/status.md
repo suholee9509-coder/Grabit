@@ -2,7 +2,12 @@
 
 > dev가 매 턴 갱신(변경·검증결과·리스크). PM은 이 파일 + STATUS 반환으로 통합 결정.
 
-- 상태: **구현 완료 · 검증·수정 에이전트 재검 PASS(2026-06-16) — 게이트 ⓒ(충실도 사인오프) 대기**
+- 상태: **구현 완료 · 보수 검증 에이전트 재검 PASS(2026-06-16, 2차) — 게이트 ⓒ(충실도 사인오프) 대기**
+- 보수 검증(2차, 실측 재실행 — 게이트 6/6 PASS · Figma 직접 대비 충실도 PASS · 수정사항 없음):
+  - `tsc -b --force`=0 · `eslint .`=0 · `steiger ./apps/web/src`=No problems found · `build`=성공(dist 생성, chunk>500kB 경고만) · `test`=**24 파일/178 테스트 PASS**(통합 베이스라인 — home-feed.contract 6 + home-empty-cold-start 2 + clip-flow 7 보존, 무회귀) · 콘솔 0(cold-start가 console.error spy로 0 단언).
+  - Figma 직접 대비(get_figma_data) 측정 1:1 확인: 트렌드 그리드 카드 `2087:71188`=**356×461**(layout_XJZ4Z3)·#1B1B1B·shadow 0 4 16 .24·썸네일 332×187 r6 x12/y150·상단블록 x18/y20 w320 gap14·제목 Bold20 #FFFFFF·하단블록 y375 → GridCard tsx/css와 동일. demo-seed `GRID_ALL`=**12카드**(grid-1~12). 우 패널 토글 펼침 **420**/접힘 **40**(recommendation-rail.module.css `.rail`/`.collapsed`, collapsed useState). GrabCard 헤더=**1줄**(flex row: identity[아바타+이름+역할 nowrap] + 시간 우측). 칩 정상렌더: InterestChipRow 82×82·gap30·선택 ring brand-50 2px·라벨 #B4B4B4/active #66FF4B, FieldGlyph 7분야 전수 글리프(+fallback)·토큰(size-avatar-xl/ring·brand-primary-50) 전부 정의 — 누락/깨짐 없음. 푸터 `2087:71659`=#121212·r하단8·separator 1px .08·Nav pad40·"© 2025 Grabit" #B3B3B3 → SiteFooter와 동일(컬럼 카피는 Figma 원본 템플릿 잔재 그대로=1:1).
+  - supabase/ diff=**0**(u0b 미접촉) 확인.
+- (이하 1차 검증 기록 — 보존)
 - 검증(clean checkout 재현 가능 · 검증 에이전트 실측 재실행):
   - `tsc -b --force` → **0 에러** (EXIT=0, 실측)
   - `eslint .` → **0 에러 / 0 경고** (EXIT=0, 실측)
