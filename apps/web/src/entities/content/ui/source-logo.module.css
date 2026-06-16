@@ -3,6 +3,7 @@
 .logo {
   display: block;
   border-radius: var(--radius-xs); /* 측정: 4 (내부 이미지 radius) */
+  object-fit: contain; /* 측정: imageRef scaleMode FIT/contain — 박스 내 비율유지 */
   flex: none;
 }
 
