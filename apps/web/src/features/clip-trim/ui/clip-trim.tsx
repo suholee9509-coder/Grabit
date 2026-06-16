@@ -16,6 +16,8 @@ import styles from './clip-trim.module.css';
 
 const TRACK_WIDTH = 405; // 측정: 트랙 폭 405
 const MIN_LEN = 1; // 최소 구간 1초(끝 배타, end>start)
+/** 세로 눈금 틱 x(측정 2087:35099~102: 405 트랙 내 절대좌표 — 1px·h30·rgba(.16)). */
+const TICK_LINES = [28, 159, 290, 402];
 
 export interface ClipTrimProps {
   /** YouTube 임베드 참조(영상 플레이어). null이면 폴백 면. */
@@ -103,6 +105,11 @@ export function ClipTrim({ videoRef, durationSec, interval, onChange }: ClipTrim
           {/* 선택 밖 딤 */}
           <div className={styles.dim} style={{ left: 0, width: selLeft }} />
           <div className={styles.dim} style={{ left: selLeft + selWidth, right: 0 }} />
+
+          {/* 세로 눈금 틱 4(측정 2087:35099~102: 1px·h30·rgba(.16)·x28/159/290/402) */}
+          {TICK_LINES.map((x) => (
+            <span key={x} className={styles.gridTick} style={{ left: x }} aria-hidden />
+          ))}
 
           {/* 선택 오버레이(테두리바) */}
           <div className={styles.selection} style={{ left: selLeft, width: selWidth }}>

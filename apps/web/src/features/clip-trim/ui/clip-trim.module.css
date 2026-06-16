@@ -60,6 +60,17 @@
   pointer-events: none;
 }
 
+/* 세로 눈금 틱 4(측정 2087:35099~102): 1px · h30 · rgba(255,255,255,.16) · 트랙 내 x28/159/290/402.
+ * 딤 위·핸들 아래 레이어(장식 그리드). */
+.gridTick {
+  position: absolute;
+  top: 11px; /* (트랙 52 - 틱 30) / 2 — 세로 중앙 */
+  width: 1px;
+  height: 30px; /* 측정: 30 */
+  background-color: var(--color-timeline-tick); /* 측정: rgba(255,255,255,0.16) */
+  pointer-events: none;
+}
+
 /* 선택 구간 오버레이 그룹 (측정: 2087:35119 187×60, 트랙보다 위아래 4px 확장) */
 .selection {
   position: absolute;
@@ -185,7 +196,7 @@
   flex: none;
 }
 
-/* 길이 "29초" (측정: gap2 아이콘+텍스트, Regular 14) */
+/* 길이 "29초" (측정 2087:35118: gap2 아이콘+텍스트, Regular 12 = PB7RQB) */
 .length {
   display: inline-flex;
   align-items: center;
@@ -193,7 +204,7 @@
   margin-left: auto;
   color: var(--color-text-primary); /* 측정: #FAFAFA */
   font-family: var(--font-family-base);
-  font-size: var(--text-body-3-size);
+  font-size: var(--text-caption-2-size); /* 측정: Regular 12 (감사 D7 Med) */
   line-height: 130%;
   letter-spacing: var(--letter-spacing-snug);
   white-space: nowrap;

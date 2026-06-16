@@ -1,4 +1,47 @@
-/* Step1 링크 입력 모달 (측정 2087:32073, 582×364). Modal 셸 재사용 + body 내 라벨/헬퍼/입력. */
+/* Step1 링크 입력 모달 (측정 2087:32073, 582×364). Modal 셸 재사용 + 커스텀 헤더 + body 내 라벨/헬퍼/입력. */
+
+/* 커스텀 헤더(측정 2087:33543 Frame 1707482652): row space-between · align center · h66 ·
+ * pad 24/24/24/28(상/우/하/좌, align-center+h66로 시각 동등) · 하단보더 rgba(255,255,255,.08).
+ * body inset(0 28)을 negate해 풀폭(582). Step2 커스텀 헤더와 동일 패턴(공유 Modal 헤더 미사용). */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 66px; /* 측정: 헤더 66h */
+  box-sizing: border-box;
+  margin: 0 -28px 24px; /* 측정: body inset 28 negate(풀폭) · 헤더→라벨블록 gap(y66→y90) */
+  padding: 0 24px 0 28px; /* 측정: 좌28/우24(align-center가 상하24 시각 대체) */
+  border-bottom: 1px solid var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+}
+.title {
+  margin: 0;
+  color: var(--color-text-primary); /* 측정: #FAFAFA */
+  font-family: var(--font-family-base);
+  font-size: var(--text-title-4-size); /* 측정: 20 */
+  line-height: 130%;
+  font-weight: var(--font-weight-bold); /* 측정: Bold 700 (style_DP1BNI) */
+  letter-spacing: var(--letter-spacing-snug); /* 측정: -2% */
+}
+/* 닫기 32×32 히트영역 + 20px 글리프(측정 2087:33545 componentId 1230:5853). Step2 .close와 동일. */
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  flex: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.close:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
 
 /* 라벨 블록(측정: column gap4) */
 .labelBlock {
