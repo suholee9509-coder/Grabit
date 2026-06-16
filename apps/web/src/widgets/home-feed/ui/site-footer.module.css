@@ -1,0 +1,143 @@
+/* SiteFooter — 홈 피드 하단 푸터 Nav. 측정 정본: 2087:71659.
+ * 슬라이스 로컬 토큰(글로벌 미등재 — Figma 푸터 템플릿 고유값):
+ *   --color-footer-text #B3B3B3(fill_O65C9S 링크/©) · --color-footer-social-bg #292929(fill_4T3GR0). */
+.footer {
+  --color-footer-text: #b3b3b3; /* 측정 2087:71673/71682 fill_O65C9S — 앱 #B4B4B4와 1unit 차(푸터 고유) */
+  --color-footer-social-bg: #292929; /* 측정 2087:71734 fill_4T3GR0 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12); /* 측정 layout_Y3SML2: 24 */
+  padding: 84px 0 0; /* 측정: top 84 */
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--color-shell-bg); /* 측정: #121212 */
+  border-radius: 0 0 var(--radius-md) var(--radius-md); /* 측정: 0 0 8 8 */
+  font-family: var(--font-family-base);
+}
+
+/* separator — 측정 2087:71660: 1px top border rgba(255,255,255,0.08), full width */
+.separator {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border-subtle); /* 측정: rgba(255,255,255,0.08) */
+}
+
+/* Nav — 측정 layout_W0TFTN: column padding 40. 내부는 row(로고 | 컬럼들 | 소셜). */
+.nav {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-20); /* 측정: 40 */
+  gap: 76px; /* 측정 layout_AOE0NF: 로고↔컬럼 gap 76(spacing 스케일 부재 — 인라인) */
+  align-items: flex-start;
+}
+
+/* 로고 컬럼 — 측정 layout_BHXSJW: column gap10, width 89. */
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5); /* 측정: 10 */
+  flex: none;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3); /* 아이콘↔워드마크 */
+}
+.logoWord {
+  color: var(--color-brand-primary); /* 측정: 워드마크 그린 #66FF4B */
+  font-size: var(--text-body-1-size); /* 16 */
+  line-height: 130%;
+  font-weight: var(--font-weight-bold); /* 700 */
+  letter-spacing: var(--letter-spacing-tight);
+}
+.copyright {
+  color: var(--color-footer-text); /* 측정: #B3B3B3 */
+  font-size: 13.9px; /* 측정 style_NW7PX0: 13.9 */
+  line-height: 130%;
+  font-weight: var(--font-weight-regular); /* 400 */
+}
+
+/* 링크 컬럼들 — 측정 layout_EVAXGR: 4 컬럼 한 행(width 850). nowrap로 한 줄 유지(footer-nav.png 대조). */
+.columns {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  gap: 0 52px; /* 측정 골격: 컬럼 간 여백(layout_8S1G6O pad24 + 컬럼폭 분배 — 850/4행 정합) */
+  min-width: 0;
+}
+/* 각 컬럼(Margin) — 측정 layout_8S1G6O: pad 0 24 32 0. */
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  padding: 0 var(--space-12) var(--space-16) 0; /* 측정: 0 24 32 0 */
+}
+/* 컬럼 헤딩 — 측정 style_JHRN5Z: Bold 15.5 #FFFFFF. */
+.heading {
+  color: var(--color-white-pure); /* 측정: #FFFFFF */
+  font-size: 15.5px; /* 측정: 15.5 */
+  line-height: 130%;
+  font-weight: var(--font-weight-bold); /* 700 */
+  margin-bottom: var(--space-4); /* 측정 layout_3RCY75: 리스트 gap8 — 헤딩↔첫 링크 */
+}
+/* 링크 리스트 — 측정 layout_3RCY75: column gap 8. */
+.links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4); /* 측정: 8 */
+}
+/* 링크 — 측정 style_GJLQL8: Regular 16 #B3B3B3. */
+.link {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  color: var(--color-footer-text); /* 측정: #B3B3B3 */
+  font-family: var(--font-family-base);
+  font-size: var(--text-body-1-size); /* 측정: 16 */
+  line-height: 130%;
+  font-weight: var(--font-weight-regular); /* 400 */
+  cursor: pointer;
+  white-space: nowrap;
+}
+.link:hover {
+  color: var(--color-white-pure);
+}
+.link:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* 소셜 — 측정 layout_4V8EYR: column align flex-end pad 0 0 40 → row gap16. */
+.social {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8); /* 측정 layout_RQM2MA: 16 */
+  flex: none;
+}
+/* 소셜 아이콘 버튼 — 측정 layout_P5Z5ZL: width 40, pad 12 0, #292929, radius 20, img 16. */
+.socialBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* 측정: 40 */
+  height: 40px; /* 측정: pad 12 + img 16 = 40 */
+  border: none;
+  border-radius: var(--radius-pill); /* 측정: 20 → pill */
+  background-color: var(--color-footer-social-bg); /* 측정: #292929 */
+  color: var(--color-white-pure);
+  cursor: pointer;
+}
+.socialBtn:hover {
+  background-color: var(--color-surface-300);
+}
+.socialBtn:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}

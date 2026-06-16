@@ -1,31 +1,49 @@
-/* recommendation-rail — 우측 추천 레일("내 취향에 맞는 실시간 그랩", 420). 측정 2087:71744.
- * 컨테이너 420 r8 #121212 · 상단 작성 버튼 · 제목(Bold18 순백) · GrabCard 리스트(gap28). */
+/* recommendation-rail — 우측 추천 레일("내 취향에 맞는 실시간 그랩").
+ *   펼침 2087:71744(420 r8 #121212): 헤더행(56h, 접힘토글+작성) · 제목(Bold18 순백 -2.5%) · 리스트(gap28) · 하단 페이드.
+ *   접힘 2087:70377(40 r8/0/0/8 #121212): 중앙 펼침 화살표 24×24 #B4B4B4. */
 .rail {
+  position: relative;
   width: 420px; /* 측정 2087:71744 */
   flex: 0 0 420px;
   align-self: flex-start;
   border-radius: var(--radius-md); /* 측정: 8 */
   background-color: var(--color-shell-bg); /* 측정: #121212 */
-  padding: var(--space-8) 0; /* 상단 영역 inset */
+  overflow: hidden;
 }
 
-/* 상단 행 — 제목 + 작성 버튼 */
-.top {
+/* 헤더행 — 측정 2087:71746: 420×56 row align center pad16 gap12. 토글(좌) + 작성(우) space-between. */
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-10); /* x20 inset(측정) */
-  margin-bottom: var(--space-7);
+  height: 56px; /* 측정: 56 */
+  box-sizing: border-box;
+  padding: var(--space-8); /* 측정: 16 */
+  gap: var(--space-6); /* 측정: 12 */
 }
-.title {
-  margin: 0;
-  color: var(--color-white-pure); /* 측정: #FFFFFF 순백 */
-  font-size: var(--text-title-5-size); /* 측정: 18 */
-  line-height: 130%;
-  letter-spacing: var(--letter-spacing-tight);
-  font-weight: var(--font-weight-bold); /* 측정: Bold */
+
+/* 접힘 토글(펼침 상태 헤더) — 측정 2087:71747: width 32, pad 3/6, radius6, 아이콘 20×20. */
+.collapseToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; /* 측정: 32 */
+  padding: var(--space-1_5) var(--space-3); /* 측정: 3 / 6 */
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm); /* 측정: 6 */
+  color: var(--color-white); /* #FAFAFA */
+  cursor: pointer;
 }
-/* 작성 버튼 — h38 pad10/18 r7 #333333(solidGray) — 측정 2087:71745 */
+.collapseToggle:hover {
+  background-color: var(--color-surface-ghost);
+}
+.collapseToggle:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* 작성 버튼 — 측정 2087:71745: h38 pad10/18 gap6 r7 #333333. */
 .writeBtn {
   display: inline-flex;
   align-items: center;
@@ -44,10 +62,69 @@
   cursor: pointer;
 }
 
-/* 리스트 — x20 column gap28 */
+/* 제목 — 측정 2087:71752: x20 y56, Bold18 -2.5% #FFFFFF 순백. */
+.title {
+  margin: 0;
+  padding: 0 var(--space-10); /* 측정: x20 inset */
+  color: var(--color-white-pure); /* 측정: #FFFFFF 순백 */
+  font-size: var(--text-title-5-size); /* 측정: 18 */
+  line-height: 130%;
+  letter-spacing: var(--letter-spacing-tight); /* -2.5% */
+  font-weight: var(--font-weight-bold); /* 측정: Bold */
+}
+
+/* 리스트 — 측정 2087:71754: x20 y107(제목 아래 여백), width 380, column gap28. */
 .list {
   display: flex;
   flex-direction: column;
   gap: var(--space-14); /* 측정: 28 */
-  padding: 0 var(--space-10); /* x20 */
+  padding: var(--space-14) var(--space-10) 48px; /* 측정: 제목↔리스트 ~28 + x20 + 하단 페이드 여유 48 */
+}
+
+/* 하단 페이드 — 측정 2087:71753: 420×48 at y1032, gradient rgba(23,23,23,0→1), backdrop blur 2px. */
+.bottomFade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px; /* 측정: 48 */
+  background: linear-gradient(
+    180deg,
+    rgba(23, 23, 23, 0) 0%,
+    rgba(23, 23, 23, 1) 100%
+  ); /* 측정 fill_JVAA6F: #171717(23,23,23) 0→1 */
+  backdrop-filter: blur(2px); /* 측정 effect_GIWSMR: blur 2 */
+  pointer-events: none;
+}
+
+/* ── 접힘 엣지 바 — 측정 2087:70377: 40w r8/0/0/8 #121212, 중앙 화살표 24×24, pad 623 0. ── */
+.collapsed {
+  width: 40px; /* 측정: 40 */
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md) 0 0 var(--radius-md); /* 측정: 8 0 0 8 */
+  overflow: visible;
+}
+/* 펼침 화살표 버튼 — 측정 layout_EL5G0B: 중앙 정렬(pad 623 0 → 세로 중앙). 아이콘 24×24 #B4B4B4. */
+.edgeToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-gray-500); /* 측정: 화살표 #B4B4B4 */
+  cursor: pointer;
+}
+.edgeToggle:hover {
+  color: var(--color-white);
+}
+.edgeToggle:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
