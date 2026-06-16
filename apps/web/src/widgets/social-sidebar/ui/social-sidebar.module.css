@@ -100,7 +100,7 @@
   pointer-events: none;
 }
 
-/* [A4] composer — 하단 입력 행(아바타 + textarea + 작성). DM1: 전송 비활성(disabled). */
+/* [A4] composer — 하단 입력 행(아바타 + textarea, Figma 입력행). DM1: 전송 비활성(disabled). 제출 버튼 미존재(Figma). */
 .composer {
   flex: 0 0 auto;
   display: flex;
