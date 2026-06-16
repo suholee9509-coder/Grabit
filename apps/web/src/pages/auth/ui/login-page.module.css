@@ -61,9 +61,9 @@
   text-align: center;
 }
 
-/* 약관/개인정보 링크 — 강조(ts2). 목적지 E6 플레이스홀더(env). */
+/* 약관/개인정보 링크 — 측정 {ts2} #999999 + underline(감사 D-link). 목적지 E6 플레이스홀더(env). */
 .link {
-  color: var(--color-text-primary);
+  color: var(--color-gray-450); /* 측정: #999999 (ts2) — underline이 강조 */
   text-decoration: underline;
   text-underline-offset: 2px;
 }

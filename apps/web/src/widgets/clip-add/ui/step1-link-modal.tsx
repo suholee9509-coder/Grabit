@@ -14,7 +14,10 @@ export interface Step1LinkModalProps {
 
 /**
  * Step1 — 링크 붙여넣기 모달(측정 2087:32073, 582×364).
- * Modal 셸(582) + 라벨/헬퍼/URL Textarea(link) + [다음] 버튼.
+ * Modal 셸(582) + 커스텀 헤더(타이틀 Bold700 + 닫기 20px SVG, 측정 2087:33543 pad 24/24/24/28·66h)
+ * + 라벨/헬퍼/URL Textarea(link) + [다음] 버튼.
+ * ★헤더는 Step2와 동일한 커스텀 헤더 패턴 — 공유 Modal 헤더(SemiBold·텍스트 ✕)를 재사용하지 않아
+ *   타 모달에 영향 없이 프레임과 1:1(타이틀 700·닫기 SVG·padding).
  * 클라 1차 검증(parseYoutubeUrl = extract_video_ref 거울) — 빈/형식불일치 시 [다음] 차단·인풋 에러.
  */
 export function Step1LinkModal({ open, onClose, onSubmit, loading = false }: Step1LinkModalProps) {
@@ -42,8 +45,6 @@ export function Step1LinkModal({ open, onClose, onSubmit, loading = false }: Ste
   return (
     <Modal
       open={open}
-      onClose={handleClose}
-      title="새 클립 추가"
       width={582}
       footer={
         <Button
@@ -57,6 +58,14 @@ export function Step1LinkModal({ open, onClose, onSubmit, loading = false }: Ste
         </Button>
       }
     >
+      {/* 커스텀 헤더 — 타이틀 Bold700 + 닫기 20px SVG (측정 2087:33543 pad 24/24/24/28·66h·하단보더 .08) */}
+      <header className={styles.header}>
+        <h2 className={styles.title}>새 클립 추가</h2>
+        <button type="button" className={styles.close} aria-label="닫기" onClick={handleClose}>
+          <CloseGlyph />
+        </button>
+      </header>
+
       <div className={styles.labelBlock}>
         <span className={styles.label}>링크 붙여넣기</span>
         <span className={styles.helper}>
@@ -85,5 +94,19 @@ export function Step1LinkModal({ open, onClose, onSubmit, loading = false }: Ste
         </p>
       ) : null}
     </Modal>
+  );
+}
+
+/** 닫기 글리프 20px(측정 componentId 1230:5853 Dismiss/Size=20 — Step2 CloseGlyph와 동일). */
+function CloseGlyph() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M5 5l10 10M15 5L5 15"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }

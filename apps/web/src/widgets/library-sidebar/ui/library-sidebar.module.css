@@ -75,9 +75,9 @@
 
 /* 트리거 라벨 — 측정 Medium 14/130%/-2% #FAFAFA. */
 .selectLabel {
-  font-size: var(--text-body-3-size); /* 14 */
+  font-size: var(--text-caption-1-size); /* 측정 2117:22571: 13 (Cap1_Rg) */
   line-height: 130%;
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-regular); /* 측정: Cap1_Rg = Regular 400 */
   letter-spacing: var(--letter-spacing-snug);
   color: var(--color-white);
   white-space: nowrap;
