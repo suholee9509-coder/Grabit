@@ -12,9 +12,13 @@ export {
 export {
   cohortLabel,
   topCohortLabel,
+  topCohortChips,
   deriveCohortRanking,
   yearsBucket,
+  YEARS_BUCKETS,
   type CohortRank,
+  type TopCohortChips,
+  type YearsBucket,
 } from './model/cohort';
 export { InsightCard } from './ui/insight-card';
 export { CohortBanner } from './ui/cohort-banner';

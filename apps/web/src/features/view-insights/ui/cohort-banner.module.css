@@ -12,19 +12,16 @@
   color: var(--color-white-pure); /* #FFFFFF (style_P6SM0B) */
 }
 
-/* 코호트 칩: h28, pad10, .04 bg + .08 border, radius4 */
+/* 코호트 칩(직군/연차 각각): h28, pad10, .04 bg + .08 border, radius4, 아바타 없음 */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3); /* 6 (아바타↔라벨) */
   height: 28px;
   box-sizing: border-box;
   padding: 0 var(--space-5); /* 10 */
   background-color: var(--color-surface-ghost); /* rgba(255,255,255,0.04) */
   border: 1px solid var(--color-border-subtle); /* rgba(255,255,255,0.08) */
   border-radius: var(--radius-xs); /* 4 */
-}
-.chipLabel {
   font-size: 14px;
   line-height: 130%;
   letter-spacing: var(--letter-spacing-snug);

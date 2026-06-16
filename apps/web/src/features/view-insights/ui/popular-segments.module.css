@@ -1,10 +1,25 @@
-/* "가장 인기있는 구간" — 측정 2087:12538 §7.2.
- * 토큰갭(슬라이스 로컬): 랭킹 1위 숫자색 #38C524. */
-.root {
+/* "가장 인기있는 구간" — 측정 2087:12538 §7.2 (2패널 헤더 나란히).
+ * 토큰갭(슬라이스 로컬): 랭킹 1위 숫자색 #38C524.
+ * 좌 772 + 우 360 카드(측정), 사이 gap 16 → 반응형 비율.
+ * 각 컬럼 = [헤더 슬롯][카드] 세로 스택 → 헤더(코호트 배너/제목)가 좌우 나란히. */
+.grid {
   --color-rank-first: #38c524; /* 12538§7.2 랭킹1위 숫자 */
+  display: grid;
+  grid-template-columns: minmax(0, 772fr) minmax(0, 360fr);
+  gap: var(--space-8); /* 16 */
+}
+
+.col {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12); /* 24 */
+  gap: var(--space-12); /* 24 (헤더↔카드) */
+}
+
+/* 헤더 슬롯: 코호트 배너(좌) / 제목(우)을 같은 높이로 정렬 */
+.headerSlot {
+  display: flex;
+  align-items: center;
+  min-height: 28px; /* 칩 높이 — 좌우 헤더 baseline 정렬 */
 }
 
 .title {
@@ -16,17 +31,10 @@
   color: var(--color-white-pure); /* #FFFFFF */
 }
 
-/* 좌 772 + 우 360 카드(측정), 사이 gap 16 → 반응형 비율 */
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 772fr) minmax(0, 360fr);
-  gap: var(--space-8); /* 16 */
-}
-
 .leftCard,
 .rightCard {
   box-sizing: border-box;
-  min-height: 321px;
+  min-height: 223px; /* 패널 728×223(측정) — 헤더 분리로 카드만 */
   border: 1px solid var(--color-border-default); /* rgba(255,255,255,0.1) */
   border-radius: var(--radius-lg); /* 12 */
   padding: var(--space-12); /* 24 */
@@ -85,10 +93,18 @@
   border-radius: var(--radius-pill);
   overflow: hidden;
 }
-.rankBar {
-  display: block;
+/* 연차 3색 스택 막대: 전체 폭=그랩수 비율, 내부=연차 버킷 세그먼트(violet/mint/magenta) */
+.rankBarStack {
+  display: flex;
   height: 100%;
   border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.rankBarSeg {
+  display: block;
+  height: 100%;
+  flex-basis: 0;
+  min-width: 0;
 }
 .toneViolet {
   background-color: var(--color-accent-violet); /* #727AD0 */
